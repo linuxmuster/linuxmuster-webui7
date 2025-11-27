@@ -1,8 +1,17 @@
-angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity) {
+angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, $window, messagebox, validation, notify, toaster, gettext, identity) {
 
     this.sessions = [];
     this.user_missing_membership = [];
     this.examMode = false;
+
+    this.error = (title, text) => {
+        toaster.pop({
+            type:'error',
+            title: title,
+            body: text,
+            timeout: 0
+        });
+    }
 
     this.load = () => {
         var promiseList = [];
@@ -43,7 +52,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', {'users': cn_list}).then((resp) => {
             errors = resp.data;
             if (errors.global) {
-                notify.error(errors.global);
+                this.error(errors.global);
             }
             for (user of users) {
                 if (user.cn in resp.data) {
@@ -133,7 +142,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
             testChar = validation.isValidLinboConf(msg.value);
             if (testChar != true) {
-                notify.error(gettext(testChar));
+                this.error(gettext(testChar));
                 return
             }
 
@@ -154,7 +163,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
             testChar = validation.isValidLinboConf(msg.value);
             if (testChar != true) {
-                notify.error(gettext(testChar));
+                this.error(gettext(testChar));
                 return
             }
             return $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: sessionID, comment: msg.value}).then((resp) => {

@@ -1,4 +1,4 @@
-angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, lmnSession) ->
+angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scope, $http, $location, $route, $uibModal, gettext, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, lmnSession) ->
     pageTitle.set(gettext('Sessions list'))
 
     $scope.startSchoolclassSessionMouseover = gettext('Start this session with all student in this schoolclass')

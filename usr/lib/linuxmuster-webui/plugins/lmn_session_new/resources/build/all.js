@@ -21,12 +21,21 @@ angular.module('lmn.session_new').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity) {
+angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, $window, messagebox, validation, notify, toaster, gettext, identity) {
     var _this = this;
 
     this.sessions = [];
     this.user_missing_membership = [];
     this.examMode = false;
+
+    this.error = function (title, text) {
+        toaster.pop({
+            type: 'error',
+            title: title,
+            body: text,
+            timeout: 0
+        });
+    };
 
     this.load = function () {
         var promiseList = [];
@@ -96,7 +105,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'users': cn_list }).then(function (resp) {
             errors = resp.data;
             if (errors.global) {
-                notify.error(errors.global);
+                _this.error(errors.global);
             }
             var _iteratorNormalCompletion2 = true;
             var _didIteratorError2 = false;
@@ -213,7 +222,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
             testChar = validation.isValidLinboConf(msg.value);
             if (testChar != true) {
-                notify.error(gettext(testChar));
+                _this.error(gettext(testChar));
                 return;
             }
 
@@ -236,7 +245,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
             testChar = validation.isValidLinboConf(msg.value);
             if (testChar != true) {
-                notify.error(gettext(testChar));
+                _this.error(gettext(testChar));
                 return;
             }
             return $http.post('/api/lmn/session/sessions', { action: 'rename-session', session: sessionID, comment: msg.value }).then(function (resp) {
@@ -394,7 +403,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         type: 'class'
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
-          notify.error(resp['data'][1]);
+          lmnSession.error(resp['data'][1]);
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
@@ -480,7 +489,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
               if (user.cn === participant) {
                 if (typeof files.items === 'undefined') {
                   // Error from backend
-                  notify.error(gettext("Can not list directory from ") + user.displayName + ": " + files);
+                  lmnSession.error(gettext("Can not list directory from ") + user.displayName + ": " + files);
                 } else {
                   user.files = files.items;
                 }
@@ -521,7 +530,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         notify.success(`Group ${group} changed for ${user[0]}`);
         return $scope.stateChanged = false;
       }).catch(function(err) {
-        notify.error(err.data.message);
+        lmnSession.error(err.data.message);
         return $scope.stateChanged = false;
       });
     };
@@ -549,7 +558,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         notify.success(`Group ${group} changed for ${usersList.join()}`);
         return $scope.stateChanged = false;
       }).catch(function(err) {
-        notify.error(err.data.message);
+        lmnSession.error(err.data.message);
         return $scope.stateChanged = false;
       });
     };
@@ -1090,7 +1099,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           notify.success(new_path + gettext(' created '));
           return $scope.load_path($scope.current_path);
         }).catch(function(resp) {
-          return notify.error(gettext('Error during creating: '), resp.data.message);
+          return lmnSession.error(gettext('Error during creating: '), resp.data.message);
         });
       });
     };
@@ -1104,7 +1113,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           notify.success(path + gettext(' deleted !'));
           return $scope.load_path($scope.current_path);
         }).catch(function(resp) {
-          return notify.error(gettext('Error during deleting : '), resp.data.message);
+          return lmnSession.error(gettext('Error during deleting : '), resp.data.message);
         });
       });
     };
@@ -1118,7 +1127,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           notify.success(path + gettext(' deleted !'));
           return $scope.load_path($scope.current_path);
         }).catch(function(resp) {
-          return notify.error(gettext('Error during deleting : '), resp.data.message);
+          return lmnSession.error(gettext('Error during deleting : '), resp.data.message);
         });
       });
     };
@@ -1132,7 +1141,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           notify.success(old_path + gettext(' renamed to ') + new_path);
           return $scope.load_path($scope.current_path);
         }).catch(function(resp) {
-          return notify.error(gettext('Error during renaming: '), resp.data.message);
+          return lmnSession.error(gettext('Error during renaming: '), resp.data.message);
         });
       });
     };
@@ -1175,7 +1184,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
 // Generated by CoffeeScript 2.5.1
 (function() {
-  angular.module('lmn.session_new').controller('LMNSessionsListController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, lmnSession) {
+  angular.module('lmn.session_new').controller('LMNSessionsListController', function($scope, $http, $location, $route, $uibModal, gettext, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, lmnSession) {
     pageTitle.set(gettext('Sessions list'));
     $scope.startSchoolclassSessionMouseover = gettext('Start this session with all student in this schoolclass');
     $scope.generateRoomSessionMouseover = gettext('Start session containing all users in this room');

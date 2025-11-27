@@ -117,7 +117,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             type: 'class'
         }).then (resp) ->
             if resp['data'][0] == 'ERROR'
-                notify.error (resp['data'][1])
+                lmnSession.error (resp['data'][1])
             if resp['data'][0] == 'LOG'
                 notify.success gettext(resp['data'][1])
                 $rootScope.identity = identity
@@ -170,7 +170,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                     if user.cn == participant
                         if (typeof files.items == 'undefined')
                             # Error from backend
-                            notify.error(gettext("Can not list directory from ") + user.displayName + ": " + files)
+                            lmnSession.error(gettext("Can not list directory from ") + user.displayName + ": " + files)
                         else
                             user.files = files.items
                         break
@@ -196,7 +196,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             notify.success("Group #{group} changed for #{user[0]}")
             $scope.stateChanged = false
         ).catch((err) ->
-            notify.error(err.data.message)
+            lmnSession.error(err.data.message)
             $scope.stateChanged = false
         )
 
@@ -218,7 +218,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             notify.success("Group #{group} changed for #{usersList.join()}")
             $scope.stateChanged = false
         ).catch((err) ->
-            notify.error(err.data.message)
+            lmnSession.error(err.data.message)
             $scope.stateChanged = false
         )
 
@@ -601,7 +601,7 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
                 notify.success(new_path + gettext(' created '))
                 $scope.load_path($scope.current_path)
             .catch (resp) ->
-                notify.error(gettext('Error during creating: '), resp.data.message)
+                lmnSession.error(gettext('Error during creating: '), resp.data.message)
 
     $scope.delete_file = (path) ->
         messagebox.show({
@@ -613,7 +613,7 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
                 notify.success(path + gettext(' deleted !'))
                 $scope.load_path($scope.current_path)
             .catch (resp) ->
-                notify.error(gettext('Error during deleting : '), resp.data.message)
+                lmnSession.error(gettext('Error during deleting : '), resp.data.message)
 
     $scope.delete_dir = (path) ->
         messagebox.show({
@@ -625,7 +625,7 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
                 notify.success(path + gettext(' deleted !'))
                 $scope.load_path($scope.current_path)
             .catch (resp) ->
-                notify.error(gettext('Error during deleting : '), resp.data.message)
+                lmnSession.error(gettext('Error during deleting : '), resp.data.message)
 
 
     $scope.rename = (item) ->
@@ -636,7 +636,7 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
                 notify.success(old_path + gettext(' renamed to ') + new_path)
                 $scope.load_path($scope.current_path)
             .catch (resp) ->
-                notify.error(gettext('Error during renaming: '), resp.data.message)
+                lmnSession.error(gettext('Error during renaming: '), resp.data.message)
 
     $scope.areUploadsFinished = () ->
         numUploads = $scope.uploadProgress.length

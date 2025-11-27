@@ -178,10 +178,6 @@ Updating linuxmuster-webui
                 /usr/sbin/lmncli check_parents && echo "parents_groups_checked" >> $webuietc/.installed
             fi
 
-            # Recreate upload folder using the right permissions
-            msg "Verifying upload folder"
-            bash $install_scripts/create_webuiUploadFolder.sh
-
             # Temporary folder for webdav downloads
             mkdir -p /srv/.webdav
             chmod 777 /srv/.webdav

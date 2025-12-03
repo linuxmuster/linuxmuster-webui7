@@ -139,8 +139,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       if result.response is 'refresh'
         $scope.getGroups ($scope.identity.user)
 
-  $scope.projectIsJoinable = (project) ->
-    return project['sophomorixJoinable'] or project.admin or identity.profile.isAdmin or $scope.identity.profile.projects.indexOf(project['cn']) > -1
+  $scope.groupIsJoinable = (group) ->
+    return group['sophomorixJoinable'] or identity.profile.isAdmin
+
+  $scope.groupIsHidden = (group) ->
+    # Only shown if not hidden, or admin, or member
+    return group['sophomorixHidden'] and !group.admin and !identity.profile.isAdmin and !group.membership
 
   $scope.resetAll = (type) ->
       warning = gettext('Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!')

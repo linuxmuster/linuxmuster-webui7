@@ -184,8 +184,12 @@
         }
       });
     };
-    $scope.projectIsJoinable = function(project) {
-      return project['sophomorixJoinable'] || project.admin || identity.profile.isAdmin || $scope.identity.profile.projects.indexOf(project['cn']) > -1;
+    $scope.groupIsJoinable = function(group) {
+      return group['sophomorixJoinable'] || identity.profile.isAdmin;
+    };
+    $scope.groupIsHidden = function(group) {
+      // Only shown if not hidden, or admin, or member
+      return group['sophomorixHidden'] && !group.admin && !identity.profile.isAdmin && !group.membership;
     };
     $scope.resetAll = function(type) {
       var warning;

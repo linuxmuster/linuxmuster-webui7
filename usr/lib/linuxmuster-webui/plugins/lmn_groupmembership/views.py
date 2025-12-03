@@ -39,7 +39,7 @@ class Handler(HttpPlugin):
         user_projects = []
 
         for project in projects:
-            member = user_profile['dn'] in project.member or user_profile['isAdmin']
+            member = user_profile['dn'] in project.member or user_profile['isAdmin'] or username in project.sophomorixAdmins
 
             if member or not project.sophomorixHidden:
                 projectDict = project.asdict()

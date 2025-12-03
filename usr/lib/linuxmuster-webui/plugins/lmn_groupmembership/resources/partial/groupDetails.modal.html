@@ -32,13 +32,13 @@
             <td><b translate>Sophomorix Status:</b></td>
             <td>{{groupDetails['sophomorixStatus']}}</td>
         </tr>
-        <tr ng:show="type == 'project'">
+        <tr>
             <td><b translate>Joinable:</b></td>
             <td>
                 <input type="checkbox" ng:model="joinable" ng:disabled="!editGroup" ng:change="changeJoin()"> </input>
             </td>
         </tr>
-        <tr ng:show="type == 'project'">
+        <tr>
             <td><b translate>Hidden:</b></td>
             <td>
                 <input type="checkbox" ng:model="hidden" ng:disabled="!editGroup" ng:change="changeHide()"> </input>

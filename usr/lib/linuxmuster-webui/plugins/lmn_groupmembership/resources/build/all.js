@@ -73,9 +73,10 @@
       };
       if (group.sophomorixType === 'printer') {
         action = group.membership ? 'removemembers' : 'addmembers';
-      } else {
-        // TODO: seems to be wrong for projects
+      } else if (group.sophomorixType === 'adminclass') {
         action = group.membership ? 'removeadmins' : 'addadmins';
+      } else if (group.sophomorixType === 'project') {
+        action = group.membership ? 'removeproject' : 'addmembers';
       }
       return $http.post('/api/lmn/groupmembership/membership', {
         action: action,

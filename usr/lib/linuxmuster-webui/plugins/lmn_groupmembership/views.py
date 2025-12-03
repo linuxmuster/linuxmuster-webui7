@@ -270,7 +270,8 @@ class Handler(HttpPlugin):
             'removemembergroups',
             'addadmingroups',
             'removeadmingroups',
-
+            # Special case for project: user must be removed from admins and members
+            'removeproject',
         ]
 
         if action in possible_actions:
@@ -290,7 +291,12 @@ class Handler(HttpPlugin):
                         results['LOG'] += result['LOG'] + "\n"
                 return results['TYPE'], results['LOG']
             else:
-                sophomorixCommand = ['sophomorix-'+objtype,  '--'+action, entity, '--'+objtype, groupname, '-jj']
+                if action == 'removeproject':
+                    option = ["--removemembers", entity, "--removeadmins", entity]
+                else:
+                    option = [f"--{action}", entity]
+
+                sophomorixCommand = ['sophomorix-'+objtype,  *option, '--'+objtype, groupname, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
                     return result['TYPE'], result['MESSAGE_EN']

@@ -52,9 +52,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
     sophomorix_type_map = {'printer': 'group', 'adminclass': 'class', 'project': 'project'}
     if group.sophomorixType == 'printer'
         action = if group.membership then 'removemembers' else 'addmembers'
-    else
-        # TODO: seems to be wrong for projects
+    else if group.sophomorixType == 'adminclass'
         action = if group.membership then 'removeadmins' else 'addadmins'
+    else if group.sophomorixType == 'project'
+        action = if group.membership then 'removeproject' else 'addmembers'
 
     $http.post('/api/lmn/groupmembership/membership', {
         action: action,

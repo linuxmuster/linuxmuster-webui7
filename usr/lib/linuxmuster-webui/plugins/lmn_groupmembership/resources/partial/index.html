@@ -76,8 +76,15 @@
             </div>
             <div class="flex-container lmn-container-list" style="flex-direction: column;" ng:style="{'max-height': classes_max_height}">
                 <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;min-width:300px;">
-                    <div ng-class="{'color-orange': classe.membership}" ng:show="!groupIsHidden(classe)">
-                        <input id={{classe.groupname}} type="checkbox" ng-click='setMembership(classe)' ng-checked="classe.membership"></input>
+                    <div ng:class="{'color-orange': classe.membership}"
+                         ng:show="!groupIsHidden(classe)"
+                         ng:style="!(groupIsJoinable(classe) || classe.membership || classe.admin) && {'padding-left':'18px'}"
+                    >
+                        <input id={{classe.groupname}} type="checkbox"
+                               ng:click='setMembership(classe)'
+                               ng:checked="classe.membership || classe.admin"
+                               ng:show="groupIsJoinable(classe) || classe.membership || classe.admin"
+                        />
                         <i class="fa fa-users"></i>
                         <a href="#" ng-click='showGroupDetails($index, classe.type, classe.groupname)'>
                             <span translate>Class</span>
@@ -102,8 +109,15 @@
             </div>
             <div class="flex-container lmn-container-list" >
                 <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse|filter:filter">
-                    <div ng-class="{'color-orange': printergroup.membership}" ng:show="!groupIsHidden(printergroup)">
-                        <input id={{printergroup.groupname}} type="checkbox" ng-click='setMembership(printergroup)' ng-checked="printergroup.membership"></input>
+                    <div ng:class="{'color-orange': printergroup.membership}"
+                         ng:show="!groupIsHidden(printergroup)"
+                         ng:style="!(groupIsJoinable(printergroup) || printergroup.membership || printergroup.admin) && {'padding-left':'18px'}"
+                    >
+                        <input id={{printergroup.groupname}} type="checkbox"
+                               ng:click='setMembership(printergroup)'
+                               ng:checked="printergroup.membership || printergroup.admin"
+                               ng:show="groupIsJoinable(printergroup) || printergroup.membership || printergroup.admin"
+                        />
                         <i class="fa fa-fw fa-print"></i>
                         <a href="#" ng-click='showGroupDetails($index, printergroup.type, printergroup.groupname)'>
                             <span translate>Printer</span>
@@ -129,9 +143,14 @@
                 <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter"
                      style="padding:3px 10px 3px 0;border-right:solid 2px #ff8f00;min-width:300px;">
                     <div ng:show="!groupIsHidden(project)"
-                         ng:class="{'color-orange': project.membership}"
-                         ng:style="!groupIsJoinable(project) && {'padding-left':'17px'}">
-                        <input id={{project.groupname}} type="checkbox" ng:show="groupIsJoinable(project)" ng:click='setMembership(project)' ng:checked="project.membership">
+                         ng:class="{'color-orange': project.admin}"
+                         ng:style="!(groupIsJoinable(project) || project.membership || project.admin) && {'padding-left':'18px'}"
+                    >
+                        <input id={{project.groupname}} type="checkbox"
+                               ng:show="groupIsJoinable(project) || project.membership || project.admin"
+                               ng:click='setMembership(project)'
+                               ng:checked="project.membership || project.admin"
+                        >
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
                             <b style="word-wrap: break-word; -ms-word-break: break-all;width:100%;">{{project.groupname}}</b>

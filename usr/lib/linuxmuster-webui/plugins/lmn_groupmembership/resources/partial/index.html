@@ -107,8 +107,8 @@
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
             </div>
-            <div class="flex-container lmn-container-list" >
-                <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse|filter:filter">
+            <div class="flex-container lmn-container-list" style="flex-direction: column;" ng:style="{'max-height': printers_max_height}">
+                <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;min-width:300px;">
                     <div ng:class="{'color-orange': printergroup.admin}"
                          ng:show="!groupIsHidden(printergroup)"
                          ng:style="!(groupIsJoinable(printergroup) || printergroup.membership || printergroup.admin) && {'padding-left':'18px'}"
@@ -119,7 +119,7 @@
                                ng:show="groupIsJoinable(printergroup) || printergroup.membership || printergroup.admin"
                         />
                         <i class="fa fa-fw fa-print"></i>
-                        <a href="#" ng-click='showGroupDetails($index, printergroup.type, printergroup.groupname)'>
+                        <a href="#" ng:click='showGroupDetails($index, printergroup.type, printergroup.groupname)'>
                             <span translate>Printer</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{printergroup.groupname}}</b>
                         </a>

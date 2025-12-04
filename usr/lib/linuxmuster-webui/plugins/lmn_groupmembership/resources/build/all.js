@@ -113,8 +113,7 @@
       $http.get('/api/lmn/groupmembership/projects').then(function(resp) {
         $scope.projects = resp.data;
         $scope.loading_projects = false;
-        $scope.projects_max_height = 45 * resp.data.length / 3 + "px";
-        return console.log($scope.projects_max_height);
+        return $scope.projects_max_height = 45 * resp.data.length / 3 + "px";
       });
       // Disable recursiv search of members since it's pretty slow for schools with a lot of projects.
       //      promises = []
@@ -129,7 +128,8 @@
       //      $q.all(promises).then () -> $scope.loading_projects = false
       $http.get('/api/lmn/groupmembership/printers').then(function(resp) {
         $scope.printers = resp.data;
-        return $scope.loading_printers = false;
+        $scope.loading_printers = false;
+        return $scope.printers_max_height = 25 * resp.data.length / 3 + "px";
       });
       return $http.get('/api/lmn/groupmembership/schoolclasses').then(function(resp) {
         $scope.classes = resp.data;

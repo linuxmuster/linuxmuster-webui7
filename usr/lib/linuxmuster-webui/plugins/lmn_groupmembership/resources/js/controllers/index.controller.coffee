@@ -86,7 +86,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             $scope.projects = resp.data
             $scope.loading_projects = false
             $scope.projects_max_height = 45 * resp.data.length / 3 + "px"
-            console.log($scope.projects_max_height)
             # Disable recursiv search of members since it's pretty slow for schools with a lot of projects.
             #      promises = []
             #      for project in $scope.projects
@@ -101,6 +100,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       $http.get('/api/lmn/groupmembership/printers').then (resp) ->
           $scope.printers = resp.data
           $scope.loading_printers = false
+          $scope.printers_max_height = 25 * resp.data.length / 3 + "px"
       $http.get('/api/lmn/groupmembership/schoolclasses').then (resp) ->
           $scope.classes = resp.data
           $scope.classes_max_height = 25 * resp.data.length / 3 + "px"

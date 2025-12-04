@@ -432,7 +432,7 @@
         $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] === 'TRUE';
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
-        if (identity.profile.isAdmin) {
+        if (identity.profile.isAdmin && groupType !== 'printergroup') {
           $scope.editGroup = true;
         } else if ((groupType === 'project') && ($scope.adminList.indexOf($scope.identity.user) >= 0)) {
           $scope.editGroup = true;

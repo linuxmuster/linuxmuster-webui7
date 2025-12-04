@@ -286,8 +286,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']]
                 
                 $scope.members = []
-                for name,member of resp.data['MEMBERS'][groupName]
-                    if member.sn != "null" # group member
+                for cn in resp.data['GROUP'][groupName]['sophomorixMembers']
+                    member = resp.data['MEMBERS'][groupName][cn]
+                    if member.sn != "null" and # group member
                         $scope.members.push({
                             'sn':member.sn,
                             'givenName':member.givenName,

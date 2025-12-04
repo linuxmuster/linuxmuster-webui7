@@ -376,7 +376,7 @@
       groupType = group[0];
       groupName = group[1];
       return $http.get('/api/lmn/groupmembership/groups/' + groupName).then(function(resp) {
-        var admin, i, len, member, name, ref, ref1;
+        var admin, cn, i, j, len, len1, member, ref, ref1;
         $scope.groupName = groupName;
         if (!resp.data.hasOwnProperty('GROUP')) {
           notify.error(gettext("Can not read properties of this project."));
@@ -398,25 +398,26 @@
         };
         $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']];
         $scope.members = [];
-        ref = resp.data['MEMBERS'][groupName];
-        for (name in ref) {
-          member = ref[name];
-          if (member.sn !== "null") { // group member
-            $scope.members.push({
-              'sn': member.sn,
-              'givenName': member.givenName,
-              'login': member.sAMAccountName,
-              'sophomorixAdminClass': member.sophomorixAdminClass,
-              'sophomorixRole': member.sophomorixRole
-            });
+        ref = resp.data['GROUP'][groupName]['sophomorixMembers'];
+        for (i = 0, len = ref.length; i < len; i++) {
+          cn = ref[i];
+          member = resp.data['MEMBERS'][groupName][cn];
+          if (member.sn !== "null" && $scope.members.push({
+            'sn': member.sn,
+            'givenName': member.givenName,
+            'login': member.sAMAccountName,
+            'sophomorixAdminClass': member.sophomorixAdminClass,
+            'sophomorixRole': member.sophomorixRole
+          })) {
+
           } else if (groupType === 'printergroup') {
             $scope.groupmemberlist.push(member.sAMAccountName);
           }
         }
         $scope.admins = [];
         ref1 = $scope.adminList;
-        for (i = 0, len = ref1.length; i < len; i++) {
-          admin = ref1[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          admin = ref1[j];
           member = resp.data['MEMBERS'][groupName][admin];
           $scope.admins.push({
             'sn': member.sn,

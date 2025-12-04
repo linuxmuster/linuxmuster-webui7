@@ -79,13 +79,13 @@
                      class="membership-item"
                      style="padding-right:10px"
                 >
-                    <div ng:class="{'color-orange': classe.membership}"
+                    <div ng:class="{'color-orange': classe.admin}"
                          ng:show="!groupIsHidden(classe)"
                          ng:style="!(groupIsJoinable(classe) || classe.membership || classe.admin) && {'padding-left':'18px'}"
                     >
                         <input id={{classe.groupname}} type="checkbox"
                                ng:click='setMembership(classe)'
-                               ng:checked="classe.membership || classe.admin"
+                               ng:checked="classe.membership"
                                ng:show="groupIsJoinable(classe) || classe.membership || classe.admin"
                         />
                         <i class="fa fa-users"></i>
@@ -121,7 +121,7 @@
                     >
                         <input id={{printergroup.groupname}} type="checkbox"
                                ng:click='setMembership(printergroup)'
-                               ng:checked="printergroup.membership || printergroup.admin"
+                               ng:checked="printergroup.membership"
                                ng:show="groupIsJoinable(printergroup) || printergroup.membership || printergroup.admin"
                         />
                         <i class="fa fa-fw fa-print"></i>
@@ -156,7 +156,7 @@
                         <input id={{project.groupname}} type="checkbox"
                                ng:show="groupIsJoinable(project) || project.membership || project.admin"
                                ng:click='setMembership(project)'
-                               ng:checked="project.membership || project.admin"
+                               ng:checked="project.membership"
                         >
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>

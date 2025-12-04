@@ -39,7 +39,7 @@ class Handler(HttpPlugin):
         user_projects = []
 
         for project in projects:
-            member = user_profile['dn'] in project.member or user_profile['isAdmin'] or username in project.sophomorixAdmins
+            member = user_profile['dn'] in project.member or username in project.sophomorixAdmins
 
             if member or not project.sophomorixHidden:
                 projectDict = project.asdict()
@@ -96,7 +96,7 @@ class Handler(HttpPlugin):
         for printer in printers:
             printer['type'] = 'printergroup'
             printer['groupname'] = printer['cn']
-            printer['membership'] = user_profile['dn'] in printer['member'] or user_profile['isAdmin']
+            printer['membership'] = user_profile['dn'] in printer['member']
             printer['admin'] = user_profile['isAdmin']
 
         return printers
@@ -121,7 +121,7 @@ class Handler(HttpPlugin):
         to_remove = []
 
         for schoolclass in schoolclasses:
-            member = user_profile['dn'] in schoolclass['member'] or user_profile['isAdmin']
+            member = user_profile['dn'] in schoolclass['member']
 
             if member or not schoolclass['sophomorixHidden']:
                 schoolclass['groupname'] = schoolclass['cn']

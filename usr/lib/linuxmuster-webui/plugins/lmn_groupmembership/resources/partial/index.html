@@ -109,7 +109,7 @@
             </div>
             <div class="flex-container lmn-container-list" >
                 <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse|filter:filter">
-                    <div ng:class="{'color-orange': printergroup.membership}"
+                    <div ng:class="{'color-orange': printergroup.admin}"
                          ng:show="!groupIsHidden(printergroup)"
                          ng:style="!(groupIsJoinable(printergroup) || printergroup.membership || printergroup.admin) && {'padding-left':'18px'}"
                     >

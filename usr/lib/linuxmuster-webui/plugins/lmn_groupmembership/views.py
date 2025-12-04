@@ -94,7 +94,8 @@ class Handler(HttpPlugin):
         for printer in printers:
             printer['type'] = 'printergroup'
             printer['groupname'] = printer['cn']
-            printer['membership'] = user_profile['dn'] in printer['dn'] or user_profile['isAdmin']
+            printer['membership'] = user_profile['dn'] in printer['member'] or user_profile['isAdmin']
+            printer['admin'] = user_profile['isAdmin']
 
         return printers
 

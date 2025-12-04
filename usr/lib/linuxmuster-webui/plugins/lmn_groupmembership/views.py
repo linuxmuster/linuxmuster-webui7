@@ -49,6 +49,8 @@ class Handler(HttpPlugin):
                 projectDict['admin'] = username in project.sophomorixAdmins or user_profile['isAdmin']
                 projectDict['members'] = project.sophomorixMembers
                 projectDict['type'] = 'project'
+                projectDict['no_admin'] = len(project.sophomorixAdmins + project.sophomorixAdminGroups) == 0
+                projectDict['no_member'] = len(project.sophomorixMembers + project.sophomorixMemberGroups) == 0
 
                 user_projects.append(projectDict)
 

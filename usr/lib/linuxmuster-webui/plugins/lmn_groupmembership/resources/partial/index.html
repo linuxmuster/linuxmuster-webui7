@@ -155,15 +155,37 @@
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
                             <b style="word-wrap: break-word; -ms-word-break: break-all;width:100%;">{{project.groupname}}</b>
                         </a>
-                        <span ng:show="!loading_projects" class="label label-danger pull-right" title="Admin(s)">
+                        <span ng:show="!loading_projects && !project.no_admin"
+                              class="label label-danger pull-right"
+                              style="width:43px;height:28px;"
+                              title="Admin(s)"
+                        >
                             {{project.sophomorixAdmins.length}} <span translate>adm.</span>
                             <br />
                             {{project.sophomorixAdminGroups.length}} <span translate>gr.</span>
                         </span>
-                        <span ng:show="!loading_projects" class="label label-default pull-right" title="Member(s)">
+                        <span ng:show="!loading_projects && project.no_admin"
+                              class="label label-danger pull-right"
+                              style="width:43px;height:28px;padding-top:10px;"
+                              title="No admin(s) in this project!"
+                        >
+                            <i class="fa fa-warning fa-xl"></i>
+                        </span>
+                        <span ng:show="!loading_projects && !project.no_member"
+                              class="label label-default pull-right"
+                              style="width:43px;height:28px;"
+                              title="Member(s)"
+                        >
                             {{project.sophomorixMembers.length}} <span translate>mem.</span>
                             <br />
                             {{project.sophomorixMemberGroups.length}} <span translate>gr.</span>
+                        </span>
+                        <span ng:show="!loading_projects && project.no_member"
+                              class="label label-default pull-right"
+                              style="width:43px;height:28px;padding-top:10px;"
+                              title="No member(s) in this project!"
+                        >
+                            <i class="fa fa-warning fa-xl"></i>
                         </span>
                     </div>
                 </div>

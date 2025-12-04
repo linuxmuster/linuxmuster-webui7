@@ -607,6 +607,11 @@ floating-toolbar {
   }
 }
 
+div.membership-item {
+    border-right:solid 2px #ff8f00;
+    min-width:300px;
+}
+
 .school-item:hover { // for schoolswitcher plugin
     background-color: lightgray;
 }

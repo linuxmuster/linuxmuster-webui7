@@ -517,6 +517,11 @@ floating-toolbar.accented .bar .btn-flat {
   font-weight: bold;
 }
 
+div.membership-item {
+  border-right: solid 2px #ff8f00;
+  min-width: 300px;
+}
+
 .school-item:hover {
   background-color: lightgray;
 }

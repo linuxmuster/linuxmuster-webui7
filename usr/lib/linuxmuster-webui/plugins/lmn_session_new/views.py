@@ -45,13 +45,19 @@ class Handler(HttpPlugin):
 
         for schoolclass in schoolclasses:
             details = self.context.ldapreader.schoolget(f'/schoolclasses/{schoolclass}', dict=False)
-            s = {
-                'name': details.cn,
-                'membersCount': len(details.sophomorixMembers),
-                'members': details.sophomorixMembers,
-                'type': 'schoolclass'
-            }
-            schoolclassesList.append(s)
+
+            if not details.cn:
+                # Maybe an extraclass
+                details = self.context.ldapreader.schoolget(f'/extraclasses/{schoolclass}', dict=False)
+
+            if details:
+                s = {
+                    'name': details.cn,
+                    'membersCount': len(details.sophomorixMembers),
+                    'members': details.sophomorixMembers,
+                    'type': 'schoolclass'
+                }
+                schoolclassesList.append(s)
         return schoolclassesList
 
     @get(r'/api/lmn/session/projects')

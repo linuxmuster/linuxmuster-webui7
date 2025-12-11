@@ -274,8 +274,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
                 if groupType == 'printergroup'
                     $scope.groupmemberlist = []
+                    sophomorix_members = resp.data['LISTS']['MEMBERLIST'][groupName]
                 else
                     $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
+                    sophomorix_members = resp.data['GROUP'][groupName]['sophomorixMembers']
                 $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups']
 
                 $scope.typeMap = {
@@ -286,7 +288,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']]
                 
                 $scope.members = []
-                for cn in resp.data['GROUP'][groupName]['sophomorixMembers']
+
+                for cn in sophomorix_members
                     member = resp.data['MEMBERS'][groupName][cn]
                     if member.sn != "null" and # group member
                         $scope.members.push({
@@ -322,7 +325,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     $scope.editGroup = true
                 else if (groupType == 'project') and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0)
                     $scope.editGroup = true
-                # List will not be updated later, avoir using it
+
+                $scope.editMembers = identity.profile.isAdmin or $scope.editGroup
+                # List will not be updated later, avoid using it
                 $scope.adminList = []
 
         $scope.filterLogin = (membersArray, login) ->

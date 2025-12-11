@@ -376,7 +376,7 @@
       groupType = group[0];
       groupName = group[1];
       return $http.get('/api/lmn/groupmembership/groups/' + groupName).then(function(resp) {
-        var admin, cn, i, j, len, len1, member, ref, ref1;
+        var admin, cn, i, j, len, len1, member, ref, sophomorix_members;
         $scope.groupName = groupName;
         if (!resp.data.hasOwnProperty('GROUP')) {
           notify.error(gettext("Can not read properties of this project."));
@@ -387,8 +387,10 @@
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
         if (groupType === 'printergroup') {
           $scope.groupmemberlist = [];
+          sophomorix_members = resp.data['LISTS']['MEMBERLIST'][groupName];
         } else {
           $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
+          sophomorix_members = resp.data['GROUP'][groupName]['sophomorixMembers'];
         }
         $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups'];
         $scope.typeMap = {
@@ -398,9 +400,8 @@
         };
         $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']];
         $scope.members = [];
-        ref = resp.data['GROUP'][groupName]['sophomorixMembers'];
-        for (i = 0, len = ref.length; i < len; i++) {
-          cn = ref[i];
+        for (i = 0, len = sophomorix_members.length; i < len; i++) {
+          cn = sophomorix_members[i];
           member = resp.data['MEMBERS'][groupName][cn];
           if (member.sn !== "null" && $scope.members.push({
             'sn': member.sn,
@@ -415,9 +416,9 @@
           }
         }
         $scope.admins = [];
-        ref1 = $scope.adminList;
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          admin = ref1[j];
+        ref = $scope.adminList;
+        for (j = 0, len1 = ref.length; j < len1; j++) {
+          admin = ref[j];
           member = resp.data['MEMBERS'][groupName][admin];
           $scope.admins.push({
             'sn': member.sn,
@@ -439,7 +440,8 @@
         } else if ((groupType === 'project') && ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0)) {
           $scope.editGroup = true;
         }
-        // List will not be updated later, avoir using it
+        $scope.editMembers = identity.profile.isAdmin || $scope.editGroup;
+        // List will not be updated later, avoid using it
         return $scope.adminList = [];
       });
     };

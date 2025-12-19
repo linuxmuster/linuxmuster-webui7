@@ -178,7 +178,7 @@
                         >
                             <i class="fa fa-warning fa-xl"></i>
                         </span>
-                        <span ng:show="!loading_projects && !project.no_member"
+                        <span ng:show="!loading_projects"
                               class="label label-default pull-right"
                               style="width:43px;height:28px;"
                               title="Member(s)"
@@ -186,13 +186,6 @@
                             {{project.sophomorixMembers.length}} <span translate>mem.</span>
                             <br />
                             {{project.sophomorixMemberGroups.length}} <span translate>gr.</span>
-                        </span>
-                        <span ng:show="!loading_projects && project.no_member"
-                              class="label label-default pull-right"
-                              style="width:43px;height:28px;padding-top:10px;"
-                              title="No member(s) in this project!"
-                        >
-                            <i class="fa fa-warning fa-xl"></i>
                         </span>
                     </div>
                 </div>

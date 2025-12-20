@@ -303,6 +303,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 for cn in sophomorix_members
                     member = resp.data['MEMBERS'][groupName][cn]
+                    if member == undefined
+                        # Happens if the user is listed in sophomorixMembers but actually not a member of the group!
+                        continue
                     if member.sn != "null" # group member
                         $scope.members.push({
                             'sn':member.sn,

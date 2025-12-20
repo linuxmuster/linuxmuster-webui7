@@ -400,6 +400,10 @@
         for (i = 0, len = sophomorix_members.length; i < len; i++) {
           cn = sophomorix_members[i];
           member = resp.data['MEMBERS'][groupName][cn];
+          if (member === void 0) {
+            // Happens if the user is listed in sophomorixMembers but actually not a member of the group!
+            continue;
+          }
           if (member.sn !== "null") { // group member
             $scope.members.push({
               'sn': member.sn,

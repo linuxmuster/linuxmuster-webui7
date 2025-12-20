@@ -303,7 +303,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 for cn in sophomorix_members
                     member = resp.data['MEMBERS'][groupName][cn]
-                    if member.sn != "null" and # group member
+                    if member.sn != "null" # group member
                         $scope.members.push({
                             'sn':member.sn,
                             'givenName':member.givenName,
@@ -329,14 +329,19 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
                 $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] == 'TRUE'
 
-                # Admin or admin of the project can edit members of a project
-                # Only admins can change hide and join option for a class
+                # Admin or admin of the project can edit members and attributes of a project
+                # Only admins can change hide and join option for a class or a printer
                 if identity.profile.isAdmin
                     $scope.editGroup = true
-                else if (groupType == 'project') and ($scope.adminList.indexOf($scope.identity.user) >= 0)
-                    $scope.editGroup = true
-                else if (groupType == 'project') and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0)
-                    $scope.editGroup = true
+                else if (groupType == 'project')
+                    if $scope.adminList.indexOf($scope.identity.user) >= 0 \
+                    or $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0
+                      $scope.editGroup = true
+                    else
+                      for project in $scope.identity.profile.projects
+                        if $scope.groupadminlist.indexOf(project) >= 0
+                          $scope.editGroup = true
+                          break
 
                 $scope.editMembers = identity.profile.isAdmin or $scope.editGroup
                 # List will not be updated later, avoid using it

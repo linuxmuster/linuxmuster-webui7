@@ -373,7 +373,7 @@
       groupType = group[0];
       groupName = group[1];
       return $http.get('/api/lmn/groupmembership/groups/' + groupName).then(function(resp) {
-        var admin, cn, i, j, len, len1, member, ref, sophomorix_members;
+        var admin, cn, i, j, k, len, len1, len2, member, project, ref, ref1, sophomorix_members;
         $scope.groupName = groupName;
         if (!resp.data.hasOwnProperty('GROUP')) {
           notify.error(gettext("Can not read properties of this project."));
@@ -400,14 +400,14 @@
         for (i = 0, len = sophomorix_members.length; i < len; i++) {
           cn = sophomorix_members[i];
           member = resp.data['MEMBERS'][groupName][cn];
-          if (member.sn !== "null" && $scope.members.push({
-            'sn': member.sn,
-            'givenName': member.givenName,
-            'login': member.sAMAccountName,
-            'sophomorixAdminClass': member.sophomorixAdminClass,
-            'sophomorixRole': member.sophomorixRole
-          })) {
-
+          if (member.sn !== "null") { // group member
+            $scope.members.push({
+              'sn': member.sn,
+              'givenName': member.givenName,
+              'login': member.sAMAccountName,
+              'sophomorixAdminClass': member.sophomorixAdminClass,
+              'sophomorixRole': member.sophomorixRole
+            });
           } else if (groupType === 'printergroup') {
             $scope.groupmemberlist.push(member.sAMAccountName);
           }
@@ -428,14 +428,23 @@
         $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] === 'TRUE';
         $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] === 'TRUE';
         $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] === 'TRUE';
-        // Admin or admin of the project can edit members of a project
-        // Only admins can change hide and join option for a class
+        // Admin or admin of the project can edit members and attributes of a project
+        // Only admins can change hide and join option for a class or a printer
         if (identity.profile.isAdmin) {
           $scope.editGroup = true;
-        } else if ((groupType === 'project') && ($scope.adminList.indexOf($scope.identity.user) >= 0)) {
-          $scope.editGroup = true;
-        } else if ((groupType === 'project') && ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0)) {
-          $scope.editGroup = true;
+        } else if (groupType === 'project') {
+          if ($scope.adminList.indexOf($scope.identity.user) >= 0 || $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0) {
+            $scope.editGroup = true;
+          } else {
+            ref1 = $scope.identity.profile.projects;
+            for (k = 0, len2 = ref1.length; k < len2; k++) {
+              project = ref1[k];
+              if ($scope.groupadminlist.indexOf(project) >= 0) {
+                $scope.editGroup = true;
+                break;
+              }
+            }
+          }
         }
         $scope.editMembers = identity.profile.isAdmin || $scope.editGroup;
         // List will not be updated later, avoid using it

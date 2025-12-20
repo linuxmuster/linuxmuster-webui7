@@ -4,6 +4,7 @@ environment.
 """
 
 # coding=utf-8
+import os
 from jadi import component
 from urllib.parse import quote, unquote
 
@@ -239,7 +240,30 @@ class Handler(HttpPlugin):
         groupname = unquote(group.encode('latin-1'))
 
         if groupType == "project":
-            writer = LMNProject(groupname, school=school)
+            if os.getuid() == 0:
+                writer = LMNProject(groupname, school=school)
+            else:
+                # lmntools writers not supported for users actually
+                if value:
+                    prefix = "--"
+                else:
+                    prefix = "--no"
+
+                if "Join" in attribute:
+                    option = prefix + "join"
+                elif "Hidden" in attribute:
+                    option = prefix + "hide"
+                elif "MailList" in attribute:
+                    option = prefix + "maillist"
+
+                sophomorixCommand = ['sophomorix-project', option, '--project', groupname, '-jj']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+
+                if result['TYPE'] == "ERROR":
+                    raise EndpointError(result['MESSAGE_EN'])
+                else:
+                    return f"Attribute {attribute} updated!"
+
         elif groupType == "class":
             writer = LMNSchoolclass(groupname, school=school)
         else:

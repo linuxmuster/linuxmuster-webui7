@@ -727,8 +727,8 @@
       }
     };
     $scope.demoteMember = function(user) {
-      $scope.removeAdmin(user);
       $scope.addMember(user);
+      $scope.removeAdmin(user);
       if ((user.login === $scope.identity.user) && ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) < 0)) {
         return $scope.editGroup = false;
       }

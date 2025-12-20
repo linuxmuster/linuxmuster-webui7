@@ -507,8 +507,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.editGroup = false
 
         $scope.demoteMember = (user) ->
-            $scope.removeAdmin(user)
             $scope.addMember(user)
+            $scope.removeAdmin(user)
             if (user.login == $scope.identity.user) and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) < 0)
                 $scope.editGroup = false
 

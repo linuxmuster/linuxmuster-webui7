@@ -8,11 +8,11 @@ from jadi import component
 from urllib.parse import quote, unquote
 
 from aj.api.http import get, post, delete, HttpPlugin
-from aj.api.endpoint import endpoint
+from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.tools import sort_schoolclasses
-from linuxmusterTools.ldapconnector import LMNPrinter
+from linuxmusterTools.ldapconnector import LMNPrinter, LMNProject, LMNSchoolclass
 
 
 @component(HttpPlugin)
@@ -225,38 +225,32 @@ class Handler(HttpPlugin):
         :rtype: tuple
         """
 
-        option  = http_context.json_body()['option']
+        attribute  = http_context.json_body()['attribute']
+        value  = http_context.json_body()['value']
         groupType = http_context.json_body()['type']
 
+        school = self.context.schoolmgr.school
+
+        if attribute not in ["sophomorixJoinable", "sophomorixHidden", "sophomorixMailList"]:
+            raise EndpointError(f"Modification of attribute {attribute} not supported")
+        if value not in [True, False]:
+            raise EndpointError(f"Value {value} is not a boolean")
+
+        groupname = unquote(group.encode('latin-1'))
+
         if groupType == "project":
-            projectName = unquote(group.encode('latin-1'))
-            sophomorixCommand = ['sophomorix-project',  option, '--project', projectName, '-jj']
+            writer = LMNProject(groupname, school=school)
         elif groupType == "class":
-            sophomorixCommand = ['sophomorix-class',  option, '--class', group, '-jj']
+            writer = LMNSchoolclass(groupname, school=school)
         else:
             # group, i.e. printer
-            printerName = unquote(group.encode('latin-1'))
-            printerWriter = LMNPrinter(printerName) # School ?
+            writer = LMNPrinter(groupname, school=school)
 
-            if '--no' in option:
-                value = False
-            else:
-                value = True
-
-            if 'join' in option:
-                key = 'sophomorixJoinable'
-            if 'hide' in option:
-                key = "sophomorixHidden"
-
-            if key:
-                printerWriter.setattr(data={key:value})
-                return "LOG", "lmntools terminated regularly"
-
-        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-
-        if result['TYPE'] == "ERROR":
-            return result['TYPE'], result['MESSAGE_EN']
-        return result['TYPE'], result['LOG']
+        try:
+            writer.setattr(data={attribute:value})
+            return f"Attribute {attribute} updated!"
+        except Exception as err:
+            raise EndpointError(str(err))
 
     @post(r'/api/lmn/groupmembership/membership')
     @authorize('lmn:groupmembership')

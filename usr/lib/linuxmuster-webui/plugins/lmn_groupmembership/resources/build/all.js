@@ -250,53 +250,50 @@
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
     $scope.changeMaillist = function() {
-      var option;
+      var attribute;
       $scope.changeState = true;
-      option = $scope.maillist ? '--maillist' : '--nomaillist';
+      attribute = "sophomorixMailList";
       return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
-        option: option,
+        attribute: attribute,
+        value: $scope.maillist,
         type: $scope.type
       }).then(function(resp) {
-        if (resp['data'][0] === 'ERROR') {
-          notify.error(resp['data'][1]);
-        }
-        if (resp['data'][0] === 'LOG') {
-          notify.success(gettext(resp['data'][1]));
-        }
+        notify.success(gettext(resp.data));
+        return $scope.changeState = false;
+      }).catch(function(err) {
+        notify.error(gettext(err.data.message));
         return $scope.changeState = false;
       });
     };
     $scope.changeJoin = function() {
-      var option;
+      var attribute;
       $scope.changeState = true;
-      option = $scope.joinable ? '--join' : '--nojoin';
+      attribute = "sophomorixJoinable";
       return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
-        option: option,
+        attribute: attribute,
+        value: $scope.joinable,
         type: $scope.type
       }).then(function(resp) {
-        if (resp['data'][0] === 'ERROR') {
-          notify.error(resp['data'][1]);
-        }
-        if (resp['data'][0] === 'LOG') {
-          notify.success(gettext(resp['data'][1]));
-        }
+        notify.success(gettext(resp.data));
+        return $scope.changeState = false;
+      }).catch(function(err) {
+        notify.error(gettext(err.data.message));
         return $scope.changeState = false;
       });
     };
     $scope.changeHide = function() {
-      var option;
+      var attribute;
       $scope.changeState = true;
-      option = $scope.hidden ? '--hide' : '--nohide';
+      attribute = "sophomorixHidden";
       return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
-        option: option,
+        attribute: attribute,
+        value: $scope.hidden,
         type: $scope.type
       }).then(function(resp) {
-        if (resp['data'][0] === 'ERROR') {
-          notify.error(resp['data'][1]);
-        }
-        if (resp['data'][0] === 'LOG') {
-          notify.success(gettext(resp['data'][1]));
-        }
+        notify.success(gettext(resp.data));
+        return $scope.changeState = false;
+      }).catch(function(err) {
+        notify.error(gettext(err.data.message));
         return $scope.changeState = false;
       });
     };

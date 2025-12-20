@@ -186,32 +186,44 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.changeMaillist = () ->
             $scope.changeState = true
-            option = if $scope.maillist then '--maillist' else '--nomaillist'
-            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
-                if resp['data'][0] == 'ERROR'
-                    notify.error (resp['data'][1])
-                if resp['data'][0] == 'LOG'
-                    notify.success gettext(resp['data'][1])
+            attribute = "sophomorixMailList"
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
+                attribute: attribute,
+                value:$scope.maillist,
+                type: $scope.type
+            }).then (resp) ->
+                notify.success gettext(resp.data)
+                $scope.changeState = false
+            .catch (err) ->
+                notify.error gettext(err.data.message)
                 $scope.changeState = false
 
         $scope.changeJoin = () ->
             $scope.changeState = true
-            option = if $scope.joinable then '--join' else '--nojoin'
-            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
-                if resp['data'][0] == 'ERROR'
-                    notify.error (resp['data'][1])
-                if resp['data'][0] == 'LOG'
-                    notify.success gettext(resp['data'][1])
+            attribute = "sophomorixJoinable"
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
+                attribute: attribute,
+                value:$scope.joinable,
+                type: $scope.type
+            }).then (resp) ->
+                notify.success gettext(resp.data)
+                $scope.changeState = false
+            .catch (err)->
+                notify.error gettext(err.data.message)
                 $scope.changeState = false
 
         $scope.changeHide = () ->
             $scope.changeState = true
-            option = if $scope.hidden then '--hide' else '--nohide'
-            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
-                if resp['data'][0] == 'ERROR'
-                    notify.error (resp['data'][1])
-                if resp['data'][0] == 'LOG'
-                    notify.success gettext(resp['data'][1])
+            attribute = "sophomorixHidden"
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
+                attribute: attribute,
+                value:$scope.hidden,
+                type: $scope.type
+            }).then (resp) ->
+                notify.success gettext(resp.data)
+                $scope.changeState = false
+            .catch (err)->
+                notify.error gettext(err.data.message)
                 $scope.changeState = false
 
         $scope.killProject = (project) ->

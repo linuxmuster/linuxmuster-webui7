@@ -12,6 +12,7 @@ from aj.api.endpoint import endpoint
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.tools import sort_schoolclasses
+from linuxmusterTools.ldapconnector import LMNPrinter
 
 
 @component(HttpPlugin)
@@ -230,9 +231,26 @@ class Handler(HttpPlugin):
         if groupType == "project":
             projectName = unquote(group.encode('latin-1'))
             sophomorixCommand = ['sophomorix-project',  option, '--project', projectName, '-jj']
-        else:
-            # Class
+        elif groupType == "class":
             sophomorixCommand = ['sophomorix-class',  option, '--class', group, '-jj']
+        else:
+            # group, i.e. printer
+            printerName = unquote(group.encode('latin-1'))
+            printerWriter = LMNPrinter(printerName) # School ?
+
+            if '--no' in option:
+                value = False
+            else:
+                value = True
+
+            if 'join' in option:
+                key = 'sophomorixJoinable'
+            if 'hide' in option:
+                key = "sophomorixHidden"
+
+            if key:
+                printerWriter.setattr(data={key:value})
+                return "LOG", "lmntools terminated regularly"
 
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
 

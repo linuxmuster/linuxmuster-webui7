@@ -102,7 +102,7 @@
                                     <i>{{type.slice(10)}}</i> : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}
                                 </li>
                                 <li ng-if="type.length <= 10">
-                                    <i> {{type}}</i> : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}
+                                    <i>{{type}}</i> : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}
                                 </li>
                             </ul>
                         </td>
@@ -117,9 +117,9 @@
         <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be killed</span>: {{data['SUMMARY'][3]['KILL']['RESULT']}}</div>
         <div class="panel-body">
             <table class="table table-bordered">
-                <tr ng-repeat="item in data['CHECK_RESULT']['KILL']">
+                <tr ng-repeat="(id,item) in data['CHECK_RESULT']['KILL']">
                     <td>{{id}}</td>
-                    <td>{{item.sophomorixStatus.OLD}} -->  {{item.sophomorixStatus.NEW}}</td>
+                    <td>{{item.IDENTIFIER_ASCII}}</td>
                 </tr>
             </table>
         </div>

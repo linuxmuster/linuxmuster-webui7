@@ -1,11 +1,17 @@
 <div class="modal-header">
     <h3>
-        <span translate>Group Details</span>
+        <span translate>Group Details </span>
+        <span ng:show="type == 'class'" translate>schoolclass</span>
+        <span ng:show="type == 'project'" translate>project</span>
+        <span ng:show="type == 'group'" translate>printer</span>
+        <span>{{groupDetails['cn']}}</span>
         <span ng:show="groupDetails == null"> ...</span>
-        <span ng:show="groupDetails != null"> - {{groupDetails['description']}}</span>
+        <span ng:show="groupDetails != null"> : {{groupDetails['description']}}</span>
     </h3>
 </div>
+
 <progress-spinner ng:show="groupDetails == null || changeState == true"></progress-spinner>
+
 <div style="padding: 0 20px;" ng:show="groupDetails != null">
     <div class="alert alert-warning" ng:show="identity.profile.isAdmin && type == 'class' && members.length == 0">
         <a class="btn btn-danger pull-right" ng:click="killSchoolclass(groupDetails['description'])">

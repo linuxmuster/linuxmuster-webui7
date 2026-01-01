@@ -103,8 +103,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
           $scope.printers_max_height = 25 * resp.data.length / 3 + "px"
       $http.get('/api/lmn/groupmembership/schoolclasses').then (resp) ->
           $scope.classes = resp.data
-          $scope.classes_max_height = 25 * resp.data.length / 3 + "px"
           $scope.loading_schoolclasses = false
+          $scope.classes_max_height = 45 * resp.data.length / 3 + "px"
 
   $scope.createProject = () ->
     messagebox.prompt(gettext('Project Name'), '').then (msg) ->

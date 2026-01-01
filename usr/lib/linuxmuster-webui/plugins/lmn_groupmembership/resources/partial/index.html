@@ -77,7 +77,7 @@
             <div class="flex-container lmn-container-list" style="flex-direction: column;" ng:style="{'max-height': classes_max_height}">
                 <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter"
                      class="membership-item"
-                     style="padding-right:10px"
+                     style="padding:3px 10px 3px 0;"
                 >
                     <div ng:class="{'color-orange': classe.admin}"
                          ng:show="!groupIsHidden(classe)"

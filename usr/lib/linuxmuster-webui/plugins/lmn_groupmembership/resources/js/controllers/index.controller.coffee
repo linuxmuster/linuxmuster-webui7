@@ -286,7 +286,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
                 if groupType == 'printergroup'
                     $scope.groupmemberlist = []
-                    sophomorix_members = resp.data['LISTS']['MEMBERLIST'][groupName]
+                    sophomorix_members = resp.data['LISTS']['MEMBERLIST'][groupName] || []
                 else
                     $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
                     sophomorix_members = resp.data['GROUP'][groupName]['sophomorixMembers']

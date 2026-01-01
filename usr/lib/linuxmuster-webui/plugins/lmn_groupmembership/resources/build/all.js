@@ -133,8 +133,8 @@
       });
       return $http.get('/api/lmn/groupmembership/schoolclasses').then(function(resp) {
         $scope.classes = resp.data;
-        $scope.classes_max_height = 45 * resp.data.length / 3 + "px";
-        return $scope.loading_schoolclasses = false;
+        $scope.loading_schoolclasses = false;
+        return $scope.classes_max_height = 45 * resp.data.length / 3 + "px";
       });
     };
     $scope.createProject = function() {
@@ -384,7 +384,7 @@
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
         if (groupType === 'printergroup') {
           $scope.groupmemberlist = [];
-          sophomorix_members = resp.data['LISTS']['MEMBERLIST'][groupName];
+          sophomorix_members = resp.data['LISTS']['MEMBERLIST'][groupName] || [];
         } else {
           $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
           sophomorix_members = resp.data['GROUP'][groupName]['sophomorixMembers'];

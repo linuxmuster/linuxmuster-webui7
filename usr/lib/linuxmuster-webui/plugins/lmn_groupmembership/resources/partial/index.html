@@ -93,8 +93,15 @@
                             <span translate>Class</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
-                        <span class="label label-default pull-right" title="Members" ng:if="classe.members.length > 0">{{classe.members.length}}</span>
-                        <span class="label label-danger pull-right" title="Members" ng:if="classe.members.length == 0">{{classe.members.length}}</span>
+                        <span class="label pull-right"
+                              ng:class="classe.members.length == 0 ? 'label-danger' : 'label-default'"
+                              style="width:43px;height:28px;"
+                              title="Member(s)"
+                        >
+                            {{classe.sophomorixMembers.length}} <span translate>stud.</span>
+                            <br />
+                            {{classe.sophomorixAdmins.length}} <span translate>tea.</span>
+                        </span>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 11:32+0200\n"
-"PO-Revision-Date: 2025-09-13 09:33\n"
+"PO-Revision-Date: 2026-01-02 12:17\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -103,7 +103,7 @@ msgstr "Configuration des vacances"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:296
 msgid "Created"
-msgstr ""
+msgstr "Créé"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:537
 msgid "Custom fields"
@@ -115,7 +115,7 @@ msgstr "Filtres personnalisés"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:295
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:248
 msgid "Detected encoding"
@@ -194,7 +194,19 @@ msgid "If you want to use your own latex template for a specific school, please\
 "            It <strong>must</strong> follow the naming convention\n"
 "            <quote>&lt;TEMPLATENAME&gt;-&lt;LANG>-&lt;NUM&gt;-template.tex</quote> as specified in\n"
 "            <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
-msgstr ""
+msgstr "Si vous voulez utiliser votre propre modèle en latex pour une école spécifique, veuillez\n"
+"            le stocker dans le répertoire /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/.<br>\n"
+"            Il <strong>doit</strong> suivre la convention de nommage\n"
+"            <quote>&lt;SCHOOLNAME&gt;.&lt;TEMPLATENAME&gt;-&lt;LANG>-&lt;NUM&gt;-modèle. ex</quote> comme spécifié dans\n"
+"            <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">dans le wiki</a>de sophomorix.\n"
+"            <br>\n"
+"            <br>\n"
+"            Si vous voulez définir un modèle pour <strong>toutes les écoles</strong>, conservez-le dans\n"
+"            /usr/share/sophomorix/lang/latex/templates/. <br>\n"
+"            \n"
+" Il <strong>doit</strong> suivre la convention de nommage\n"
+"            <quote>&lt;TEMPLATENAME&gt;-&lt;LANG>-&lt;NUM&gt;-template. ex</quote> comme indiqué dans\n"
+"            <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">dans le wiki</a> de sophomorix."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:111
 msgid "Ip router"
@@ -531,7 +543,7 @@ msgstr "Mise à jour de la clé API"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:294
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:562
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:608
@@ -590,7 +602,7 @@ msgstr "encodage extrastudents.csv"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:239
 msgid "linuxmuster-api does not seem to be installed on your system."
-msgstr ""
+msgstr "linuxmuster-api ne semble pas être installé sur votre système."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:271
 msgid "students.csv"

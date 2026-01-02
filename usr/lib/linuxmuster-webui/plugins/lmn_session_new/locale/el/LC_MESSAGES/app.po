@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"POT-Creation-Date: 2026-01-02 13:01+0100\n"
+"PO-Revision-Date: 2026-01-02 12:17\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -272,39 +272,39 @@ msgstr ""
 msgid "Transfer Files in Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:131
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:161
 msgid "Session Name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:141
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:150
 msgid "Session Created"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:148
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:157
 msgid "No Session selected"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:148
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:169
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:178
 msgid "You have to select a session first."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:161
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:170
 msgid "Session renamed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:169
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:178
 msgid "No session selected"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:182
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:609
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:621
 msgid "Delete"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:182
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:320
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:344
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:369

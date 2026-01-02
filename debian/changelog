@@ -1,3 +1,16 @@
+linuxmuster-webui7 (7.3.31) lmn73; urgency=medium
+
+  * [groupmembership] Review logic of members and admins 
+  * [groupmembership] Review logic of joinable and hidden groups 
+  * [groupmembership] Edit printers joinable and hidden attributes
+  * [groupmembership] Warning for projects without admin
+  * [groupmembership] Separate view for teachers in a schoolclass 
+  * [groupmembership] Display number of teachers in a schoolclass in the index view 
+  * [listmanagement] Warning for users coming back from attic
+  * [listmanagement] Fix display of killable users
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 02 Jan 2026 12:38:23 +0100
+
 linuxmuster-webui7 (7.3.30) lmn73; urgency=medium
 
   * [auth] Fix dashboard. 

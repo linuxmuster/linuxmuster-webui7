@@ -172,7 +172,7 @@ class Handler(HttpPlugin):
         studentsList = []
 
         if user is None:
-            students = self.lr.get('/roles/student', school=schoolname)
+            students = self.lr.get('/rawroles/student', school=schoolname)
 
             if not students:
                 return ["none"]

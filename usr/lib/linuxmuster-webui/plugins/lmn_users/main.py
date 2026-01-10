@@ -119,6 +119,11 @@ class Permissions (PermissionProvider):
                 'default': False,
             },
             {
+                'id': 'lm:users:users:delete',
+                'name': _('Delete users (non admins)'), # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
                 'id': 'lm:users:schooladmins:read',
                 'name': _('Read schooladmins'), # skipcq: PYL-E0602
                 'default': False,

@@ -106,7 +106,7 @@ def _sophomorixoutput_as_dict(output):
     output = output.replace(':null]', ":\"null\"]")
 
 
-    # Some comands get many dicts, we just want the first
+    # Some commands get many dicts, we just want the first
     output = output.replace('\n', '').split('# JSON-end')[0]
     output = output.split('# JSON-begin')[1]
     output = re.sub('# JSON-begin', '', output)

@@ -49,6 +49,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
+
         schoolname = self.context.schoolmgr.school
         teachersList = []
 
@@ -88,6 +89,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
+
         schoolname = self.context.schoolmgr.school
         parentsList = []
 
@@ -126,6 +128,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
+
         schoolname = self.context.schoolmgr.school
         staffList = []
 
@@ -163,6 +166,7 @@ class Handler(HttpPlugin):
         :return: List of students with details, one student per dict.
         :rtype: list of dict
         """
+
 
         schoolname = self.context.schoolmgr.school
         studentsList = []
@@ -221,6 +225,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
+
         schoolname = self.context.schoolmgr.school
         schooladminsList = []
 
@@ -262,6 +267,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
+
         globaladminsList = []
 
         if user is None:
@@ -300,6 +306,7 @@ class Handler(HttpPlugin):
         :rtype: string
         """
 
+
         school = self.context.schoolmgr.school
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -322,6 +329,7 @@ class Handler(HttpPlugin):
         :rtype: string
         """
 
+
         school = self.context.schoolmgr.school
         comment = http_context.json_body()['comment']
         sophomorixCommand = ['sophomorix-user', '-u', user, '--school', school, '--comment', comment, '-jj']
@@ -340,6 +348,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string
         """
+
 
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -360,6 +369,7 @@ class Handler(HttpPlugin):
         :rtype: string
         """
 
+
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
         sophomorixCommand = ['sophomorix-admin', '--create-global-admin', user, '--random-passwd-save', '-jj']
@@ -378,6 +388,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string
         """
+
 
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -399,6 +410,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string or list
         """
+
 
         secret_path = '/etc/linuxmuster/.secret/'
 
@@ -429,6 +441,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string or list
         """
+
 
         binduser = http_context.json_body()['binduser']
         school_option = ''
@@ -485,3 +498,27 @@ class Handler(HttpPlugin):
             return ''
         except subprocess.CalledProcessError as e:
             return e.output.decode()
+
+    @post(r'/api/lmn/sophomorixUsers/killuser')
+    @authorize('lm:users:users:delete')
+    @endpoint(api=True)
+    def handle_api_users_kill(self, http_context):
+        """
+        Directly kill a given user with sophomorix-kill, but does not remove the corresponding line in the CSV file.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: State of the command
+        :rtype: string
+        """
+
+
+        user = http_context.json_body()['user']
+
+        sophomorixCommand = ['sophomorix-kill', '--kill', user, '-jj']
+        result = lmn_getSophomorixValue(sophomorixCommand, '')
+        # Dealing with sophomorix progress output
+        if 'COMMENT_EN' in result:
+            return True
+        else:
+            return False

@@ -93,7 +93,7 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
                 if resp.data == true
                     notify.success(gettext("User #{user_cn} successfully deleted!"))
                     messagebox.show(
-                        title: gettext('Clean up teacher.csv'),
+                        title: gettext('Clean up teachers.csv'),
                         text: gettext('The user account was deleted but you will have to manually remove the corresponding line in the file teachers.csv.'),
                         positive: 'OK, I understand',
                     )

@@ -95,24 +95,6 @@ class Handler(HttpPlugin):
         path = http_context.json_body().get('path', None)
         return self._smb_list_path(path)
 
-    @post(r'/api/lmn/smbclient/listhome')
-    @endpoint(api=True)
-    def handle_api_smb_listhome(self, http_context):
-        """
-        Return a list of objects (files, directories, ...) from a specific
-        user's home.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: All items with informations
-        :rtype: dict
-        """
-
-        user = http_context.json_body().get('user', self.context.identity)
-        homepath = self.context.ldapreader.get(f'/users/{user}', dict=False).homeDirectory
-        return self._smb_list_path(homepath)
-
-
     def _smb_list_path(self, path):
         """
         Return a list of objects (files, directories, ...) from a specific path.
@@ -123,15 +105,6 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        def SMB2UnixPath(path):
-            path = path.replace('\\', '/')
-
-            if 'linuxmuster-global' in path:
-                root = '/srv/samba/schools/global'
-            else:
-                root = f'/srv/samba/schools/{self.context.schoolmgr.school}'
-
-            return os.path.join(root, *list(filter(None, path.split('/')))[2:])
 
         try:
             items = []
@@ -143,7 +116,6 @@ class Handler(HttpPlugin):
                     'name': item.name,
                     'path': item_path,
                     'download_url': base64.b64encode(item_path.encode('utf-8'), altchars=b'-_').decode(),
-                    'unixPath': SMB2UnixPath(item_path),
                     'isDir': item.is_dir(),
                     'isFile': item.is_file(),
                     'isLink': item.is_symlink(),
@@ -170,7 +142,7 @@ class Handler(HttpPlugin):
         except InvalidParameter as e:
             raise EndpointError("This server does not support this feature actually, but it will come soon!")
         except SMBOSError as e:
-            raise EndpointError(f"{path} does not seem to exist.")
+            raise EndpointError(f"{path} does not seem to exist: {str(e)}")
         return {
             'parent': '', # TODO
             'items': items
@@ -526,7 +498,6 @@ class Handler(HttpPlugin):
             targets.append({
                 'name': name,
                 'path': target,
-                'unixPath': '',
                 'isDir': False,
                 'isFile': True,
                 'isLink': False,

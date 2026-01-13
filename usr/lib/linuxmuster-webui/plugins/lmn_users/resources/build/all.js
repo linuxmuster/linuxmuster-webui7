@@ -132,30 +132,6 @@
         return $route.reload();
       });
     };
-    $scope.killteacher = function(user_cn) {
-      return messagebox.show({
-        title: gettext('Kill user ' + user_cn),
-        text: gettext(`Do you really want to definitively remove the user ${user_cn}? This action is uncoverable.`),
-        positive: 'Yes, definitively remove',
-        negative: 'Cancel'
-      }).then(function() {
-        return $http.post('/api/lmn/sophomorixUsers/killuser', {
-          user: user_cn
-        }).then(function(resp) {
-          console.log(resp.data);
-          if (resp.data === true) {
-            notify.success(gettext(`User ${user_cn} successfully deleted!`));
-            return messagebox.show({
-              title: gettext('Clean up teachers.csv'),
-              text: gettext('The user account was deleted but you will have to manually remove the corresponding line in the file teachers.csv.'),
-              positive: 'OK, I understand'
-            });
-          } else {
-            return notify.error(`There was an error during the process. Please try manually to execute the command 'sophomorix-kill --kill ${user_cn}' to get more informations.`);
-          }
-        });
-      });
-    };
     $scope.haveSelection = function() {
       var i, len, ref, x;
       if ($scope.teachers) {
@@ -362,30 +338,6 @@
         }
       }
       return false;
-    };
-    $scope.killstudent = function(user_cn) {
-      return messagebox.show({
-        title: gettext('Kill user ' + user_cn),
-        text: gettext(`Do you really want to definitively remove the user ${user_cn}? This action is uncoverable.`),
-        positive: 'Yes, definitively remove',
-        negative: 'Cancel'
-      }).then(function() {
-        return $http.post('/api/lmn/sophomorixUsers/killuser', {
-          user: user_cn
-        }).then(function(resp) {
-          console.log(resp.data);
-          if (resp.data === true) {
-            notify.success(gettext(`User ${user_cn} successfully deleted!`));
-            return messagebox.show({
-              title: gettext('Clean up students.csv'),
-              text: gettext('The user account was deleted but you will have to manually remove the corresponding line in the file students.csv.'),
-              positive: 'OK, I understand'
-            });
-          } else {
-            return notify.error(`There was an error during the process. Please try manually to execute the command 'sophomorix-kill --kill ${user_cn}' to get more informations.`);
-          }
-        });
-      });
     };
     $scope.filter = function(row) {
       var i, len, ref, result, value;
@@ -735,30 +687,6 @@
             return 'staff';
           }
         }
-      });
-    };
-    $scope.killstaff = function(user_cn) {
-      return messagebox.show({
-        title: gettext('Kill user ' + user_cn),
-        text: gettext(`Do you really want to definitively remove the user ${user_cn}? This action is uncoverable.`),
-        positive: 'Yes, definitively remove',
-        negative: 'Cancel'
-      }).then(function() {
-        return $http.post('/api/lmn/sophomorixUsers/killuser', {
-          user: user_cn
-        }).then(function(resp) {
-          console.log(resp.data);
-          if (resp.data === true) {
-            notify.success(gettext(`User ${user_cn} successfully deleted!`));
-            return messagebox.show({
-              title: gettext('Clean up staff.csv'),
-              text: gettext('The user account was deleted but you will have to manually remove the corresponding line in the file staff.csv.'),
-              positive: 'OK, I understand'
-            });
-          } else {
-            return notify.error(`There was an error during the process. Please try manually to execute the command 'sophomorix-kill --kill ${user_cn}' to get more informations.`);
-          }
-        });
       });
     };
     $scope.haveSelection = function() {
@@ -1629,30 +1557,6 @@
         return $route.reload();
       });
     };
-    $scope.killteacher = function(user_cn) {
-      return messagebox.show({
-        title: gettext('Kill user ' + user_cn),
-        text: gettext(`Do you really want to definitively remove the user ${user_cn}? This action is uncoverable.`),
-        positive: 'Yes, definitively remove',
-        negative: 'Cancel'
-      }).then(function() {
-        return $http.post('/api/lmn/sophomorixUsers/killuser', {
-          user: user_cn
-        }).then(function(resp) {
-          console.log(resp.data);
-          if (resp.data === true) {
-            notify.success(gettext(`User ${user_cn} successfully deleted!`));
-            return messagebox.show({
-              title: gettext('Clean up teachers.csv'),
-              text: gettext('The user account was deleted but you will have to manually remove the corresponding line in the file teachers.csv.'),
-              positive: 'OK, I understand'
-            });
-          } else {
-            return notify.error(`There was an error during the process. Please try manually to execute the command 'sophomorix-kill --kill ${user_cn}' to get more informations.`);
-          }
-        });
-      });
-    };
     $scope.haveSelection = function() {
       var i, len, ref, x;
       if ($scope.teachers) {
@@ -2117,7 +2021,7 @@
     };
   });
 
-  angular.module('lmn.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) {
+  angular.module('lmn.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $window, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) {
     var custom_fields_role;
     //notify.error gettext("You have to enter a username")
     $scope.id = id;
@@ -2336,6 +2240,31 @@
           };
           return $scope.userDetails['parents'].push(parent_var);
         }
+      });
+    };
+    $scope.killUser = function(user) {
+      return messagebox.show({
+        title: gettext('Kill user ' + user.cn),
+        text: gettext(`Do you really want to definitively remove the user ${user.cn}? This action is uncoverable.`),
+        positive: 'Yes, definitively remove',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lmn/sophomorixUsers/killuser', {
+          user: user.cn
+        }).then(function(resp) {
+          if (resp.data === true) {
+            notify.success(gettext(`User ${user.cn} successfully deleted!`));
+            return messagebox.show({
+              title: gettext(`Clean up ${user.sophomorixAdminFile}`),
+              text: gettext(`The user account was deleted but you will have to manually remove the corresponding line in the file ${user.sophomorixAdminFile}.`),
+              positive: 'OK, I understand'
+            }).then(function() {
+              return $window.location.reload();
+            });
+          } else {
+            return notify.error(`There was an error during the process. Please try manually to execute the command 'sophomorix-kill --kill ${user.cn}' to get more informations.`);
+          }
+        });
       });
     };
     $scope.$watch('parentToAdd', function() {

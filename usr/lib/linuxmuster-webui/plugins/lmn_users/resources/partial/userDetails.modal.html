@@ -157,6 +157,11 @@
         </div>
     </div>
     <div class="modal-footer">
+        <a class="btn btn-danger pull-left" ng:show="identity.profile.isAdmin"
+           ng-click="killUser(userDetails)" title="Definitively remove the user's account" translate >
+            <i class="fa fa-trash"></i>
+            Remove account
+        </a>
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
     </div>
 </div>

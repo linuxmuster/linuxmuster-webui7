@@ -45,7 +45,7 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
     $scope.close = () ->
         $uibModalInstance.close()
 
-angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) ->
+angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $window, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) ->
 
     #notify.error gettext("You have to enter a username")
     $scope.id = id
@@ -187,6 +187,24 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                 notify.success(gettext("Parent #{parent.label} assigned to #{$scope.id}"))
                 parent_var = {'cn':parent.login, 'displayname':parent.displayName}
                 $scope.userDetails['parents'].push(parent_var)
+
+    $scope.killUser = (user) ->
+        messagebox.show(
+          title: gettext('Kill user ' + user.cn),
+          text: gettext("Do you really want to definitively remove the user #{user.cn}? This action is uncoverable." ),
+          positive: 'Yes, definitively remove',
+          negative: 'Cancel').then () ->
+            $http.post('/api/lmn/sophomorixUsers/killuser', {user: user.cn}).then (resp) ->
+                if resp.data == true
+                    notify.success(gettext("User #{user.cn} successfully deleted!"))
+                    messagebox.show(
+                        title: gettext("Clean up #{user.sophomorixAdminFile}"),
+                        text: gettext("The user account was deleted but you will have to manually remove the corresponding line in the file #{user.sophomorixAdminFile}."),
+                        positive: 'OK, I understand',
+                    ).then () ->
+                        $window.location.reload()
+                else
+                    notify.error("There was an error during the process. Please try manually to execute the command 'sophomorix-kill --kill #{user.cn}' to get more informations.")
 
     $scope.$watch 'parentToAdd', () ->
         if $scope.parentToAdd

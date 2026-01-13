@@ -82,24 +82,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
              ).closed.then () ->
                 $route.reload()
 
-    $scope.killteacher = (user_cn) ->
-        messagebox.show(
-          title: gettext('Kill user ' + user_cn),
-          text: gettext("Do you really want to definitively remove the user #{user_cn}? This action is uncoverable." ),
-          positive: 'Yes, definitively remove',
-          negative: 'Cancel').then () ->
-            $http.post('/api/lmn/sophomorixUsers/killuser', {user: user_cn}).then (resp) ->
-                console.log(resp.data)
-                if resp.data == true
-                    notify.success(gettext("User #{user_cn} successfully deleted!"))
-                    messagebox.show(
-                        title: gettext('Clean up teachers.csv'),
-                        text: gettext('The user account was deleted but you will have to manually remove the corresponding line in the file teachers.csv.'),
-                        positive: 'OK, I understand',
-                    )
-                else
-                    notify.error("There was an error during the process. Please try manually to execute the command 'sophomorix-kill --kill #{user_cn}' to get more informations.")
-
     $scope.haveSelection = () ->
         if $scope.teachers
             for x in $scope.teachers

@@ -538,6 +538,8 @@ class UserLdapConfig(UserConfigProvider):
                                 (sophomorixRole=globaladministrator)
                                 (sophomorixRole=schooladministrator)
                                 (sophomorixRole=teacher)
+                                (sophomorixRole=staff)
+                                (sophomorixRole=parent)
                                 (sophomorixRole=student)
                             )
                         )"""

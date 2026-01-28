@@ -63,6 +63,10 @@ angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($sc
         $uibModalInstance.dismiss()
 
 
+angular.module('lmn.linbo4').filter 'newLines', () ->
+    (input) ->
+        return input.split('\n')
+
 angular.module('lmn.linbo4').controller 'LMLINBO4BackupsModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, image) ->
     $scope.image = image
 

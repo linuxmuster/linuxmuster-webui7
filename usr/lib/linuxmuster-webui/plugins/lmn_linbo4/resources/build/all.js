@@ -91,6 +91,12 @@
     };
   });
 
+  angular.module('lmn.linbo4').filter('newLines', function() {
+    return function(input) {
+      return input.split('\n');
+    };
+  });
+
   angular.module('lmn.linbo4').controller('LMLINBO4BackupsModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, image) {
     $scope.image = image;
     return $scope.close = function() {

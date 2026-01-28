@@ -23,7 +23,9 @@
                 <i>{{image.size|bytes}}</i>
             </td>
             <td>
-                {{image.desc}}
+                <div ng:repeat="line in image.desc | newLines">
+                    {{line}}<br />
+                </div>
             </td>
             <td> </td>
             <td> </td>
@@ -41,7 +43,9 @@
                 <i>{{backup.size|bytes}}</i>
             </td>
             <td>
-                {{backup.desc}}
+                <div ng:repeat="line in backup.desc | newLines">
+                    {{line}}<br />
+                </div>
             </td>
             <td width="1">
                 <button class="btn btn-default" ng:click="$parent.editImage(backup)">

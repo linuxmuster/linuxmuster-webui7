@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.33) lmn73; urgency=medium
+
+  * [dashboard] Fix user config load, roles and harden
+  * [linbo] Display new lines for desc 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 28 Jan 2026 22:47:24 +0100
+
 linuxmuster-webui7 (7.3.32) lmn73; urgency=medium
 
   * [smbclient] Remove deprecated unix path and listhome

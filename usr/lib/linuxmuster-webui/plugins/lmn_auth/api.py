@@ -509,7 +509,7 @@ class UserLdapConfig(UserConfigProvider):
             ## Load ldap attribute webuidashboard
             userAttrs = AuthenticationService.get(self.context).get_provider().get_ldap_user(self.user)
             try:
-                self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
+                self.data = json.loads(userAttrs['sophomorixWebuiDashboard'][0])
             except Exception:
                 logging.warning(
                     f'Error retrieving userconfig from {self.user}, '

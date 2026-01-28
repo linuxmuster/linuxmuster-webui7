@@ -574,8 +574,10 @@ class UserLdapConfig(UserConfigProvider):
 
     def harden(self):
         """
-        Change mode to "read, write, and execute by owner". Currently not used
-        (self.path is not defined) but keeped in compatibility mode.
+        Change mode to "read, write, and execute by owner" only for root,
+        since other data are stored in LDAP.
         """
 
-        os.chmod(self.path, stat.S_IRWXU)
+
+        if self.user == 'root':
+            os.chmod('/root/.config/ajenti.yml', stat.S_IRWXU)

@@ -201,7 +201,7 @@ class Handler(HttpPlugin):
             if self.context.schoolmgr.school == 'default-school':
                 classes.append('teachers')
             else:
-                classes.append(f'{school}-teachers')
+                classes.append(f'{self.context.schoolmgr.school}-teachers')
 
         else:
             schoolclasses_user = self.context.ldapreader.schoolget(f'/users/{self.context.identity}').get('schoolclasses', [])

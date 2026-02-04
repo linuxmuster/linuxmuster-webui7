@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.34) lmn73; urgency=medium
+
+  * [users] Fix school context for teacher's passwords (@hermanntoast) 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 04 Feb 2026 21:06:06 +0100
+
 linuxmuster-webui7 (7.3.33) lmn73; urgency=medium
 
   * [dashboard] Fix user config load, roles and harden

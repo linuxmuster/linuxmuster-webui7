@@ -218,11 +218,13 @@ class SchoolManager:
             for drive in self.drives:
                 if share_name == drive.id:
                     return drive.label or default
+            logging.warning(f"Drive {share_name} not found in Drives.xml")
 
         def get_share_disabled(share_id):
             for drive in self.drives:
                 if share_id == drive.id:
                     return drive.disabled
+            logging.warning(f"Drive {share_id} not found in Drives.xml")
 
         home = {
             'name' : 'Home',

@@ -219,12 +219,15 @@ class SchoolManager:
                 if share_name == drive.id:
                     return drive.label or default
             logging.warning(f"Drive {share_name} not found in Drives.xml")
+            return None
 
         def get_share_disabled(share_id):
             for drive in self.drives:
                 if share_id == drive.id:
                     return drive.disabled
             logging.warning(f"Drive {share_id} not found in Drives.xml")
+            # "Not found" means disabled
+            return True
 
         home = {
             'name' : 'Home',
@@ -264,6 +267,7 @@ class SchoolManager:
         #     'icon' : 'fas fa-chalkboard-teacher',
         #     'active': False,
         # }
+
         students = {
             'name' : get_share_label('students', 'Students'),
             'path' : f'{self.share_prefix}\\students',
@@ -272,6 +276,7 @@ class SchoolManager:
             'active': False,
             'id': 'students',
         }
+
         share = {
             'name' : get_share_label('share', 'Share'),
             'path' : f'{self.share_prefix}\\share',
@@ -280,6 +285,7 @@ class SchoolManager:
             'active': False,
             'id': 'share',
         }
+
         program = {
             'name' : get_share_label('program', 'Programs'),
             'path' : f'{self.share_prefix}\\program',
@@ -288,6 +294,7 @@ class SchoolManager:
             'active': False,
             'id': 'program',
         }
+
         iso = {
             'name' : get_share_label('iso', 'ISO'),
             'path' : f'{self.share_prefix}\\iso',
@@ -296,6 +303,7 @@ class SchoolManager:
             'active': False,
             'id': 'iso',
         }
+
         projects = {
             'name' : get_share_label('projects', 'Projects'),
             'path' : f'{self.share_prefix}\\share\\projects',

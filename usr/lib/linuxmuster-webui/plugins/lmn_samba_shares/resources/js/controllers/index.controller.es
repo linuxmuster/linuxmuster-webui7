@@ -34,6 +34,10 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
                         $scope.current_path = share.path;
                         $scope.load_share(share);
                         $scope.splitted_path = [];
+                    } else if (share.name == null) {
+                        // Share manually removed from admin from Drives.xml, ignores it
+                        position = $scope.shares.indexOf(share);
+                        $scope.shares.splice(position, 1);
                     }
                 }
             });

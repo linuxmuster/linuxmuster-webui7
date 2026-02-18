@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.35) lmn73; urgency=medium
+
+  * Security update to Ajenti 2.2.12
+  * [samba_shares] Ignore drives without names 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 18 Feb 2026 21:47:22 +0100
+
 linuxmuster-webui7 (7.3.34) lmn73; urgency=medium
 
   * [users] Fix school context for teacher's passwords (@hermanntoast) 

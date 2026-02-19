@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.88) lmn72; urgency=medium
+
+  * Fix setuptools dependency. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 19 Feb 2026 10:48:55 +0100
+
 linuxmuster-webui7 (7.2.87) lmn72; urgency=medium
 
   * Fix zope dependency.

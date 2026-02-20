@@ -2045,33 +2045,38 @@
           $scope.custom = resp.custom;
           $scope.customMulti = resp.customMulti;
           $scope.proxyAddresses = resp.proxyAddresses;
-          // Is there a custom field to show ?
-          if ($scope.proxyAddresses.show) {
-            $scope.custom_column = true;
-          }
-          if (!$scope.custom_column) {
-            ref = $scope.custom;
-            for (custom in ref) {
-              values = ref[custom];
-              if (values.show) {
-                $scope.custom_column = true;
-                break;
+          if (custom_fields_role === 'students') {
+            // Always show this column for the parents entries
+            return $scope.custom_column = true;
+          } else {
+            // Is there a custom field to show ?
+            if ($scope.proxyAddresses.show) {
+              $scope.custom_column = true;
+            }
+            if (!$scope.custom_column) {
+              ref = $scope.custom;
+              for (custom in ref) {
+                values = ref[custom];
+                if (values.show) {
+                  $scope.custom_column = true;
+                  break;
+                }
               }
             }
-          }
-          if (!$scope.custom_column) {
-            ref1 = $scope.customMulti;
-            results = [];
-            for (custom in ref1) {
-              values = ref1[custom];
-              if (values.show) {
-                $scope.custom_column = true;
-                break;
-              } else {
-                results.push(void 0);
+            if (!$scope.custom_column) {
+              ref1 = $scope.customMulti;
+              results = [];
+              for (custom in ref1) {
+                values = ref1[custom];
+                if (values.show) {
+                  $scope.custom_column = true;
+                  break;
+                } else {
+                  results.push(void 0);
+                }
               }
+              return results;
             }
-            return results;
           }
         });
       }

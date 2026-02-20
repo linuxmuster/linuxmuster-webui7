@@ -70,21 +70,25 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                 $scope.customMulti = resp.customMulti
                 $scope.proxyAddresses = resp.proxyAddresses
 
-                # Is there a custom field to show ?
-                if $scope.proxyAddresses.show
+                if custom_fields_role == 'students'
+                    # Always show this column for the parents entries
                     $scope.custom_column = true
+                else
+                    # Is there a custom field to show ?
+                    if $scope.proxyAddresses.show
+                        $scope.custom_column = true
 
-                if not $scope.custom_column
-                    for custom, values of $scope.custom
-                        if values.show
-                            $scope.custom_column = true
-                            break
+                    if not $scope.custom_column
+                        for custom, values of $scope.custom
+                            if values.show
+                                $scope.custom_column = true
+                                break
 
-                if not $scope.custom_column
-                    for custom, values of $scope.customMulti
-                        if values.show
-                            $scope.custom_column = true
-                            break
+                    if not $scope.custom_column
+                        for custom, values of $scope.customMulti
+                            if values.show
+                                $scope.custom_column = true
+                                break
 
     $scope.formatDate = (date) ->
         if (date == "19700101000000.0Z")

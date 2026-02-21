@@ -346,7 +346,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.debug(f"Running Webui as {username}")
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
-            logging.debug(f"Context user not found, running Webui as {nobody}")
+            logging.debug(f"Context user not found, running Webui as user 'nobody'")
 
         return uid
 

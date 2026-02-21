@@ -314,7 +314,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
                     logging.debug(f"Running Webui as {role}")
                 except KeyError:
                     gid = grp.getgrnam('nogroup').gr_gid
-                    logging.debug(f"Context group not found, running Webui as {nogroup}")
+                    logging.debug(f"Context group not found, running Webui as group 'nogroup'.")
                 return gid
         return None
 
@@ -346,7 +346,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.debug(f"Running Webui as {username}")
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
-            logging.debug(f"Context user not found, running Webui as user 'nobody'")
+            logging.debug(f"Context user not found, running Webui as user 'nobody'.")
 
         return uid
 

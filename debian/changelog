@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.36) lmn73; urgency=medium
+
+  * [users] Add school parameter for parents.
+  * [users] Fix parents column when custom fields are not configured. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 22 Feb 2026 18:19:05 +0100
+
 linuxmuster-webui7 (7.3.35) lmn73; urgency=medium
 
   * Security update to Ajenti 2.2.12

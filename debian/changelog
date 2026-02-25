@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.89) lmn72; urgency=medium
+
+  * Security fix in Ajenti 2.2.13. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 25 Feb 2026 23:11:01 +0100
+
 linuxmuster-webui7 (7.2.88) lmn72; urgency=medium
 
   * Fix setuptools dependency. 

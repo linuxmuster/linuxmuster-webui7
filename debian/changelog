@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.38) lmn73; urgency=medium
+
+  * [users] Passwords permissions for staff and parents too. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 03 Mar 2026 15:13:23 +0100
+
 linuxmuster-webui7 (7.3.37) lmn73; urgency=medium
 
   * Security fix in Ajenti 2.2.13. 

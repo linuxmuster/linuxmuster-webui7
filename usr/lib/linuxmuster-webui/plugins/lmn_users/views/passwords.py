@@ -24,6 +24,8 @@ class Handler(HttpPlugin):
             'globaladministrator': 4,
             'schooladministrator': 3,
             'teacher': 2,
+            'staff': 1,
+            'parent': 1,
             'student': 1,
             'examuser': 1,
         }

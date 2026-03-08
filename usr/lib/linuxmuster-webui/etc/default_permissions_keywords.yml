@@ -1,0 +1,228 @@
+lm:globalsettings:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:schoolsettings:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:sync:list:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:sync:online:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:sync:sync:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:crontab:read:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:crontab:write:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:quotas:apply:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:quotas:configure:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:quotas:ldap-search:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lmn:session:trans:
+- roles: teacher
+- users: null
+- groups: null
+lm:users:apply:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:check:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:customfields:read:
+- roles: globaladministrator,schooladministrator,teacher,student,parent,staff
+- users: null
+- groups: null
+lm:users:customfields:write:
+- roles: globaladministrator,schooladministrator,teacher,student,parent,staff
+- users: null
+- groups: null
+lm:users:extraclasses:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:extraclasses:write:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:extrastudents:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:extrastudents:write:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:globaladmins:create:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:users:globaladmins:delete:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:users:globaladmins:read:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:users:passwords:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+lm:users:schooladmins:create:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:users:schooladmins:delete:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:users:schooladmins:read:
+- roles: globaladministrator
+- users: null
+- groups: null
+lm:users:students:read:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+lm:users:students:write:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+lm:users:parents:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:parents:write:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:staff:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:staff:write:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:teachers:list:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+lm:users:teachers:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:teachers:write:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:users:users:delete:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lmn:groupmembership:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+lmn:groupmemberships:write:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+lm:devices:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:devices:import:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:linbo:configs:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:linbo:examples:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:linbo:icons:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:linbo:images:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:docker:change:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:docker:list:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:samba_dns:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:samba_dns:write:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+core:config:read:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+core:config:write:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+filesystem:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+filesystem:write:
+- roles: globaladministrator,schooladministrator,teacher
+- users: null
+- groups: null
+network:configure:
+- roles: globaladministrator
+- users: null
+- groups: null
+network:updown:
+- roles: globaladministrator
+- users: null
+- groups: null
+lmn:clients:config:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:device-manager:read:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null
+lm:device-manager:modify:
+- roles: globaladministrator,schooladministrator
+- users: null
+- groups: null

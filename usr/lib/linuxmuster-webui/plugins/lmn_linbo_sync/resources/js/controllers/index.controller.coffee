@@ -126,6 +126,11 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.groups[group]['auto']['disable_gui'] = 1 - $scope.groups[group]['auto']['disable_gui']
         $scope.refresh_cmd(group)
 
+    $scope.handle_broadcast = (group) ->
+        # Possible values : 0 or 1
+        $scope.groups[group]['auto']['broadcast'] = 1 - $scope.groups[group]['auto']['broadcast']
+        $scope.refresh_cmd(group)
+
     $scope.handle_wake_on_lan = (group) ->
         # Possible values : 0 or 1
         $scope.groups[group]['auto']['wol'] = 1 - $scope.groups[group]['auto']['wol']
@@ -145,6 +150,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             'timeout' : 0,
             'prestart' : false,
             'disable_gui' : false,
+            'broadcast': false,
             'bypass' : false,
             'partition' : false,
             'actions' : {
@@ -207,6 +213,9 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         if $scope.groups[group]['auto']['disable_gui'] > 0
             autostart += ' -d '
             cmd_parameters['disable_gui'] = true
+        if $scope.groups[group]['auto']['broadcast'] > 0
+            autostart += ' -u '
+            cmd_parameters['broadcast'] = true
         if $scope.groups[group]['auto']['bypass'] > 0 and timeout
             autostart += ' -n '
             cmd_parameters['bypass'] = true

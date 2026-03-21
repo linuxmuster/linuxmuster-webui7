@@ -174,6 +174,11 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       $scope.groups[group]['auto']['disable_gui'] = 1 - $scope.groups[group]['auto']['disable_gui'];
       return $scope.refresh_cmd(group);
     };
+    $scope.handle_broadcast = function(group) {
+      // Possible values : 0 or 1
+      $scope.groups[group]['auto']['broadcast'] = 1 - $scope.groups[group]['auto']['broadcast'];
+      return $scope.refresh_cmd(group);
+    };
     $scope.handle_wake_on_lan = function(group) {
       // Possible values : 0 or 1
       $scope.groups[group]['auto']['wol'] = 1 - $scope.groups[group]['auto']['wol'];
@@ -194,6 +199,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
         'timeout': 0,
         'prestart': false,
         'disable_gui': false,
+        'broadcast': false,
         'bypass': false,
         'partition': false,
         'actions': {
@@ -259,6 +265,10 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       if ($scope.groups[group]['auto']['disable_gui'] > 0) {
         autostart += ' -d ';
         cmd_parameters['disable_gui'] = true;
+      }
+      if ($scope.groups[group]['auto']['broadcast'] > 0) {
+        autostart += ' -u ';
+        cmd_parameters['broadcast'] = true;
       }
       if ($scope.groups[group]['auto']['bypass'] > 0 && timeout) {
         autostart += ' -n ';

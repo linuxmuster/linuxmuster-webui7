@@ -12,6 +12,7 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_linbo_sync import api
 
+
 ## TODO
 # Better icons and design
 # Force some options even if not present in start.conf ?

@@ -99,6 +99,7 @@ def group_os(workstations):
                 }
             workstations[group]['auto'] = {
                 'disable_gui': 0,
+                'broadcast': 0,
                 'bypass': 0,
                 'wol': 0,
                 'prestart': 0,
@@ -345,6 +346,10 @@ def build_linbo_command(cmd_parameters):
             cmd = f'{cmd} -g {target}'
         else:
             return False
+
+    # Broadcast
+    if cmd_parameters['broadcast']:
+        cmd = f'{cmd} -u'
 
     # Timeout and bypass
     if cmd_parameters['timeout'] > 0:

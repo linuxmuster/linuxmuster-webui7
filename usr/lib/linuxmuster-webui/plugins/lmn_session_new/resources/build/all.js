@@ -903,6 +903,14 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.shareAll = function() {
       var choose_path, print_path;
+      if ($scope.extExamUsers.length > 0) {
+        messagebox.show({
+          title: gettext('User(s) in exam'),
+          text: gettext('This functionality can not be used when some users are in exam mode with another teacher.'),
+          positive: 'OK'
+        });
+        return;
+      }
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
       print_path = "transfer";
       return $scope.choose_items(choose_path, print_path, 'share', 'all').then(async function(result) {
@@ -961,6 +969,14 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.collectAll = async function(command) {
       var collect_path, dst, i, items, len, now, participant, ref, transfer_directory;
+      if ($scope.extExamUsers.length > 0) {
+        messagebox.show({
+          title: gettext('User(s) in exam'),
+          text: gettext('This functionality can not be used when some users are in exam mode with another teacher.'),
+          positive: 'OK'
+        });
+        return;
+      }
       // command is copy or move
       now = $scope.now();
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;

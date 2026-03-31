@@ -465,6 +465,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $scope._share(participant, result.items)
 
     $scope.shareAll = () ->
+        if $scope.extExamUsers.length > 0
+            messagebox.show(title: gettext('User(s) in exam'), text: gettext('This functionality can not be used when some users are in exam mode with another teacher.'), positive: 'OK')
+            return
+
         choose_path = "#{identity.profile.homeDirectory}\\transfer"
         print_path = "transfer"
         $scope.choose_items(choose_path, print_path,'share', 'all').then (result) ->
@@ -500,6 +504,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         return collectPromise
 
     $scope.collectAll = (command) ->
+        if $scope.extExamUsers.length > 0
+            messagebox.show(title: gettext('User(s) in exam'), text: gettext('This functionality can not be used when some users are in exam mode with another teacher.'), positive: 'OK')
+            return
+
         # command is copy or move
 
         now = $scope.now()

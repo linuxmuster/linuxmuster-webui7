@@ -394,6 +394,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.isStudent = function(user) {
       return ['student', 'examuser'].indexOf(user.sophomorixRole) > -1;
     };
+    $scope.extExamUser = function(user) {
+      return $scope.extExamUsers.indexOf(user) > -1;
+    };
     // Fix missing membership for share
     $scope.fixMembership = function(group) {
       return $http.post('/api/lmn/groupmembership/membership', {

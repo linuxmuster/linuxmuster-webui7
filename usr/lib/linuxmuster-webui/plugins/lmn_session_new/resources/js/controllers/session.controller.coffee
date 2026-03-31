@@ -107,6 +107,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.isStudent = (user) ->
         return ['student', 'examuser'].indexOf(user.sophomorixRole) > -1
 
+    $scope.extExamUser = (user) ->
+        return $scope.extExamUsers.indexOf(user) > -1
+
     # Fix missing membership for share
 
     $scope.fixMembership = (group) ->

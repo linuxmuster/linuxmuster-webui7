@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.3.39) lmn73; urgency=medium
+
+  * Security fix i nAjenti 2.2.15: CWE-862.
+  * [linbo_sync] Add broadcast (-u) option.
+  * [session] Fix #286: no collect or share if users in extern exam mode.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 01 Apr 2026 23:57:01 +0200
+
 linuxmuster-webui7 (7.3.38) lmn73; urgency=medium
 
   * [users] Passwords permissions for staff and parents too. 

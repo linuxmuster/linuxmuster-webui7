@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.4.1) lmn74; urgency=medium
+
+  * New package for 7.4.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 25 Apr 2026 18:14:04 +0200
+
 linuxmuster-webui7 (7.3.39) lmn73; urgency=medium
 
   * Security fix i nAjenti 2.2.15: CWE-862.

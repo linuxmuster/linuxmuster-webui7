@@ -518,8 +518,8 @@ class Handler(HttpPlugin):
                 apiconfig = f.read()
 
             config = {
-                'keys': apiconfig['host_keys'],
-                'enable_host_auth': apiconfig['host_key_auth']
+                'keys': apiconfig.get('host_keys', []),
+                'enable_host_auth': apiconfig.get('host_key_auth', False)
             }
 
             apiconfig = {}
@@ -548,7 +548,7 @@ class Handler(HttpPlugin):
             with LMNFile(apiconfig_path, 'r') as f:
                 apiconfig = f.read()
 
-            if keyname in apiconfig['host_keys']:
+            if keyname in apiconfig.get('host_keys', []):
                 del apiconfig['host_keys'][keyname]
 
             with LMNFile(apiconfig_path, 'w') as f:

@@ -44,11 +44,11 @@ class Handler(HttpPlugin):
         schoolclassesList = []
 
         for schoolclass in schoolclasses:
-            details = self.context.ldapreader.schoolget(f'/schoolclasses/{schoolclass}', dict=False)
+            details = self.context.ldapreader.schoolget(f'/schoolclasses/{schoolclass}', asdict=False)
 
             if not details.cn:
                 # Maybe an extraclass
-                details = self.context.ldapreader.schoolget(f'/extraclasses/{schoolclass}', dict=False)
+                details = self.context.ldapreader.schoolget(f'/extraclasses/{schoolclass}', asdict=False)
 
             if details:
                 s = {
@@ -69,7 +69,7 @@ class Handler(HttpPlugin):
         projectsList = []
 
         for project in projects:
-            details = self.context.ldapreader.schoolget(f'/projects/{project}', dict=False)
+            details = self.context.ldapreader.schoolget(f'/projects/{project}', asdict=False)
             s = {
                 'name': details.cn,
                 'membersCount': len(details.sophomorixMembers),

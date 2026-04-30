@@ -37,7 +37,7 @@ class Handler(HttpPlugin):
         username = self.context.identity
         user_profile = self.context.profile
 
-        projects = self.context.ldapreader.schoolget('/projects', dict=False)
+        projects = self.context.ldapreader.schoolget('/projects', asdict=False)
         user_projects = []
 
         for project in projects:
@@ -72,7 +72,7 @@ class Handler(HttpPlugin):
         """
 
         projectName = unquote(project.encode('latin-1'))
-        project = self.context.ldapreader.schoolget(f'/projects/{projectName}', dict=False)
+        project = self.context.ldapreader.schoolget(f'/projects/{projectName}', asdict=False)
 
         project.get_all_members()
         projectDict = project.asdict()

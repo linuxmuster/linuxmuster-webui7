@@ -37,14 +37,14 @@ class Handler(HttpPlugin):
         username = self.context.identity
         user_profile = self.context.profile
 
-        projects = self.context.ldapreader.schoolget('/projects', asdict=False)
+        projects = self.context.ldapreader.schoolget('/projects', as_dict=False)
         user_projects = []
 
         for project in projects:
             member = user_profile['dn'] in project.member or username in project.sophomorixAdmins
 
             if member or not project.sophomorixHidden:
-                projectDict = project.asdict()
+                projectDict = project.as_dict()
 
                 projectDict['groupname'] = project.cn
                 projectDict['membership'] = member
@@ -72,10 +72,10 @@ class Handler(HttpPlugin):
         """
 
         projectName = unquote(project.encode('latin-1'))
-        project = self.context.ldapreader.schoolget(f'/projects/{projectName}', asdict=False)
+        project = self.context.ldapreader.schoolget(f'/projects/{projectName}', as_dict=False)
 
         project.get_all_members()
-        projectDict = project.asdict()
+        projectDict = project.as_dict()
 
         return projectDict
 

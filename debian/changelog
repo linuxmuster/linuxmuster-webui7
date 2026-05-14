@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.40) lmn73; urgency=medium
+
+  * Security fixs. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 14 May 2026 17:52:28 +0200
+
 linuxmuster-webui7 (7.4.1) lmn74; urgency=medium
 
   * New package for 7.4.

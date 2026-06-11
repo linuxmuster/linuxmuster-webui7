@@ -1631,7 +1631,7 @@
     $scope.options = {
       format: 'pdf',
       one_per_page: false,
-      pdflatex: false,
+      pdflatex: true,
       schoolclass: schoolclass,
       user: user,
       adminClass: adminClass,

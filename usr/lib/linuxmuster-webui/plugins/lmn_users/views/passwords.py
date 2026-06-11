@@ -234,6 +234,7 @@ class Handler(HttpPlugin):
             '--caller', self.context.identity,
             '--user', users,
             '--one-per-page',
+            '--command', 'pdflatex',
             '-jj',
         ]
 

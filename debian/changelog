@@ -1,3 +1,14 @@
+linuxmuster-webui7 (7.4.2) lmn74; urgency=medium
+
+  * Avoid var shadowing with lmntools
+  * Compatibility for Python 3.13
+  * Security update of paramiko
+  * Security update of Ajenti
+  * Fix dependency of ntpsec
+  * [users] Use pdflatex as default for passwords 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 16 Jun 2026 17:13:49 +0200
+
 linuxmuster-webui7 (7.3.39) lmn73; urgency=medium
 
   * Security fix i nAjenti 2.2.15: CWE-862.

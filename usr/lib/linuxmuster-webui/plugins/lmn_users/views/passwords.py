@@ -192,6 +192,9 @@ class Handler(HttpPlugin):
         classes = []
         if self.context.profile['isAdmin']:
 
+            # Search for staff groups too
+            classes_raw += self.context.ldapreader.schoolget('/staff')
+
             for classe in classes_raw:
                 if not classe["sophomorixHidden"] and len(classe["sophomorixMembers"]) > 0:
                     classes.append(classe['cn'])
@@ -202,6 +205,7 @@ class Handler(HttpPlugin):
             # add also teachers passwords
             if self.context.schoolmgr.school == 'default-school':
                 classes.append('teachers')
+                classes.append('parents')
             else:
                 classes.append(f'{self.context.schoolmgr.school}-teachers')
 

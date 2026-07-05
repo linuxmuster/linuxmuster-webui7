@@ -1743,11 +1743,11 @@
     };
     $scope.getGroups = function(username) {
       $scope.admin_warning = false;
+      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
+        $scope.admin_warning = true;
+      }
       return $http.get('/api/lmn/users/classes').then(function(resp) {
-        $scope.classes = resp.data;
-        if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
-          return $scope.admin_warning = true;
-        }
+        return $scope.classes = resp.data;
       });
     };
     $scope.printCSV = function(schoolclass) {

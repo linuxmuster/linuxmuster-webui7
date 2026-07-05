@@ -93,10 +93,10 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
 
     $scope.getGroups = (username) ->
         $scope.admin_warning = false
+        if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixRole == 'globaladministrator' || $scope.identity.profile.sophomorixRole == 'schooladministrator'
+            $scope.admin_warning = true
         $http.get('/api/lmn/users/classes').then (resp) ->
             $scope.classes = resp.data
-            if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixRole == 'globaladministrator' || $scope.identity.profile.sophomorixRole == 'schooladministrator'
-                $scope.admin_warning = true
 
     $scope.printCSV = (schoolclass) ->
         msg = messagebox.show(progress: true)

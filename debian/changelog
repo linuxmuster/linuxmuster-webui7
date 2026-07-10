@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.41) lmn73; urgency=medium
+
+  * Print parents and staff passwords too. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 Jul 2026 08:50:21 +0200
+
 linuxmuster-webui7 (7.3.40) lmn73; urgency=medium
 
   * Security fixs. 

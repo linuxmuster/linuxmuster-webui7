@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.4.3) lmn74; urgency=medium
+
+  * Security fixs in Ajenti.
+  * Print parents and staff passwords too.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 15 Jul 2026 11:10:10 +0200
+
 linuxmuster-webui7 (7.4.2) lmn74; urgency=medium
 
   * Avoid var shadowing with lmntools

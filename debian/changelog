@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.43) lmn73; urgency=medium
+
+  * Security fix in Ajenti. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 15 Jul 2026 10:19:09 +0200
+
 linuxmuster-webui7 (7.3.42) lmn73; urgency=medium
 
   * [settings] Fix default values for api keys. 

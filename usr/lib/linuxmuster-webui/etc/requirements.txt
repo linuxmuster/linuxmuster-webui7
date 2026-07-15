@@ -1,7 +1,7 @@
 aj==2.2.16
 ajenti-panel==2.2.16
 ajenti.plugin.ace==0.32
-ajenti.plugin.core==0.116
+ajenti.plugin.core==0.115
 ajenti.plugin.dashboard==0.42
 ajenti.plugin.filesystem==0.51
 ajenti.plugin.plugins==0.55

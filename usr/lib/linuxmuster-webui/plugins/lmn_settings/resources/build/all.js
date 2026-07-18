@@ -13,13 +13,17 @@
     });
   });
 
-  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields) {
+  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields, passwordConstraints) {
+    var buildPasswordRuleForm, buildPasswordRulesFromForm;
     pageTitle.set(gettext('Settings'));
     $scope.trans = {
       remove: gettext('Remove')
     };
     $scope.activetab = 0;
     $scope.custom_fields_role_selector = 'students';
+    $scope.passwordConstraintsRoles = ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator'];
+    $scope.passwordConstraintsRole = 'student';
+    $scope.passwordRuleClasses = ['lower', 'upper', 'digit', 'special'];
     $scope.logLevels = [
       {
         name: gettext('Minimal'),
@@ -99,6 +103,98 @@
     });
     $http.get('/api/lmn/holidays').then(function(resp) {
       return $scope.holidays = resp.data;
+    });
+    buildPasswordRuleForm = function(rules) {
+      var cls, form, i, j, len, len1, ref, rule;
+      form = {
+        minLength: null,
+        classes: {
+          lower: false,
+          upper: false,
+          digit: false,
+          special: false
+        },
+        count: null
+      };
+      for (i = 0, len = rules.length; i < len; i++) {
+        rule = rules[i];
+        if (rule.type === 'min_length') {
+          form.minLength = rule.value;
+        } else if (rule.type === 'require_classes') {
+          ref = rule.classes;
+          for (j = 0, len1 = ref.length; j < len1; j++) {
+            cls = ref[j];
+            form.classes[cls] = true;
+          }
+          form.count = rule.count;
+        }
+      }
+      return form;
+    };
+    buildPasswordRulesFromForm = function(form) {
+      var checked, cls, rule, rules, selectedClasses;
+      rules = [];
+      if (form.minLength) {
+        rules.push({
+          type: 'min_length',
+          value: form.minLength
+        });
+      }
+      selectedClasses = (function() {
+        var ref, results;
+        ref = form.classes;
+        results = [];
+        for (cls in ref) {
+          checked = ref[cls];
+          if (checked) {
+            results.push(cls);
+          }
+        }
+        return results;
+      })();
+      if (selectedClasses.length > 0) {
+        rule = {
+          type: 'require_classes',
+          classes: selectedClasses
+        };
+        if (form.count) {
+          rule.count = form.count;
+        }
+        rules.push(rule);
+      }
+      return rules;
+    };
+    $http.get('/api/lmn/activeschool').then(function(resp) {
+      $scope.currentSchool = resp.data;
+      return passwordConstraints.load().then(function(resp) {
+        var i, len, ref, ref1, results, role, roles, rules, school;
+        $scope.passwordConstraints = resp;
+        $scope.passwordConstraintsForm = {
+          default: {},
+          schools: {}
+        };
+        ref = $scope.passwordConstraintsRoles;
+        for (i = 0, len = ref.length; i < len; i++) {
+          role = ref[i];
+          $scope.passwordConstraintsForm.default[role] = buildPasswordRuleForm(resp.default[role] || []);
+        }
+        ref1 = resp.schools;
+        results = [];
+        for (school in ref1) {
+          roles = ref1[school];
+          $scope.passwordConstraintsForm.schools[school] = {};
+          results.push((function() {
+            var results1;
+            results1 = [];
+            for (role in roles) {
+              rules = roles[role];
+              results1.push($scope.passwordConstraintsForm.schools[school][role] = buildPasswordRuleForm(rules));
+            }
+            return results1;
+          })());
+        }
+        return results;
+      });
     });
     $scope.filterscriptNotEmpty = function() {
       var i, len, ref, results, role;
@@ -194,7 +290,7 @@
       school = "default-school";
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf');
     };
-    return $scope.saveCustom = function() {
+    $scope.saveCustom = function() {
       var config;
       config = {
         'custom': $scope.custom,
@@ -207,6 +303,48 @@
         }
       };
       return customFields.save(config).then(function() {
+        return notify.success(gettext('Saved'));
+      });
+    };
+    $scope.hasSchoolOverride = function(role) {
+      return !!($scope.passwordConstraintsForm && $scope.passwordConstraintsForm.schools[$scope.currentSchool] && $scope.passwordConstraintsForm.schools[$scope.currentSchool][role]);
+    };
+    $scope.toggleSchoolOverride = function(role) {
+      var base, name;
+      if ((base = $scope.passwordConstraintsForm.schools)[name = $scope.currentSchool] == null) {
+        base[name] = {};
+      }
+      if ($scope.hasSchoolOverride(role)) {
+        delete $scope.passwordConstraintsForm.schools[$scope.currentSchool][role];
+        if (Object.keys($scope.passwordConstraintsForm.schools[$scope.currentSchool]).length === 0) {
+          return delete $scope.passwordConstraintsForm.schools[$scope.currentSchool];
+        }
+      } else {
+        return $scope.passwordConstraintsForm.schools[$scope.currentSchool][role] = buildPasswordRuleForm([]);
+      }
+    };
+    return $scope.savePasswordConstraints = function() {
+      var config, form, i, len, ref, ref1, role, roles, school;
+      config = {
+        default: {},
+        schools: {}
+      };
+      ref = $scope.passwordConstraintsRoles;
+      for (i = 0, len = ref.length; i < len; i++) {
+        role = ref[i];
+        config.default[role] = buildPasswordRulesFromForm($scope.passwordConstraintsForm.default[role]);
+      }
+      ref1 = $scope.passwordConstraintsForm.schools;
+      for (school in ref1) {
+        roles = ref1[school];
+        config.schools[school] = {};
+        for (role in roles) {
+          form = roles[role];
+          config.schools[school][role] = buildPasswordRulesFromForm(form);
+        }
+      }
+      return passwordConstraints.save(config).then(function() {
+        $scope.passwordConstraints = config;
         return notify.success(gettext('Saved'));
       });
     };
@@ -669,6 +807,24 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
             $scope.LMNVersion = res.data;
         });
     };
+});
+
+
+'use strict';
+
+angular.module('lmn.settings').service('passwordConstraints', function ($http) {
+
+    this.load = function () {
+        return $http.get('/api/lmn/config/passwordconstraints').then(function (response) {
+            return response.data;
+        });
+    };
+
+    this.save = function (config) {
+        return $http.post('/api/lmn/config/passwordconstraints', { 'config': config });
+    };
+
+    return this;
 });
 
 

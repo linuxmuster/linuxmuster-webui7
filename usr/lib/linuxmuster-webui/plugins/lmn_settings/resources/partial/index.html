@@ -808,16 +808,104 @@
             <i class="fa fa-plus"></i> <span translate>Add holidays</span>
         </button>
     </uib:tab>
+
+    <uib:tab heading="{{'Password constraints'|translate}}">
+
+        <br />
+
+        <div ng:if="passwordConstraints">
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-4">
+                    <label translate>Choose a role to configure</label>
+                    <select class="form-control" ng:model="passwordConstraintsRole">
+                        <option ng:repeat="role in passwordConstraintsRoles" value="{{role}}">{{role}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <hr />
+        <br />
+
+        <h3 translate>Default rules (all schools)</h3>
+        <table class="table">
+            <tr>
+                <th translate>Minimum length</th>
+                <td>
+                    <input type="number" min="0" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].minLength" class="form-control" placeholder="{{'Samba minimum applies if empty'|translate}}" />
+                </td>
+            </tr>
+            <tr>
+                <th translate>Required character classes</th>
+                <td>
+                    <label class="checkbox-inline" ng:repeat="cls in passwordRuleClasses">
+                        <input type="checkbox" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].classes[cls]" /> {{cls}}
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th translate>Required count</th>
+                <td>
+                    <input type="number" min="1" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].count" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <hr />
+        <br />
+
+        <label class="checkbox-inline">
+            <input type="checkbox" ng:checked="hasSchoolOverride(passwordConstraintsRole)" ng:click="toggleSchoolOverride(passwordConstraintsRole)" />
+            <span translate>Override for this school</span> ({{currentSchool}})
+        </label>
+        <p class="help-block" ng:show="hasSchoolOverride(passwordConstraintsRole)" translate>
+            This replaces the default rules above for this role in this school — it does not add to them.
+        </p>
+
+        <div ng:show="hasSchoolOverride(passwordConstraintsRole)">
+            <br />
+            <table class="table">
+                <tr>
+                    <th translate>Minimum length</th>
+                    <td>
+                        <input type="number" min="0" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].minLength" class="form-control" placeholder="{{'Samba minimum applies if empty'|translate}}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th translate>Required character classes</th>
+                    <td>
+                        <label class="checkbox-inline" ng:repeat="cls in passwordRuleClasses">
+                            <input type="checkbox" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].classes[cls]" /> {{cls}}
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th translate>Required count</th>
+                    <td>
+                        <input type="number" min="1" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].count" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        </div>
+
+    </uib:tab>
     </uib:tabset>
 
     <div class="floating-toolbar-padder"></div>
     <floating-toolbar>
-        <button ng-show="activetab != 4" ng:click="backups()" class="btn btn-lmn pull-right"><i class="fa fa-history"></i></button>
+        <button ng-show="activetab != 4 && activetab != 6" ng:click="backups()" class="btn btn-lmn pull-right"><i class="fa fa-history"></i></button>
         <button ng-show="activetab == 0" ng:click="saveAndCheck()" class="btn btn-lmn" translate>Save &amp; check</button>
         <button ng-show="activetab == 2" ng:click="saveApplyQuota()" class="btn btn-lmn" translate>Save &amp; Apply Quota</button>
         <button ng-show="activetab < 3" ng:click="save()" class="btn btn-lmn" translate>Save</button>
         <button ng-show="activetab == 3" ng:click="save() && saveCustom()" class="btn btn-lmn" translate>Save</button>
         <button ng-show="activetab == 4" ng:click="saveCustom()" class="btn btn-lmn" translate>Save</button>
         <button ng-show="activetab == 5" ng:click="saveApplyHolidays()" class="btn btn-lmn" translate>Save</button>
+        <button ng-show="activetab == 6" ng:click="savePasswordConstraints()" class="btn btn-lmn" translate>Save</button>
     </floating-toolbar>
 </div>

@@ -4,7 +4,7 @@ angular.module('lmn.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields) ->
+angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields, passwordConstraints) ->
     pageTitle.set(gettext('Settings'))
 
     $scope.trans = {
@@ -13,6 +13,9 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $scope.activetab = 0
     $scope.custom_fields_role_selector = 'students'
+    $scope.passwordConstraintsRoles = ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator']
+    $scope.passwordConstraintsRole = 'student'
+    $scope.passwordRuleClasses = ['lower', 'upper', 'digit', 'special']
 
     $scope.logLevels = [
         {name: gettext('Minimal'), value: 0}
@@ -73,6 +76,42 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $http.get('/api/lmn/holidays').then (resp) ->
         $scope.holidays = resp.data
+
+    buildPasswordRuleForm = (rules) ->
+        form = {minLength: null, classes: {lower: false, upper: false, digit: false, special: false}, count: null}
+        for rule in rules
+            if rule.type == 'min_length'
+                form.minLength = rule.value
+            else if rule.type == 'require_classes'
+                form.classes[cls] = true for cls in rule.classes
+                form.count = rule.count
+        form
+
+    buildPasswordRulesFromForm = (form) ->
+        rules = []
+        if form.minLength
+            rules.push({type: 'min_length', value: form.minLength})
+        selectedClasses = (cls for cls, checked of form.classes when checked)
+        if selectedClasses.length > 0
+            rule = {type: 'require_classes', classes: selectedClasses}
+            rule.count = form.count if form.count
+            rules.push(rule)
+        rules
+
+    $http.get('/api/lmn/activeschool').then (resp) ->
+        $scope.currentSchool = resp.data
+
+        passwordConstraints.load().then (resp) ->
+            $scope.passwordConstraints = resp
+            $scope.passwordConstraintsForm = {default: {}, schools: {}}
+
+            for role in $scope.passwordConstraintsRoles
+                $scope.passwordConstraintsForm.default[role] = buildPasswordRuleForm(resp.default[role] or [])
+
+            for school, roles of resp.schools
+                $scope.passwordConstraintsForm.schools[school] = {}
+                for role, rules of roles
+                    $scope.passwordConstraintsForm.schools[school][role] = buildPasswordRuleForm(rules)
 
     $scope.filterscriptNotEmpty = () ->
         # A filterscript option should not be empty but "---"
@@ -160,3 +199,30 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         }
         customFields.save(config).then () ->
             notify.success(gettext('Saved'))
+
+    $scope.hasSchoolOverride = (role) ->
+        !!($scope.passwordConstraintsForm and $scope.passwordConstraintsForm.schools[$scope.currentSchool] and $scope.passwordConstraintsForm.schools[$scope.currentSchool][role])
+
+    $scope.toggleSchoolOverride = (role) ->
+        $scope.passwordConstraintsForm.schools[$scope.currentSchool] ?= {}
+        if $scope.hasSchoolOverride(role)
+            delete $scope.passwordConstraintsForm.schools[$scope.currentSchool][role]
+            if Object.keys($scope.passwordConstraintsForm.schools[$scope.currentSchool]).length == 0
+                delete $scope.passwordConstraintsForm.schools[$scope.currentSchool]
+        else
+            $scope.passwordConstraintsForm.schools[$scope.currentSchool][role] = buildPasswordRuleForm([])
+
+    $scope.savePasswordConstraints = () ->
+        config = {default: {}, schools: {}}
+
+        for role in $scope.passwordConstraintsRoles
+            config.default[role] = buildPasswordRulesFromForm($scope.passwordConstraintsForm.default[role])
+
+        for school, roles of $scope.passwordConstraintsForm.schools
+            config.schools[school] = {}
+            for role, form of roles
+                config.schools[school][role] = buildPasswordRulesFromForm(form)
+
+        passwordConstraints.save(config).then () ->
+            $scope.passwordConstraints = config
+            notify.success gettext('Saved')

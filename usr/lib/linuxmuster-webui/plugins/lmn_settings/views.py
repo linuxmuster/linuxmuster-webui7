@@ -334,6 +334,77 @@ class Handler(HttpPlugin):
         with LMNFile(custom_config_path, 'w') as config:
             config.write(custom_config)
 
+    PASSWORD_CONSTRAINTS_PATH = '/etc/linuxmuster/tools/password_constraints.yml'
+    PASSWORD_CONSTRAINTS_ROLES = [
+        'student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator',
+    ]
+
+    @get(r'/api/lmn/config/passwordconstraints')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_read_password_constraints(self, http_context):
+        """
+        Read the password constraints config
+        (/etc/linuxmuster/tools/password_constraints.yml). Every known role
+        is always present under 'default' (empty rule list if unconfigured),
+        so the frontend never has to guard against missing keys.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Configuration, with keys 'default' and 'schools'
+        :rtype: dict
+        """
+
+        config = {}
+        if os.path.isfile(self.PASSWORD_CONSTRAINTS_PATH):
+            with LMNFile(self.PASSWORD_CONSTRAINTS_PATH, 'r') as f:
+                config = f.read() or {}
+
+        default = config.get('default', {})
+        for role in self.PASSWORD_CONSTRAINTS_ROLES:
+            default.setdefault(role, [])
+
+        return {
+            'default': default,
+            'schools': config.get('schools', {}),
+        }
+
+    @post(r'/api/lmn/config/passwordconstraints')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_save_password_constraints(self, http_context):
+        """
+        Validate and save the password constraints config.
+
+        Every rule is validated with linuxmusterTools' own rule builder
+        before writing (pure validation, no Samba/LDAP access), so a
+        malformed rule (unknown type, invalid classes, bad count) is
+        rejected here instead of silently breaking lmnapi/webui/cli later.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return:
+        :rtype:
+        """
+
+        from linuxmusterTools.passwords import PasswordRules
+
+        config = http_context.json_body()['config']
+
+        role_rule_lists = list(config.get('default', {}).values())
+        for school_rules in config.get('schools', {}).values():
+            role_rule_lists.extend(school_rules.values())
+
+        for rules in role_rule_lists:
+            for entry in rules:
+                try:
+                    PasswordRules.build(entry)
+                except (ValueError, KeyError) as e:
+                    raise EndpointError(None, message=str(e))
+
+        with LMNFile(self.PASSWORD_CONSTRAINTS_PATH, 'w') as f:
+            f.write(config)
+
     @get(r'/api/lmn/holidays')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)

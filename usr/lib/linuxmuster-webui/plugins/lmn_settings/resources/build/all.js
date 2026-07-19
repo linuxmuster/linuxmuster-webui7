@@ -24,6 +24,12 @@
     $scope.passwordConstraintsRoles = ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator'];
     $scope.passwordConstraintsRole = 'student';
     $scope.passwordRuleClasses = ['lower', 'upper', 'digit', 'special'];
+    $scope.passwordRuleClassLabels = {
+      lower: gettext('Lowercase letter'),
+      upper: gettext('Uppercase letter'),
+      digit: gettext('Digit'),
+      special: gettext('Special character')
+    };
     $scope.logLevels = [
       {
         name: gettext('Minimal'),

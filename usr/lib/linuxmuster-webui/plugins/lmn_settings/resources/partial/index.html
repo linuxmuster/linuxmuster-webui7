@@ -842,7 +842,7 @@
                 <th translate>Required character classes</th>
                 <td>
                     <label class="checkbox-inline" ng:repeat="cls in passwordRuleClasses">
-                        <input type="checkbox" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].classes[cls]" /> {{cls}}
+                        <input type="checkbox" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].classes[cls]" /> {{passwordRuleClassLabels[cls]}}
                     </label>
                 </td>
             </tr>
@@ -879,7 +879,7 @@
                     <th translate>Required character classes</th>
                     <td>
                         <label class="checkbox-inline" ng:repeat="cls in passwordRuleClasses">
-                            <input type="checkbox" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].classes[cls]" /> {{cls}}
+                            <input type="checkbox" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].classes[cls]" /> {{passwordRuleClassLabels[cls]}}
                         </label>
                     </td>
                 </tr>

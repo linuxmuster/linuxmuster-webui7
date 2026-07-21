@@ -496,5 +496,22 @@
             <a ng:click="toggleAddIp()" class="btn btn-default btn-flat" translate>Close</a>
         </div>
     </dialog>
+
+    <dialog ng:show="showApiKeySecret" style="width:600px; max-width:90vw;">
+        <div class="modal-header">
+            <h4 translate>Api key secret</h4>
+        </div>
+        <div class="modal-body">
+            <p class="alert alert-info" translate>Copy this secret now, it will not be shown in clear text like this again.</p>
+            <textarea readonly rows="3" class="form-control" style="font-family: monospace; resize: none;"
+                      ng:click="$event.target.select()">{{apiKeySecret}}</textarea>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="copyApiKeySecret()" class="btn btn-default btn-flat">
+                <i class="fa fa-copy"></i> <span translate>Copy</span>
+            </a>
+            <a ng:click="closeApiKeySecret()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </dialog>
 </div>
 

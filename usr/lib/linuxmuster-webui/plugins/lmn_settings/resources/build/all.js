@@ -377,6 +377,8 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
     $scope.showNewApiKey = false;
     $scope.showUpdateApiKey = false;
     $scope.showAddApiKeyIp = false;
+    $scope.showApiKeySecret = false;
+    $scope.apiKeySecret = '';
     $scope._ = { 'newIp': '', 'newApiUser': { 'label': '' } };
     $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)');
 
@@ -724,7 +726,19 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
             text: gettext("Do you really want to see this secret key ? It could be a security issue!"),
             positive: 'Show',
             negative: 'Cancel' }).then(function () {
-            messagebox.show({ title: gettext('Show Api key'), text: key.secret, positive: 'OK' });
+            $scope.apiKeySecret = key.secret;
+            $scope.showApiKeySecret = true;
+        });
+    };
+
+    $scope.closeApiKeySecret = function () {
+        $scope.showApiKeySecret = false;
+        $scope.apiKeySecret = '';
+    };
+
+    $scope.copyApiKeySecret = function () {
+        navigator.clipboard.writeText($scope.apiKeySecret).then(function () {
+            notify.success(gettext('Copied to clipboard!'));
         });
     };
 

@@ -677,6 +677,9 @@ class Handler(HttpPlugin):
         with LMNFile(apiconfig_path, 'r') as f:
             apiconfig = f.read()
 
+        if not apiconfig.get('host_keys', []):
+            apiconfig['host_keys'] = {}
+
         apiconfig['host_keys'][key['name']] = {
             'secret': key['secret'],
             'user': key['user'],

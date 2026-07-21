@@ -57,8 +57,12 @@ angular.module('lmn.users').service('userPassword', function($http, $uibModal, m
             text: gettext("Do you really want to see this password ? It could be a security issue!"),
             positive: 'Show',
             negative: 'Cancel'}).then(() => {
-                $http.get(`/api/lmn/users/${user.sAMAccountName}/bindpassword`).then((resp) => {
-                    messagebox.show({title: gettext('Show bind user password'), text: resp.data, positive: 'OK'});
+                $uibModal.open({
+                    templateUrl: '/lmn_users:resources/partial/showBindPassword.modal.html',
+                    controller: 'LMNUsersShowBindPasswordController',
+                    resolve: {
+                        user: () => user
+                    }
                 });
             });
     };

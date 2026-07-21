@@ -19,7 +19,21 @@ angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope
     $scope.close = () ->
         $uibModalInstance.close()
 
-angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype, validation) ->
+angular.module('lmn.users').controller 'LMNUsersShowBindPasswordController', ($scope, $uibModalInstance, $http, gettext, notify, user) ->
+    $scope.username = user.sAMAccountName
+    $scope.password = null
+
+    $http.get("/api/lmn/users/#{$scope.username}/bindpassword").then (resp) ->
+        $scope.password = resp.data
+
+    $scope.copy = () ->
+        navigator.clipboard.writeText($scope.password).then () ->
+            notify.success(gettext('Copied to clipboard!'))
+
+    $scope.close = () ->
+        $uibModalInstance.close()
+
+angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype) ->
     $scope.users = users
     # Single user
     if not Array.isArray(users)
@@ -32,15 +46,12 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
             notify.error(gettext("You have to enter a password"))
             return
 
-        test = validation.isValidPassword($scope.userpw)
-        if test != true
-           notify.error gettext(test)
-           return
-        else
-            usernames = $scope.users.flatMap((x) => x.sAMAccountName).join(',').trim()
-            $http.post("/api/lmn/users/passwords/set-#{$scope.pwtype}", {users: usernames, password: $scope.userpw}).then (resp) ->
-                notify.success(gettext('New password set'))
-        $scope.close()
+        usernames = $scope.users.flatMap((x) => x.sAMAccountName).join(',').trim()
+        $http.post("/api/lmn/users/passwords/set-#{$scope.pwtype}", {users: usernames, password: $scope.userpw}).then (resp) ->
+            notify.success(gettext('New password set'))
+            $scope.close()
+        .catch (e) ->
+            notify.error(gettext('Password change failed: ') + e.data.message)
 
     $scope.close = () ->
         $uibModalInstance.close()

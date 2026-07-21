@@ -568,6 +568,17 @@ class Handler(HttpPlugin):
         with LMNFile(config_path, 'w') as f:
             f.write(lmconfig)
 
+    def _restart_api_service(self):
+        """
+        Restart linuxmuster-api so it picks up the config.yml just written
+        (host_keys/host_key_auth are only read once at process startup).
+        """
+
+        try:
+            subprocess.check_call(['systemctl', 'restart', 'linuxmuster-api'])
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            pass
+
     @get(r'/api/lmn/apisettings')
     @endpoint(api=True)
     def handle_api_get_apisettings(self, http_context):
@@ -625,6 +636,8 @@ class Handler(HttpPlugin):
             with LMNFile(apiconfig_path, 'w') as f:
                 f.write(apiconfig)
 
+        self._restart_api_service()
+
     @post(r'/api/lmn/apikeys')
     @endpoint(api=True)
     def handle_api_post_apisettings(self, http_context):
@@ -654,6 +667,8 @@ class Handler(HttpPlugin):
 
         with LMNFile(apiconfig_path, 'w') as f:
             f.write(apiconfig)
+
+        self._restart_api_service()
 
     @put(r'/api/lmn/apikeys')
     @endpoint(api=True)
@@ -690,5 +705,7 @@ class Handler(HttpPlugin):
 
         with LMNFile(apiconfig_path, 'w') as f:
             f.write(apiconfig)
+
+        self._restart_api_service()
 
         return key['secret']

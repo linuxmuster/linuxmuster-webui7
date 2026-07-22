@@ -1985,7 +1985,23 @@
     };
   });
 
-  angular.module('lmn.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype, validation) {
+  angular.module('lmn.users').controller('LMNUsersShowBindPasswordController', function($scope, $uibModalInstance, $http, gettext, notify, user) {
+    $scope.username = user.sAMAccountName;
+    $scope.password = null;
+    $http.get(`/api/lmn/users/${$scope.username}/bindpassword`).then(function(resp) {
+      return $scope.password = resp.data;
+    });
+    $scope.copy = function() {
+      return navigator.clipboard.writeText($scope.password).then(function() {
+        return notify.success(gettext('Copied to clipboard!'));
+      });
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.close();
+    };
+  });
+
+  angular.module('lmn.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype) {
     $scope.users = users;
     // Single user
     if (!Array.isArray(users)) {
@@ -1994,27 +2010,23 @@
     $scope.pwtype = pwtype === 'current' ? pwtype : 'first';
     $scope.userpw = "";
     $scope.save = function() {
-      var test, usernames;
+      var usernames;
       if (!$scope.userpw) {
         notify.error(gettext("You have to enter a password"));
         return;
       }
-      test = validation.isValidPassword($scope.userpw);
-      if (test !== true) {
-        notify.error(gettext(test));
-        return;
-      } else {
-        usernames = $scope.users.flatMap((x) => {
-          return x.sAMAccountName;
-        }).join(',').trim();
-        $http.post(`/api/lmn/users/passwords/set-${$scope.pwtype}`, {
-          users: usernames,
-          password: $scope.userpw
-        }).then(function(resp) {
-          return notify.success(gettext('New password set'));
-        });
-      }
-      return $scope.close();
+      usernames = $scope.users.flatMap((x) => {
+        return x.sAMAccountName;
+      }).join(',').trim();
+      return $http.post(`/api/lmn/users/passwords/set-${$scope.pwtype}`, {
+        users: usernames,
+        password: $scope.userpw
+      }).then(function(resp) {
+        notify.success(gettext('New password set'));
+        return $scope.close();
+      }).catch(function(e) {
+        return notify.error(gettext('Password change failed: ') + e.data.message);
+      });
     };
     return $scope.close = function() {
       return $uibModalInstance.close();
@@ -3335,14 +3347,20 @@ angular.module('lmn.users').service('userPassword', function ($http, $uibModal, 
         };
     };
 
-    this.showBindPW = function (user) {
+    this.showBindPW = function (_user) {
         messagebox.show({
             title: gettext('Show bind user password'),
             text: gettext("Do you really want to see this password ? It could be a security issue!"),
             positive: 'Show',
             negative: 'Cancel' }).then(function () {
-            $http.get('/api/lmn/users/' + user.sAMAccountName + '/bindpassword').then(function (resp) {
-                messagebox.show({ title: gettext('Show bind user password'), text: resp.data, positive: 'OK' });
+            $uibModal.open({
+                templateUrl: '/lmn_users:resources/partial/showBindPassword.modal.html',
+                controller: 'LMNUsersShowBindPasswordController',
+                resolve: {
+                    user: function user() {
+                        return _user;
+                    }
+                }
             });
         });
     };

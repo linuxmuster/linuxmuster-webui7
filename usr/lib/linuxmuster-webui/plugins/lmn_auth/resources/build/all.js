@@ -30,17 +30,15 @@
     });
   });
 
-  angular.module('lmn.auth').controller('LMNPasswordChangeCtrl', function($scope, $http, pageTitle, gettext, notify, validation) {
+  angular.module('lmn.auth').controller('LMNPasswordChangeCtrl', function($scope, $http, pageTitle, gettext, notify) {
     pageTitle.set(gettext('Change Password'));
     $scope.showNewPassword = false;
     $scope.toggleShowNewPassword = () => {
       return $scope.showNewPassword = !$scope.showNewPassword;
     };
     return $scope.change = function() {
-      var test;
-      test = validation.isValidPassword($scope.newPassword);
-      if (test !== true) {
-        notify.error(gettext(test));
+      if (!$scope.newPassword) {
+        notify.error(gettext('You have to enter a password'));
         return;
       }
       return $http.post('/api/lmn/change-password', {

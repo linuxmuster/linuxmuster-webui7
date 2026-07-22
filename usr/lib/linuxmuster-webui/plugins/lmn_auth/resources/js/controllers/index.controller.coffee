@@ -3,7 +3,7 @@ angular.module('lmn.auth').config ($routeProvider) ->
         controller: 'LMNPasswordChangeCtrl'
         templateUrl: '/lmn_auth:resources/partial/index.html'
 
-angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, pageTitle, gettext, notify, validation) ->
+angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, pageTitle, gettext, notify) ->
     pageTitle.set(gettext('Change Password'))
 
     $scope.showNewPassword = false;
@@ -11,11 +11,9 @@ angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, p
     $scope.toggleShowNewPassword = () => $scope.showNewPassword = !$scope.showNewPassword;
 
     $scope.change = () ->
-        test = validation.isValidPassword($scope.newPassword)
-        if test != true
-           notify.error gettext(test)
+        if not $scope.newPassword
+           notify.error gettext('You have to enter a password')
            return
-
 
         $http.post('/api/lmn/change-password', password: $scope.password, new_password: $scope.newPassword).then () ->
             notify.success gettext('Password changed')

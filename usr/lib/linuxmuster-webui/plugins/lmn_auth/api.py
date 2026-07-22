@@ -24,6 +24,7 @@ from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname,
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 from linuxmusterTools.ldapconnector import LMNLdapReader
+from linuxmusterTools.passwords import PasswordPolicyProvider
 
 
 @component(AuthenticationProvider)
@@ -86,6 +87,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
             self.context.schoolmgr = schoolmgr
             self.context.ldapreader = LMNLdapReader
             self.context.profile = self._get_profile(username)
+            self.context.password_policy_provider = PasswordPolicyProvider()
+
+            # Cache samba domain's policies
+            self.context.password_policy_provider._samba_policy()
 
             def schoolget(*args, **kwargs):
                 """
@@ -282,6 +287,14 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         if not self.authenticate(username, password):
             raise Exception('Wrong password')
+
+        profil = self.get_ldap_user(username)
+        result = self.context.password_policy_provider.validate(
+            new_password, role=profil['sophomorixRole'], school=profil['sophomorixSchoolname'], username=username
+        )
+        if not result.ok:
+            raise Exception(f"Password does not meet requirements: {'; '.join(result.violations)}")
+
         systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         subprocess.check_call(systemString, shell=False, sensitive=True)
 

@@ -349,9 +349,15 @@ class Handler(HttpPlugin):
         is always present under 'default' (empty rule list if unconfigured),
         so the frontend never has to guard against missing keys.
 
+        'schools' is scoped by the caller's actual sophomorixRole (like
+        lmn_users/views/passwords.py's _checkPasswordPermissions), not by
+        the session's active school: global-administrators get every
+        school's override, everyone else only their current school's,
+        never another school's.
+
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: Configuration, with keys 'default' and 'schools'
+        :return: Configuration, with keys 'default' and 'schools' (all schools for global-administrators, own school only otherwise)
         :rtype: dict
         """
 
@@ -364,9 +370,20 @@ class Handler(HttpPlugin):
         for role in self.PASSWORD_CONSTRAINTS_ROLES:
             default.setdefault(role, [])
 
+        identity_role = self.context.ldapreader.getval(f'/users/{self.context.identity}', 'sophomorixRole')
+        schools = config.get('schools', {})
+
+        if identity_role == 'globaladministrator':
+            scoped_schools = schools
+        elif identity_role == 'schooladministrator':
+            school = self.context.schoolmgr.school
+            scoped_schools = {school: schools[school]} if school in schools else {}
+        else:
+            return {}
+
         return {
             'default': default,
-            'schools': config.get('schools', {}),
+            'schools': scoped_schools,
         }
 
     @post(r'/api/lmn/config/passwordconstraints')
@@ -375,6 +392,21 @@ class Handler(HttpPlugin):
     def handle_api_save_password_constraints(self, http_context):
         """
         Validate and save the password constraints config.
+
+        'schools' is scoped by the caller's actual sophomorixRole, like
+        handle_api_read_password_constraints: global-administrators may
+        write any school present in the posted 'schools' payload (every
+        other school's existing override is preserved untouched);
+        everyone else may only write their own current school, any other
+        school in the payload is ignored.
+
+        The global 'default' rules are only changed by global-administrators:
+        'lm:schoolsettings' (required to reach this endpoint at all) is also
+        granted to school-administrators, so a posted 'default' that actually
+        differs from what's on disk is rejected unless the caller also holds
+        'lm:globalsettings'. Omitting 'default' (or resending it unchanged)
+        never triggers this check, so school-administrators can still save
+        their own school's override normally.
 
         Every rule is validated with linuxmusterTools' own rule builder
         before writing (pure validation, no Samba/LDAP access), so a
@@ -389,7 +421,25 @@ class Handler(HttpPlugin):
 
         from linuxmusterTools.passwords import PasswordRules
 
-        config = http_context.json_body()['config']
+        posted_config = http_context.json_body()['config']
+        identity_role = self.context.ldapreader.getval(f'/users/{self.context.identity}', 'sophomorixRole')
+
+        config = {}
+        if os.path.isfile(self.PASSWORD_CONSTRAINTS_PATH):
+            with LMNFile(self.PASSWORD_CONSTRAINTS_PATH, 'r') as f:
+                config = f.read() or {}
+
+        config.setdefault('default', {})
+        if 'default' in posted_config and posted_config['default'] != config['default']:
+            with authorize('lm:globalsettings'):
+                config['default'] = posted_config['default']
+
+        posted_schools = posted_config.get('schools', {})
+        if identity_role == 'globaladministrator':
+            config.setdefault('schools', {}).update(posted_schools)
+        else:
+            school = self.context.schoolmgr.school
+            config.setdefault('schools', {})[school] = posted_schools.get(school, {})
 
         role_rule_lists = list(config.get('default', {}).values())
         for school_rules in config.get('schools', {}).values():

@@ -11,12 +11,36 @@ from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
 from aj.plugins.lmn_common.tools import sort_schoolclasses
+from linuxmusterTools.passwords import MinLengthRule
 
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
+
+    def _get_role_school(self, user):
+        if user.endswith('-exam'):
+            return 'examuser', self.context.schoolmgr.school
+        return (
+            self.context.ldapreader.getval(f'/users/{user}', 'sophomorixRole'),
+            self.context.ldapreader.getval(f'/users/{user}', 'sophomorixSchoolname'),
+        )
+
+    def _validate_password(self, users, password):
+        """
+        Validate `password` against the resolved policy of every user in the
+        comma-separated `users` list, raising on the first violation found.
+        """
+
+        for user in users.split(','):
+            role, school = self._get_role_school(user)
+            result = self.context.password_policy_provider.validate(password, role=role, school=school, username=user)
+            if not result.ok:
+                raise EndpointError(
+                    None,
+                    message=f"Password does not meet requirements for {user}: {'; '.join(result.violations)}",
+                )
 
     def _checkPasswordPermissions(self, http_context, user):
 
@@ -120,9 +144,16 @@ class Handler(HttpPlugin):
             if not self._checkPasswordPermissions(http_context, user):
                 return http_context.respond_forbidden()
 
-        # TODO: Password length should be read from school settings
-        password_length = '8'
-        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--random', password_length, '-jj', '--use-smbpasswd']
+        # Random password length: at least as long as the strictest configured
+        # minimum among the target users, falling back to 8 if none is set.
+        for user in users.split(','):
+            role, school = self._get_role_school(user)
+            policy = self.context.password_policy_provider.get_policy(role, school)
+            for rule in policy.rules:
+                if isinstance(rule, MinLengthRule):
+                    password_length = rule.length
+
+        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--random', str(password_length), '-jj', '--use-smbpasswd']
         return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @post(r'/api/lmn/users/passwords/set-first')
@@ -145,6 +176,8 @@ class Handler(HttpPlugin):
             # If one user fails the test, responding forbidden
             if not self._checkPasswordPermissions(http_context, user):
                 return http_context.respond_forbidden()
+
+        self._validate_password(users, password)
 
         sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '-jj', '--use-smbpasswd']
         return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
@@ -169,6 +202,8 @@ class Handler(HttpPlugin):
             # If one user fails the test, responding forbidden
             if not self._checkPasswordPermissions(http_context, user):
                 return http_context.respond_forbidden()
+
+        self._validate_password(users, password)
 
         sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
         return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)

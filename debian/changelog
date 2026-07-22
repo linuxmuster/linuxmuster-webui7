@@ -1,3 +1,22 @@
+linuxmuster-webui7 (7.4.5) lmn74; urgency=medium
+
+  * Add endpoints, service and frontend to edit password constraints.
+  * Scope password constraints read/write by role (schooladmin vs
+    globaladmin) and by school. Fix #287.
+  * Validate new passwords against the configured policy when setting or
+    changing them.
+  * Disable default (global) fields for schooladmins; i18n for character
+    classes.
+  * Catch backend validation errors properly and cap require_classes count
+    to the number of checked classes. Fix #289.
+  * Print passwords of parents in schools other than the default school.
+    Fix #288.
+  * Ensure host_key key is not missing; restart API after saving a new key.
+  * Replace password/settings modals with a better dialog window.
+  * Build fix for the bind passwords view; fix default values.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 22 Jul 2026 22:21:23 +0200
+
 linuxmuster-webui7 (7.4.4) lmn74; urgency=medium
 
   * Typo in requirements. 

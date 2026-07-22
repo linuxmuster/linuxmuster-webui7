@@ -243,6 +243,7 @@ class Handler(HttpPlugin):
                 classes.append('parents')
             else:
                 classes.append(f'{self.context.schoolmgr.school}-teachers')
+                classes.append(f'{self.context.schoolmgr.school}-parents')
 
         else:
             schoolclasses_user = self.context.ldapreader.schoolget(f'/users/{self.context.identity}').get('schoolclasses', [])

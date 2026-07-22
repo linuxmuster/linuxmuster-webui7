@@ -449,7 +449,7 @@ class Handler(HttpPlugin):
             for entry in rules:
                 try:
                     PasswordRules.build(entry)
-                except (ValueError, KeyError) as e:
+                except (ValueError, KeyError, TypeError, AttributeError) as e:
                     raise EndpointError(None, message=str(e))
 
         with LMNFile(self.PASSWORD_CONSTRAINTS_PATH, 'w') as f:

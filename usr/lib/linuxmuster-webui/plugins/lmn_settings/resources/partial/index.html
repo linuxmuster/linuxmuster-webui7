@@ -845,14 +845,14 @@
                 <th translate>Required character classes</th>
                 <td>
                     <label class="checkbox-inline" ng:repeat="cls in passwordRuleClasses">
-                        <input type="checkbox" ng:disabled="!isGlobalAdmin" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].classes[cls]" /> {{passwordRuleClassLabels[cls]}}
+                        <input type="checkbox" ng:disabled="!isGlobalAdmin" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].classes[cls]" ng:change="clampRequiredCount(passwordConstraintsForm.default[passwordConstraintsRole])" /> {{passwordRuleClassLabels[cls]}}
                     </label>
                 </td>
             </tr>
             <tr>
                 <th translate>Required count</th>
                 <td>
-                    <input type="number" min="1" ng:disabled="!isGlobalAdmin" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].count" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
+                    <input type="number" min="1" max="{{checkedClassCount(passwordConstraintsForm.default[passwordConstraintsRole])}}" ng:disabled="!isGlobalAdmin" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].count" ng:change="clampRequiredCount(passwordConstraintsForm.default[passwordConstraintsRole])" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
                 </td>
             </tr>
         </table>
@@ -882,14 +882,14 @@
                     <th translate>Required character classes</th>
                     <td>
                         <label class="checkbox-inline" ng:repeat="cls in passwordRuleClasses">
-                            <input type="checkbox" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].classes[cls]" /> {{passwordRuleClassLabels[cls]}}
+                            <input type="checkbox" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].classes[cls]" ng:change="clampRequiredCount(passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole])" /> {{passwordRuleClassLabels[cls]}}
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <th translate>Required count</th>
                     <td>
-                        <input type="number" min="1" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].count" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
+                        <input type="number" min="1" max="{{checkedClassCount(passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole])}}" ng:model="passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole].count" ng:change="clampRequiredCount(passwordConstraintsForm.schools[currentSchool][passwordConstraintsRole])" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
                     </td>
                 </tr>
             </table>

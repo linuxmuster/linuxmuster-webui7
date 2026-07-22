@@ -4,7 +4,7 @@ angular.module('lmn.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields, passwordConstraints) ->
+angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields, passwordConstraints, identity) ->
     pageTitle.set(gettext('Settings'))
 
     $scope.trans = {
@@ -13,7 +13,8 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $scope.activetab = 0
     $scope.custom_fields_role_selector = 'students'
-    $scope.isGlobalAdmin = $scope.identity.profile.sophomorixRole == 'globaladministrator'
+    identity.promise.then () ->
+        $scope.isGlobalAdmin = identity.profile.sophomorixRole == 'globaladministrator'
     $scope.passwordConstraintsRoles = ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator']
     $scope.passwordConstraintsRole = 'student'
     $scope.passwordRuleClasses = ['lower', 'upper', 'digit', 'special']
@@ -104,6 +105,16 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             rule.count = form.count if form.count
             rules.push(rule)
         rules
+
+    $scope.checkedClassCount = (form) ->
+        return 0 unless form
+        (cls for cls, checked of form.classes when checked).length
+
+    $scope.clampRequiredCount = (form) ->
+        return unless form
+        max = $scope.checkedClassCount(form)
+        if form.count and form.count > max
+            form.count = max or null
 
     $http.get('/api/lmn/activeschool').then (resp) ->
         $scope.currentSchool = resp.data
@@ -232,6 +243,8 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             for role, form of roles
                 config.schools[school][role] = buildPasswordRulesFromForm(form)
 
-        passwordConstraints.save(config).then () ->
+        passwordConstraints.save(config).then((resp) ->
             $scope.passwordConstraints = config
             notify.success gettext('Saved')
+        ).catch (err) ->
+            notify.error(err.data.message or gettext('Could not save password constraints'))

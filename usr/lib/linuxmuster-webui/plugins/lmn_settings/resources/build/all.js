@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields, passwordConstraints) {
+  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields, passwordConstraints, identity) {
     var buildPasswordRuleForm, buildPasswordRulesFromForm;
     pageTitle.set(gettext('Settings'));
     $scope.trans = {
@@ -21,7 +21,9 @@
     };
     $scope.activetab = 0;
     $scope.custom_fields_role_selector = 'students';
-    $scope.isGlobalAdmin = $scope.identity.profile.sophomorixRole === 'globaladministrator';
+    identity.promise.then(function() {
+      return $scope.isGlobalAdmin = identity.profile.sophomorixRole === 'globaladministrator';
+    });
     $scope.passwordConstraintsRoles = ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator'];
     $scope.passwordConstraintsRole = 'student';
     $scope.passwordRuleClasses = ['lower', 'upper', 'digit', 'special'];
@@ -170,6 +172,34 @@
         rules.push(rule);
       }
       return rules;
+    };
+    $scope.checkedClassCount = function(form) {
+      var checked, cls;
+      if (!form) {
+        return 0;
+      }
+      return ((function() {
+        var ref, results;
+        ref = form.classes;
+        results = [];
+        for (cls in ref) {
+          checked = ref[cls];
+          if (checked) {
+            results.push(cls);
+          }
+        }
+        return results;
+      })()).length;
+    };
+    $scope.clampRequiredCount = function(form) {
+      var max;
+      if (!form) {
+        return;
+      }
+      max = $scope.checkedClassCount(form);
+      if (form.count && form.count > max) {
+        return form.count = max || null;
+      }
     };
     $http.get('/api/lmn/activeschool').then(function(resp) {
       $scope.currentSchool = resp.data;
@@ -352,9 +382,11 @@
           config.schools[school][role] = buildPasswordRulesFromForm(form);
         }
       }
-      return passwordConstraints.save(config).then(function() {
+      return passwordConstraints.save(config).then(function(resp) {
         $scope.passwordConstraints = config;
         return notify.success(gettext('Saved'));
+      }).catch(function(err) {
+        return notify.error(err.data.message || gettext('Could not save password constraints'));
       });
     };
   });

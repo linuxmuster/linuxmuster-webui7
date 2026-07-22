@@ -13,6 +13,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $scope.activetab = 0
     $scope.custom_fields_role_selector = 'students'
+    $scope.isGlobalAdmin = $scope.identity.profile.sophomorixRole == 'globaladministrator'
     $scope.passwordConstraintsRoles = ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator']
     $scope.passwordConstraintsRole = 'student'
     $scope.passwordRuleClasses = ['lower', 'upper', 'digit', 'special']
@@ -219,10 +220,12 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             $scope.passwordConstraintsForm.schools[$scope.currentSchool][role] = buildPasswordRuleForm([])
 
     $scope.savePasswordConstraints = () ->
-        config = {default: {}, schools: {}}
+        config = {schools: {}}
 
-        for role in $scope.passwordConstraintsRoles
-            config.default[role] = buildPasswordRulesFromForm($scope.passwordConstraintsForm.default[role])
+        if $scope.isGlobalAdmin
+            config.default = {}
+            for role in $scope.passwordConstraintsRoles
+                config.default[role] = buildPasswordRulesFromForm($scope.passwordConstraintsForm.default[role])
 
         for school, roles of $scope.passwordConstraintsForm.schools
             config.schools[school] = {}

@@ -21,6 +21,7 @@
     };
     $scope.activetab = 0;
     $scope.custom_fields_role_selector = 'students';
+    $scope.isGlobalAdmin = $scope.identity.profile.sophomorixRole === 'globaladministrator';
     $scope.passwordConstraintsRoles = ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator'];
     $scope.passwordConstraintsRole = 'student';
     $scope.passwordRuleClasses = ['lower', 'upper', 'digit', 'special'];
@@ -332,13 +333,15 @@
     return $scope.savePasswordConstraints = function() {
       var config, form, i, len, ref, ref1, role, roles, school;
       config = {
-        default: {},
         schools: {}
       };
-      ref = $scope.passwordConstraintsRoles;
-      for (i = 0, len = ref.length; i < len; i++) {
-        role = ref[i];
-        config.default[role] = buildPasswordRulesFromForm($scope.passwordConstraintsForm.default[role]);
+      if ($scope.isGlobalAdmin) {
+        config.default = {};
+        ref = $scope.passwordConstraintsRoles;
+        for (i = 0, len = ref.length; i < len; i++) {
+          role = ref[i];
+          config.default[role] = buildPasswordRulesFromForm($scope.passwordConstraintsForm.default[role]);
+        }
       }
       ref1 = $scope.passwordConstraintsForm.schools;
       for (school in ref1) {

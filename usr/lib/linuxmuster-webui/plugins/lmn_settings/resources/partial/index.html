@@ -831,25 +831,28 @@
         <br />
 
         <h3 translate>Default rules (all schools)</h3>
+        <p class="help-block" ng:if="!isGlobalAdmin" translate>
+            Only global administrators can change the default rules applied to every school.
+        </p>
         <table class="table">
             <tr>
                 <th translate>Minimum length</th>
                 <td>
-                    <input type="number" min="0" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].minLength" class="form-control" placeholder="{{'Samba minimum applies if empty'|translate}}" />
+                    <input type="number" min="0" ng:disabled="!isGlobalAdmin" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].minLength" class="form-control" placeholder="{{'Samba minimum applies if empty'|translate}}" />
                 </td>
             </tr>
             <tr>
                 <th translate>Required character classes</th>
                 <td>
                     <label class="checkbox-inline" ng:repeat="cls in passwordRuleClasses">
-                        <input type="checkbox" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].classes[cls]" /> {{passwordRuleClassLabels[cls]}}
+                        <input type="checkbox" ng:disabled="!isGlobalAdmin" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].classes[cls]" /> {{passwordRuleClassLabels[cls]}}
                     </label>
                 </td>
             </tr>
             <tr>
                 <th translate>Required count</th>
                 <td>
-                    <input type="number" min="1" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].count" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
+                    <input type="number" min="1" ng:disabled="!isGlobalAdmin" ng:model="passwordConstraintsForm.default[passwordConstraintsRole].count" class="form-control" placeholder="{{'all checked'|translate}}" style="width: 8em;" />
                 </td>
             </tr>
         </table>

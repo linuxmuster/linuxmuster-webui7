@@ -22,6 +22,7 @@ from aj.auth import AuthenticationProvider, OSAuthenticationProvider, Authentica
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config, allowed_roles
 from aj.plugins.lmn_common.multischool import SchoolManager
+from aj.plugins.lmn_common.lmnapi_client import LmnapiClient
 from aj.api.endpoint import EndpointError
 from linuxmusterTools.ldapconnector import LMNLdapReader
 from linuxmusterTools.passwords import PasswordPolicyProvider
@@ -227,6 +228,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         self._get_krb_ticket(username, password)
 
+        # Get a linuxmuster-api token once for the whole session.
+        self.context.lmnapi_client = LmnapiClient()
+        self.context.lmnapi_client.authenticate(username, password)
+
         return {
             'username': username,
             'password': password,
@@ -275,7 +280,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def change_password(self, username, password, new_password):
         """
-        Change user password through sophomorix-passwd.
+        Change user password through linuxmuster-api.
 
         :param username: Username
         :type username: string
@@ -295,8 +300,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if not result.ok:
             raise Exception(f"Password does not meet requirements: {'; '.join(result.violations)}")
 
-        systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
-        subprocess.check_call(systemString, shell=False, sensitive=True)
+        # authenticate() above just refreshed self.context.lmnapi_client's token
+        self.context.lmnapi_client.set_current_password(username, new_password)
 
     def get_isolation_gid(self, username):
         """
@@ -468,8 +473,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             f'Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{{ }}'))
 
     def update_password(self, username, password):
-        systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
-        subprocess.check_call(systemString, shell=False, sensitive=True)
+        self.context.lmnapi_client.set_current_password(username, password)
         return True
 
     def signout(self):

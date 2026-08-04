@@ -50,6 +50,22 @@ else:
     display_options = {}
     logging.error("Without config.yml the users will not be able to login.")
 
+# Load linuxmuster-api's host/port
+lmnapi_config_path = '/etc/linuxmuster/api/config.yml'
+lmnapi_host = '127.0.0.1'
+lmnapi_port = 8001
+
+if os.path.isfile(lmnapi_config_path):
+    try:
+        with LMNFile(lmnapi_config_path, 'r') as lmnapi_conf:
+            uvicorn_conf = (lmnapi_conf.read() or {}).get('uvicorn', {})
+            configured_host = uvicorn_conf.get('host')
+            if configured_host and configured_host != '0.0.0.0':
+                lmnapi_host = configured_host
+            lmnapi_port = uvicorn_conf.get('port', lmnapi_port)
+    except Exception as e:
+        logging.error(f"Could not read linuxmuster-api's host/port from {lmnapi_config_path}: {e}")
+
 # Load samba domain
 smbconf = ConfigParser(delimiters=("=",))
 try:

@@ -11,6 +11,7 @@ from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
 from aj.plugins.lmn_common.tools import sort_schoolclasses
+from aj.plugins.lmn_common import lmnapi_client
 from linuxmusterTools.passwords import MinLengthRule
 
 
@@ -165,8 +166,6 @@ class Handler(HttpPlugin):
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: Output of `sophomorix-passwd`
-        :rtype: dict
         """
 
         users = http_context.json_body()['users']
@@ -179,8 +178,11 @@ class Handler(HttpPlugin):
 
         self._validate_password(users, password)
 
-        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '-jj', '--use-smbpasswd']
-        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
+        try:
+            for user in users.split(','):
+                self.context.lmnapi_client.set_first_password(user, password, set_current=True)
+        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+            raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/users/passwords/set-current')
     @authorize('lm:users:passwords')
@@ -191,8 +193,6 @@ class Handler(HttpPlugin):
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: Output of `sophomorix-passwd`
-        :rtype: dict
         """
 
         users = http_context.json_body()['users']
@@ -205,8 +205,11 @@ class Handler(HttpPlugin):
 
         self._validate_password(users, password)
 
-        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
-        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
+        try:
+            for user in users.split(','):
+                self.context.lmnapi_client.set_current_password(user, password, set_first=False)
+        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+            raise EndpointError(None, message=str(e))
 
     @get(r'/api/lmn/users/classes')
     @authorize('lm:users:passwords')

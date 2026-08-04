@@ -12,7 +12,6 @@ from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
 from aj.plugins.lmn_common.tools import sort_schoolclasses
 from aj.plugins.lmn_common import lmnapi_client
-from linuxmusterTools.passwords import MinLengthRule
 
 
 @component(HttpPlugin)
@@ -94,7 +93,7 @@ class Handler(HttpPlugin):
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: Output of `sophomorix-passwd`
+        :return: Output of `sophomorix-user`
         :rtype: dict
         """
 
@@ -109,12 +108,10 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_users_passwords_first(self, http_context):
         """
-        Reset user's password to initial password.
+        Reset user's current password back to their existing first password.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: Output of `sophomorix-passwd`
-        :rtype: dict
         """
 
         users = http_context.json_body()['users']
@@ -123,19 +120,23 @@ class Handler(HttpPlugin):
             if not self._checkPasswordPermissions(http_context, user):
                 return http_context.respond_forbidden()
 
-        sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', users, '--use-smbpasswd']
-        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+        try:
+            for user in users.split(','):
+                self.context.lmnapi_client.set_first_password(user)
+        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+            raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/users/passwords/set-random')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_passwords_random(self, http_context):
         """
-        Set a random password.
+        Generate and set a random password, satisfying each user's own
+        password policy (linuxmuster-api resolves it server-side per user).
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: Output of `sophomorix-passwd`
+        :return: Dict of generated passwords, keyed by user
         :rtype: dict
         """
 
@@ -145,17 +146,13 @@ class Handler(HttpPlugin):
             if not self._checkPasswordPermissions(http_context, user):
                 return http_context.respond_forbidden()
 
-        # Random password length: at least as long as the strictest configured
-        # minimum among the target users, falling back to 8 if none is set.
-        for user in users.split(','):
-            role, school = self._get_role_school(user)
-            policy = self.context.password_policy_provider.get_policy(role, school)
-            for rule in policy.rules:
-                if isinstance(rule, MinLengthRule):
-                    password_length = rule.length
-
-        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--random', str(password_length), '-jj', '--use-smbpasswd']
-        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+        try:
+            return {
+                user: self.context.lmnapi_client.set_random_first_password(user)
+                for user in users.split(',')
+            }
+        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+            raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/users/passwords/set-first')
     @authorize('lm:users:passwords')
@@ -442,8 +439,10 @@ class Handler(HttpPlugin):
         if not self._checkPasswordPermissions(http_context, user):
             return http_context.respond_forbidden()
 
-        line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', user]).splitlines()[-4]
-        return b'1 OK' in line
+        try:
+            return self.context.lmnapi_client.check_first_password(user)
+        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+            raise EndpointError(None, message=str(e))
 
     @get(r'/api/lmn/users/(?P<binduser>[a-z0-9\-_]*)/bindpassword')
     @authorize('lm:users:globaladmins:create')

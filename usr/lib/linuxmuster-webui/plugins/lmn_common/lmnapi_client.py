@@ -57,31 +57,57 @@ class LmnapiClient:
         self.token = r.json()
         return self.token
 
-    def set_first_password(self, user, password, set_current=False):
+    def set_first_password(self, user, password=None, set_current=False):
         """
         Call POST /v1/users/{user}/set-first-password.
+
+        If password is None, linuxmuster-api resets the user's current
+        password back to their existing first password instead of setting a
+        new one (set_current is then meaningless and ignored on that path).
         """
 
-        self._post_password(user, 'set-first-password', {'password': password, 'set_current': set_current})
+        self._request('POST', f'/v1/users/{user}/set-first-password', json={'password': password, 'set_current': set_current})
 
     def set_current_password(self, user, password, set_first=False):
         """
         Call POST /v1/users/{user}/set-current-password.
         """
 
-        self._post_password(user, 'set-current-password', {'password': password, 'set_first': set_first})
+        self._request('POST', f'/v1/users/{user}/set-current-password', json={'password': password, 'set_first': set_first})
 
-    def _post_password(self, user, endpoint, body):
+    def set_random_first_password(self, user):
+        """
+        Call POST /v1/users/{user}/set-random-first-password: linuxmuster-api
+        generates a password satisfying the current password policy and sets
+        it as the user's first and current password.
+
+        :return: the generated password
+        """
+
+        return self._request('POST', f'/v1/users/{user}/set-random-first-password')['password']
+
+    def check_first_password(self, user):
+        """
+        Call GET /v1/users/{user}?check_first_pw=true.
+
+        :return: True if the user's current password still matches their
+                 stored first password, False otherwise.
+        """
+
+        return self._request('GET', f'/v1/users/{user}', params={'check_first_pw': True})['FirstPasswordSet']
+
+    def _request(self, method, path, **kwargs):
         if not self.token:
             raise LmnapiUnavailable('No linuxmuster-api session token available.')
 
         try:
-            r = requests.post(
-                f'https://{self.host}:{self.port}/v1/users/{user}/{endpoint}',
-                json=body,
+            r = requests.request(
+                method,
+                f'https://{self.host}:{self.port}{path}',
                 headers={'X-API-Key': self.token},
                 verify=False,
                 timeout=10,
+                **kwargs,
             )
         except requests.exceptions.RequestException as e:
             raise LmnapiUnavailable(str(e))
@@ -92,3 +118,5 @@ class LmnapiClient:
             except ValueError:
                 detail = r.text
             raise LmnapiError(detail)
+
+        return r.json()

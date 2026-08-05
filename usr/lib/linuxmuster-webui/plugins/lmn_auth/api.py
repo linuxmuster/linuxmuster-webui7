@@ -464,8 +464,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         respects some standards.
         """
 
-        strong_pw = re.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()\+{}\-\[\]]|(?=.*\d)).{7,}', password)
-        valid_pw = re.match('^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$', password)
+        strong_pw = re.match(r'(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()+{}\-[\]]|(?=.*\d)).{7,}', password)
+        valid_pw = re.match(r'^[a-zA-Z0-9!@#§+\-$%&*{}()\][]+$', password)
         if valid_pw and strong_pw:
             return True
         raise EndpointError(_(

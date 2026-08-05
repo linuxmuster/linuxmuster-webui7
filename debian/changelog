@@ -1,3 +1,24 @@
+linuxmuster-webui7 (7.4.6) lmn74; urgency=medium
+
+  * [users] Migrate all password management (initial/current/random
+    password, first-password check and reveal) from
+    sophomorix-passwd/sophomorix-user shell-outs to linuxmuster-api, via a
+    new minimal lmnapi HTTP client. Add linuxmuster-api as a package
+    dependency and load its host/port from config.
+  * [auth] Fix self.context.lmnapi_client being lost after login:
+    authenticate() runs on Ajenti's shared restricted worker, not the
+    session's own process. The client is now built in
+    prepare_environment() instead.
+  * [users] Show a clear message instead of a raw technical error (e.g.
+    "No linuxmuster-api session token available") when linuxmuster-api is
+    unreachable for the current session; add the missing failure
+    notification for the "Set initial password"/"Set random password"
+    actions on the student list.
+  * [auth] Fix redundant regex escapes and unescaped-sequence warnings in
+    check_password_complexity().
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 05 Aug 2026 15:45:00 +0200
+
 linuxmuster-webui7 (7.4.5) lmn74; urgency=medium
 
   * Add endpoints, service and frontend to edit password constraints.

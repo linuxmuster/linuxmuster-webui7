@@ -96,6 +96,15 @@ class LmnapiClient:
 
         return self._request('GET', f'/v1/users/{user}', params={'check_first_pw': True})['FirstPasswordSet']
 
+    def get_first_password(self, user):
+        """
+        Call GET /v1/users/{user} and return the user's stored first password.
+
+        :return: The user's sophomorixFirstPassword, in clear text.
+        """
+
+        return self._request('GET', f'/v1/users/{user}')['sophomorixFirstPassword']
+
     def _request(self, method, path, **kwargs):
         if not self.token:
             raise LmnapiUnavailable('No linuxmuster-api session token available.')

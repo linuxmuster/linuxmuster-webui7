@@ -9,7 +9,7 @@ from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
+from aj.plugins.lmn_common.api import _sophomorixoutput_as_dict
 from aj.plugins.lmn_common.tools import sort_schoolclasses
 from aj.plugins.lmn_common import lmnapi_client
 
@@ -95,15 +95,19 @@ class Handler(HttpPlugin):
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: Output of `sophomorix-user`
-        :rtype: dict
+        :return: The user's first password
+        :rtype: string
         """
 
         if not self._checkPasswordPermissions(http_context, user):
             return http_context.respond_forbidden()
 
-        sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
-        return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
+        try:
+            return self.context.lmnapi_client.get_first_password(user)
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
+            raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/users/passwords/reset-first')
     @authorize('lm:users:passwords')

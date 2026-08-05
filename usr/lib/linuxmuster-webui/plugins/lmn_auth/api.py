@@ -93,6 +93,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
             # Cache samba domain's policies
             self.context.password_policy_provider._samba_policy()
 
+            auth_info = getattr(self.context.session, 'auth_info', None) or {}
+            self.context.lmnapi_client = LmnapiClient()
+            if auth_info.get('password'):
+                self.context.lmnapi_client.authenticate(username, auth_info['password'])
+
             def schoolget(*args, **kwargs):
                 """
                 This alias allow to automatically pass the school context for school
@@ -228,10 +233,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         self._get_krb_ticket(username, password)
 
-        # Get a linuxmuster-api token once for the whole session.
-        self.context.lmnapi_client = LmnapiClient()
-        self.context.lmnapi_client.authenticate(username, password)
-
         return {
             'username': username,
             'password': password,
@@ -300,7 +301,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if not result.ok:
             raise Exception(f"Password does not meet requirements: {'; '.join(result.violations)}")
 
-        # authenticate() above just refreshed self.context.lmnapi_client's token
         self.context.lmnapi_client.set_current_password(username, new_password)
 
     def get_isolation_gid(self, username):

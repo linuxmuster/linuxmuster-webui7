@@ -13,6 +13,8 @@ from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_
 from aj.plugins.lmn_common.tools import sort_schoolclasses
 from aj.plugins.lmn_common import lmnapi_client
 
+LMNAPI_UNAVAILABLE_MESSAGE = "linuxmuster-api is not available for this session. Please try logging in again or contact your administrator."
+
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -123,7 +125,9 @@ class Handler(HttpPlugin):
         try:
             for user in users.split(','):
                 self.context.lmnapi_client.set_first_password(user)
-        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
             raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/users/passwords/set-random')
@@ -151,7 +155,9 @@ class Handler(HttpPlugin):
                 user: self.context.lmnapi_client.set_random_first_password(user)
                 for user in users.split(',')
             }
-        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
             raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/users/passwords/set-first')
@@ -178,7 +184,9 @@ class Handler(HttpPlugin):
         try:
             for user in users.split(','):
                 self.context.lmnapi_client.set_first_password(user, password, set_current=True)
-        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
             raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/users/passwords/set-current')
@@ -205,7 +213,9 @@ class Handler(HttpPlugin):
         try:
             for user in users.split(','):
                 self.context.lmnapi_client.set_current_password(user, password, set_first=False)
-        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
             raise EndpointError(None, message=str(e))
 
     @get(r'/api/lmn/users/classes')
@@ -441,7 +451,9 @@ class Handler(HttpPlugin):
 
         try:
             return self.context.lmnapi_client.check_first_password(user)
-        except (lmnapi_client.LmnapiUnavailable, lmnapi_client.LmnapiError) as e:
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
             raise EndpointError(None, message=str(e))
 
     @get(r'/api/lmn/users/(?P<binduser>[a-z0-9\-_]*)/bindpassword')

@@ -22,7 +22,7 @@ from aj.auth import AuthenticationProvider, OSAuthenticationProvider, Authentica
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config, allowed_roles
 from aj.plugins.lmn_common.multischool import SchoolManager
-from aj.plugins.lmn_common.lmnapi_client import LmnapiClient
+from aj.plugins.lmn_common.lmnapi_client import LmnapiClient, LmnapiUnavailable, LmnapiError
 from aj.api.endpoint import EndpointError
 from linuxmusterTools.ldapconnector import LMNLdapReader
 from linuxmusterTools.passwords import PasswordPolicyProvider
@@ -301,7 +301,12 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if not result.ok:
             raise Exception(f"Password does not meet requirements: {'; '.join(result.violations)}")
 
-        self.context.lmnapi_client.set_current_password(username, new_password)
+        try:
+            self.context.lmnapi_client.set_current_password(username, new_password)
+        except (AttributeError, LmnapiUnavailable):
+            raise Exception("linuxmuster-api is not available for this session. Please try logging in again or contact your administrator.")
+        except LmnapiError as e:
+            raise Exception(str(e))
 
     def get_isolation_gid(self, username):
         """

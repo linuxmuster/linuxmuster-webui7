@@ -3305,12 +3305,16 @@ angular.module('lmn.users').service('userPassword', function ($http, $uibModal, 
     this.resetFirstPassword = function (userlist) {
         $http.post('/api/lmn/users/passwords/reset-first', { users: userlist }).then(function (resp) {
             notify.success(gettext('Initial password set'));
+        }).catch(function (e) {
+            notify.error(gettext('Password change failed: ') + e.data.message);
         });
     };
 
     this.setRandomFirstPassword = function (userlist) {
         $http.post('/api/lmn/users/passwords/set-random', { users: userlist }).then(function (resp) {
             notify.success(gettext('Random password set'));
+        }).catch(function (e) {
+            notify.error(gettext('Password change failed: ') + e.data.message);
         });
     };
 

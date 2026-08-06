@@ -7,7 +7,7 @@ from aj.auth import authorize
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_linbo4.images import LinboImageManager
+from linuxmusterTools.linbo import LinboImageManager
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -21,7 +21,7 @@ class Handler(HttpPlugin):
     def _load_linboImages(self):
         self.mgr = None
         if self.context.identity is not None and os.getuid() == 0:
-            self.mgr = LinboImageManager.get(self.context)
+            self.mgr = LinboImageManager()
 
     @get(r'/api/lmn/linbo4/groups')
     @authorize('lm:linbo:configs')
@@ -186,7 +186,7 @@ class Handler(HttpPlugin):
         # Update list of images
         self.mgr.list()
         return [imageGroup.to_dict()
-                for name,imageGroup in self.mgr.linboImageGroups.items()
+                for name,imageGroup in self.mgr.groups.items()
                 ]
 
     @post(r'/api/lmn/linbo4/images/(?P<image>.+)')
@@ -195,13 +195,19 @@ class Handler(HttpPlugin):
     def handle_api_post_image(self, http_context, image=None):
         data = http_context.json_body()['data']
         diff = http_context.json_body()['diff']
-        self.mgr.save_extras(image, data, diff=diff)
+        try:
+            self.mgr.save_extras(image, data, diff=diff)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @delete(r'/api/lmn/linbo4/images/(?P<image>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_delete_image(self, http_context, image=None):
-        self.mgr.delete(image)
+        try:
+            self.mgr.delete(image)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @post(r'/api/lmn/linbo4/renameImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
@@ -209,15 +215,21 @@ class Handler(HttpPlugin):
     def handle_api_rename_image(self, http_context, image=None):
 
         new_name = http_context.json_body()['new_name']
-        self.mgr.rename(image, new_name)
+        try:
+            self.mgr.rename(image, new_name)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @post(r'/api/lmn/linbo4/duplicateImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
-    def handle_api_rename_image(self, http_context, image=None):
+    def handle_api_duplicate_image(self, http_context, image=None):
 
         new_name = http_context.json_body()['new_name']
-        self.mgr.duplicate(image, new_name)
+        try:
+            self.mgr.duplicate(image, new_name)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @post(r'/api/lmn/linbo4/restoreBackupImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
@@ -225,7 +237,10 @@ class Handler(HttpPlugin):
     def handle_api_restore_image(self, http_context, image=None):
 
         date = http_context.json_body()['date']
-        self.mgr.restore(image, date)
+        try:
+            self.mgr.restore(image, date)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @post(r'/api/lmn/linbo4/deleteBackupImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
@@ -233,7 +248,10 @@ class Handler(HttpPlugin):
     def handle_api_delete_backup(self, http_context, image=None):
 
         date = http_context.json_body()['date']
-        self.mgr.delete(image, date=date)
+        try:
+            self.mgr.delete(image, date=date)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @post(r'/api/lmn/linbo4/saveBackupImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
@@ -242,14 +260,20 @@ class Handler(HttpPlugin):
 
         data = http_context.json_body()['data']
         timestamp = http_context.json_body()['timestamp']
-        self.mgr.save_extras(image, data, timestamp=timestamp)
+        try:
+            self.mgr.save_extras(image, data, timestamp=timestamp)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @delete(r'/api/lmn/linbo4/deleteDiffImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_delete_diff(self, http_context, image=None):
 
-        self.mgr.delete(image, diff=True)
+        try:
+            self.mgr.delete(image, diff=True)
+        except (OSError, ValueError, RuntimeError) as e:
+            raise EndpointError(e)
 
     @get(r'/api/lmn/linbo4/restart-services')
     @authorize('lm:linbo:configs')

@@ -9,11 +9,9 @@ from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import _sophomorixoutput_as_dict
+from aj.plugins.lmn_common.api import _sophomorixoutput_as_dict, LMNAPI_UNAVAILABLE_MESSAGE
 from aj.plugins.lmn_common.tools import sort_schoolclasses
 from aj.plugins.lmn_common import lmnapi_client
-
-LMNAPI_UNAVAILABLE_MESSAGE = "linuxmuster-api is not available for this session. Please try logging in again or contact your administrator."
 
 
 @component(HttpPlugin)

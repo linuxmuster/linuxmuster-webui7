@@ -9,7 +9,8 @@ from jadi import component
 from aj.api.http import get, post, patch, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, LMNAPI_UNAVAILABLE_MESSAGE
+from aj.plugins.lmn_common import lmnapi_client
 from linuxmusterTools.ldapconnector import LMNLdapReader, LMNStudent
 
 
@@ -467,16 +468,16 @@ class Handler(HttpPlugin):
         """
 
 
-        schoolname = self.context.schoolmgr.school
         student = http_context.json_body()['student']
         parent = http_context.json_body()['parent']
 
-        cmd = f"/usr/sbin/lmncli student --add-parents --school {schoolname} {parent} {student}".split()
         try:
-            result = subprocess.check_output(cmd)
-            return ''
-        except subprocess.CalledProcessError as e:
-            return e.output.decode()
+            self.context.lmnapi_client.add_parent(student, parent)
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
+            raise EndpointError(None, message=str(e))
+        return ''
 
     @post(r'/api/lmn/sophomorixUsers/remove-parent')
     @authorize('lm:users:parents:write')
@@ -490,16 +491,16 @@ class Handler(HttpPlugin):
         """
 
 
-        schoolname = self.context.schoolmgr.school
         student = http_context.json_body()['student']
         parent = http_context.json_body()['parent']
 
-        cmd = f"/usr/sbin/lmncli student --remove-parents --school {schoolname} {parent} {student}".split()
         try:
-            result = subprocess.check_output(cmd)
-            return ''
-        except subprocess.CalledProcessError as e:
-            return e.output.decode()
+            self.context.lmnapi_client.remove_parent(student, parent)
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
+            raise EndpointError(None, message=str(e))
+        return ''
 
     @post(r'/api/lmn/sophomorixUsers/killuser')
     @authorize('lm:users:users:delete')

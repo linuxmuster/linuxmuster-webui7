@@ -66,6 +66,8 @@ if os.path.isfile(lmnapi_config_path):
     except Exception as e:
         logging.error(f"Could not read linuxmuster-api's host/port from {lmnapi_config_path}: {e}")
 
+LMNAPI_UNAVAILABLE_MESSAGE = "linuxmuster-api is not available for this session. Please try logging in again or contact your administrator."
+
 # Load samba domain
 smbconf = ConfigParser(delimiters=("=",))
 try:

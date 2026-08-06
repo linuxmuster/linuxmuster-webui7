@@ -1,13 +1,13 @@
 from concurrent import futures
 import logging
-import subprocess
 from time import localtime, strftime  # needed for timestamp in collect transfer
 
 from jadi import component
 from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize, AuthenticationService
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, LMNAPI_UNAVAILABLE_MESSAGE
+from aj.plugins.lmn_common import lmnapi_client
 
 
 @component(HttpPlugin)
@@ -207,7 +207,6 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_management_group(self, http_context):
         users = http_context.json_body()['users']
-        usersList = ','.join(users) if len(users) > 1 else users[0]
         group = http_context.json_body()['group']
 
         groups = ['wifi', 'internet', 'intranet', 'webfilter', 'printing']
@@ -216,24 +215,21 @@ class Handler(HttpPlugin):
         if group not in valid_groups:
             return
 
-        action = "--add-members"
-        if group.startswith("no"):
-            action = "--remove-members"
+        remove = group.startswith("no")
+        if remove:
             group = group[2:]
 
-        p = subprocess.Popen([
-            'sudo',
-            '/usr/sbin/lmncli', 'mgmtgroup',
-            '-s', self.context.schoolmgr.school,
-            action, usersList,
-            group,
-            ],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False,
-        )
-        stdout, stderr = p.communicate()
+        school = self.context.schoolmgr.school
 
-        if stderr:
-            raise Exception(stderr.decode())
+        try:
+            if remove:
+                self.context.lmnapi_client.remove_management_group_members(group, users, school)
+            else:
+                self.context.lmnapi_client.add_management_group_members(group, users, school)
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
+            raise EndpointError(None, message=str(e))
 
     @post(r'/api/lmn/session/participants')
     @authorize('lm:users:students:read')

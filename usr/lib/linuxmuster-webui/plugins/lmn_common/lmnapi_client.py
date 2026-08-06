@@ -105,6 +105,41 @@ class LmnapiClient:
 
         return self._request('GET', f'/v1/users/{user}')['sophomorixFirstPassword']
 
+    def add_management_group_members(self, group, users, school):
+        """
+        Call POST /v1/managementgroups/{group}/members to add users
+        (wifi, internet, intranet, webfilter, printing) to a management group.
+
+        `school` is required: linuxmuster-api has no notion of the webui's
+        current school context, and a global-administrator's own JWT carries
+        no single school at all.
+        """
+
+        self._request('POST', f'/v1/managementgroups/{group}/members', json={'users': users}, params={'school': school})
+
+    def remove_management_group_members(self, group, users, school):
+        """
+        Call DELETE /v1/managementgroups/{group}/members to remove users
+        from a management group. See add_management_group_members for `school`.
+        """
+
+        self._request('DELETE', f'/v1/managementgroups/{group}/members', json={'users': users}, params={'school': school})
+
+    def add_parent(self, student, parent):
+        """
+        Call POST /v1/users/{student}/parents to assign an existing parent
+        to an existing student.
+        """
+
+        self._request('POST', f'/v1/users/{student}/parents', json={'users': [parent]})
+
+    def remove_parent(self, student, parent):
+        """
+        Call DELETE /v1/users/{student}/parents to unassign a parent from a student.
+        """
+
+        self._request('DELETE', f'/v1/users/{student}/parents', json={'users': [parent]})
+
     def _request(self, method, path, **kwargs):
         if not self.token:
             raise LmnapiUnavailable('No linuxmuster-api session token available.')
@@ -121,11 +156,11 @@ class LmnapiClient:
         except requests.exceptions.RequestException as e:
             raise LmnapiUnavailable(str(e))
 
-        if r.status_code != 200:
+        if not r.ok:
             try:
                 detail = r.json().get('detail', r.text)
             except ValueError:
                 detail = r.text
             raise LmnapiError(detail)
 
-        return r.json()
+        return r.json() if r.content else None

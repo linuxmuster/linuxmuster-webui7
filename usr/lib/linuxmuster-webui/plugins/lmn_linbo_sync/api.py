@@ -42,7 +42,7 @@ def build_linbo_remote(cmd_parameters):
     if target['type'] == 'group':
         kwargs['group'] = target['host']
     else:
-        kwargs['ips'] = [target['host']]
+        kwargs['clients'] = [target['host']]
 
     return LinboRemote(**kwargs)
 

@@ -105,6 +105,20 @@ class LmnapiClient:
 
         return self._request('GET', f'/v1/users/{user}')['sophomorixFirstPassword']
 
+    def get_user_quotas(self, user):
+        """
+        Call GET /v1/users/{user}/quotas.
+
+        Unlike sophomorix-query, this resolves quotas hosted on a separate
+        fileserver (MSDFS) instead of always querying the local domain
+        controller.
+
+        :return: {<share>: {'used', 'soft_limit', 'hard_limit'} or {'ERROR': ...},
+                  ..., 'cloud': ..., 'mail': ...}
+        """
+
+        return self._request('GET', f'/v1/users/{user}/quotas')
+
     def add_management_group_members(self, group, users, school):
         """
         Call POST /v1/managementgroups/{group}/members to add users

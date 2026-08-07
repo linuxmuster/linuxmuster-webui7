@@ -1,3 +1,29 @@
+linuxmuster-webui7 (7.4.7) lmn74; urgency=medium
+
+  * [linbo_sync] Migrate the linbo-remote plugin to linuxmuster-tools:
+    api.py now only maps the frontend's cmd_parameters to a LinboRemote
+    and runs it, instead of duplicating command-building, OS-detection
+    and last-sync logic locally.
+  * [linbo_sync] Host online detection now reports a boot state (Off,
+    Linbo, OS Linux, OS Windows, OS Unknown) via lmntools' classify_host()
+    instead of shelling out to nmap directly.
+  * [lmn_linbo4] Remove the plugin's own 527-line images.py: image
+    listing/renaming/deletion now goes through lmntools'
+    LinboImageManager instead of a local, duplicated implementation.
+  * [lmn_session_new] Management group membership (wifi, internet,
+    intranet, webfilter, printing) no longer shells out to `sudo
+    /usr/sbin/lmncli mgmtgroup ...`; it now calls linuxmuster-api
+    (POST/DELETE /v1/managementgroups/{group}/members).
+  * [lmn_users] Assigning/unassigning a parent to a student no longer
+    shells out to `/usr/sbin/lmncli student --add-parents/--remove-parents`;
+    it now calls linuxmuster-api (POST/DELETE /v1/users/{student}/parents).
+  * [lmn_common] lmnapi_client: add add_management_group_members(),
+    remove_management_group_members(), add_parent(), remove_parent().
+    Fix response handling accepting only HTTP 200 (other 2xx codes were
+    treated as errors) and crashing on a body-less response.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 07 Aug 2026 15:15:00 +0200
+
 linuxmuster-webui7 (7.4.6) lmn74; urgency=medium
 
   * [users] Migrate all password management (initial/current/random

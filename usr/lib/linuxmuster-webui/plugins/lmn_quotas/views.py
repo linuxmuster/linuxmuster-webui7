@@ -11,7 +11,7 @@ from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, samba_workgroup
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 from linuxmusterTools.quotas import list_user_files
 
 

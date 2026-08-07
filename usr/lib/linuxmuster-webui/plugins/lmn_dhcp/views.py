@@ -8,7 +8,7 @@ from isc_dhcp_leases import Lease, IscDhcpLeases
 from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):

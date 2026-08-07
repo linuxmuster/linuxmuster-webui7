@@ -10,7 +10,7 @@ import threading
 import ast
 import logging
 from pprint import pformat
-from .lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 from configparser import ConfigParser
 from time import time
 

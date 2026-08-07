@@ -12,7 +12,7 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import PermissionProvider
 from aj.plugins.core.api.sidebar import SidebarItemProvider
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 
 
 @component(HttpPlugin)

@@ -12,7 +12,7 @@ import subprocess
 from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 from aj.plugins.lmn_common.api import display_options
 
 

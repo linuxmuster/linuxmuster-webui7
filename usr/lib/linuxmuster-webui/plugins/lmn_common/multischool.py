@@ -8,7 +8,7 @@ from linuxmusterTools.samba_util import DriveManager, GPOManager
 from linuxmusterTools.ldapconnector import LMNLdapReader as lr
 
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 
 
 class SchoolManager:

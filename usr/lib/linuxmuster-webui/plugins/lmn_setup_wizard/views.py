@@ -9,7 +9,7 @@ import subprocess
 from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 
 
 @component(HttpPlugin)

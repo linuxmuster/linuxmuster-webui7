@@ -7,7 +7,7 @@ from jadi import component
 import os
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 from aj.auth import authorize
 
 @component(HttpPlugin)

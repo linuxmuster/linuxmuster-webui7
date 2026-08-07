@@ -16,7 +16,7 @@ from secrets import token_bytes
 from aj.api.http import get, post, delete, put, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 from aj.plugins.lmn_common.api import allowed_roles, ALL_ROLES, config_path
 
 

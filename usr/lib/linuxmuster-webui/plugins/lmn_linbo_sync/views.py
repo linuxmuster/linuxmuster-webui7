@@ -11,6 +11,8 @@ from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_linbo_sync import api
+from linuxmusterTools.linbo import list_workstations, last_sync_all
+from linuxmusterTools.linbo.host_status import classify_host
 
 
 ## TODO
@@ -35,10 +37,9 @@ class Handler(HttpPlugin):
         :rtype: dict or list
         """
 
-        configpath = f'{self.context.schoolmgr.configpath}devices.csv'
         school = self.context.schoolmgr.school
-        workstations = api.list_workstations(configpath, school)
-        api.last_sync_all(workstations)
+        workstations = list_workstations(school=school)
+        last_sync_all(workstations)
 
         if len(workstations) != 0:
             return workstations
@@ -60,7 +61,7 @@ class Handler(HttpPlugin):
         :rtype: string
         """
 
-        return api.test_online(host)
+        return classify_host(host)
 
     @post(r'/api/lmn/linbosync/run')
     @endpoint(api=True)
@@ -76,10 +77,6 @@ class Handler(HttpPlugin):
         """
 
         cmd_parameters = http_context.json_body()['cmd_parameters']
-        school = self.context.schoolmgr.school
-        configpath = f'{self.context.schoolmgr.configpath}devices.csv'
-
-        cmd_parameters['school'] = school
-        cmd_parameters['configpath'] = configpath
+        cmd_parameters['school'] = self.context.schoolmgr.school
 
         return api.run(cmd_parameters)

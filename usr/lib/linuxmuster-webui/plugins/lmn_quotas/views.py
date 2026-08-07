@@ -10,7 +10,8 @@ from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue, samba_workgroup
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, samba_workgroup, LMNAPI_UNAVAILABLE_MESSAGE
+from aj.plugins.lmn_common import lmnapi_client
 from linuxmusterTools.lmnfile import LMNFile
 from linuxmusterTools.quotas import list_user_files
 
@@ -24,13 +25,20 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_quota(self, http_context, user):
         """
-        Get quota informations from user through sophomorix-query.
+        Get quota informations for a user through linuxmuster-api.
+
+        Goes through linuxmuster-api (linuxmusterTools.quotas) rather than
+        sophomorix-query: the latter always queries the local domain
+        controller for smbcquotas, giving wrong numbers for a share hosted
+        on a separate fileserver (MSDFS proxy) - linuxmuster-api resolves
+        the real fileserver address.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
         :param user: User login
         :type user: string
-        :return: All quotas informations from user
+        :return: {<share>: {'used', 'soft_limit', 'hard_limit'} or {'ERROR': ...},
+                  ..., 'cloud': ..., 'mail': ...}
         :rtype: dict
         """
 
@@ -38,20 +46,15 @@ class Handler(HttpPlugin):
             http_context.respond_forbidden()
             return {}
 
-        if user != 'root':
-            try:
-                sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']
-                jsonpath = 'USER/' + user
-                data = lmn_getSophomorixValue(sophomorixCommand, jsonpath)
-                return {
-                    'QUOTA_USAGE_BY_SHARE': data['QUOTA_USAGE_BY_SHARE'],
-                    'sophomorixCloudQuotaCalculated': data['sophomorixCloudQuotaCalculated'],
-                    'sophomorixMailQuotaCalculated': data['sophomorixMailQuotaCalculated'],
-                }
-            except IndexError:
-                return {}
+        if user == 'root':
+            return {}
 
-        return {}
+        try:
+            return self.context.lmnapi_client.get_user_quotas(user)
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
+            raise EndpointError(None, message=str(e))
 
     @get(r'/api/lmn/quota/usermap/(?P<user>[a-z0-9\-_]*)')
     @authorize('lm:users:passwords')

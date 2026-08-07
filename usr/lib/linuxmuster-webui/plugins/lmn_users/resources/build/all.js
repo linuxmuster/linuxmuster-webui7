@@ -2130,20 +2130,28 @@
       return results;
     });
     $http.get(`/api/lmn/quota/user/${id}`).then(function(resp) {
-      var ref, results, share, total, type, usage, used, values;
+      var ref, results, share, total, total_txt, type, usage, used, values;
       $scope.quotas = [];
-      ref = resp.data['QUOTA_USAGE_BY_SHARE'];
+      ref = resp.data;
       results = [];
       for (share in ref) {
         values = ref[share];
-        // default-school and linuxmuster-global both needed ?
-        // cloudquota and mailquota not in QUOTA_USAGE_BY_SHARE ?
-        used = values['USED_MiB'];
-        total = values['HARD_LIMIT_MiB'];
+        if (share === 'cloud' || share === 'mail') {
+          continue;
+        }
+        if (values['ERROR']) {
+          $scope.quotas.push({
+            'share': share,
+            'total': gettext('Error'),
+            'used': '?',
+            'usage': 0,
+            'type': "danger"
+          });
+          continue;
+        }
+        used = values['used'];
+        total = values['hard_limit'];
         if (typeof total === 'string') {
-          if (total === 'NO LIMIT') {
-            total = gettext('NO LIMIT');
-          }
           results.push($scope.quotas.push({
             'share': share,
             'total': gettext(total),
@@ -2152,7 +2160,13 @@
             'type': "success"
           }));
         } else {
-          usage = Math.floor((100 * used) / total);
+          if (total === 0) {
+            usage = 0;
+            total_txt = gettext('NO LIMIT');
+          } else {
+            usage = Math.floor((100 * used) / total);
+            total_txt = total + " MiB";
+          }
           if (usage < 60) {
             type = "success";
           } else if (usage < 80) {
@@ -2162,7 +2176,7 @@
           }
           results.push($scope.quotas.push({
             'share': share,
-            'total': total + " MiB",
+            'total': total_txt,
             'used': used,
             'usage': usage,
             'type': type

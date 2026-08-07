@@ -16,14 +16,16 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
 
         $http.get("/api/lmn/quota/user/#{user}").then (resp) ->
             $scope.quotas = []
-            $scope.user['sophomorixCloudQuotaCalculated'] = resp.data['sophomorixCloudQuotaCalculated']
-            $scope.user['sophomorixMailQuotaCalculated'] = resp.data['sophomorixMailQuotaCalculated']
+            $scope.user['sophomorixCloudQuotaCalculated'] = resp.data['cloud']
+            $scope.user['sophomorixMailQuotaCalculated'] = resp.data['mail']
 
-            for share, values of resp.data['QUOTA_USAGE_BY_SHARE']
-            # default-school and linuxmuster-global both needed ?
-            # cloudquota and mailquota not in QUOTA_USAGE_BY_SHARE ?
-                used = values['USED_MiB']
-                total = values['HARD_LIMIT_MiB']
+            for share, values of resp.data
+                continue if share in ['cloud', 'mail']
+                if values['ERROR']
+                    $scope.quotas.push({'share':share, 'total':gettext('Error'), 'used':'?', 'usage':0, 'type':"danger"})
+                    continue
+                used = values['used']
+                total = values['hard_limit']
                 if (typeof total == 'string')
                     $scope.quotas.push({'share':share, 'total':gettext(total), 'used':used, 'usage':0, 'type':"success"})
                 else

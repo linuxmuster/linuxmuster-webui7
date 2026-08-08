@@ -1,3 +1,33 @@
+linuxmuster-webui7 (7.4.8) lmn74; urgency=medium
+
+  * [lmn_common] Remove the plugin's own LMNFile/fieldnames.py: settings,
+    quotas, dhcp, permissions, devices, linbo4, setup_wizard and
+    device-manager now use linuxmusterTools.lmnfile.LMNFile instead of a
+    duplicated, less complete copy (no atomic writes, no BOM handling,
+    a StartConfLoader bug fixed only in lmntools' version).
+  * [lmn_quotas] Fix quota display for users whose home share is hosted
+    on a separate fileserver (MSDFS): the quota was queried locally via
+    sophomorix-query, which cannot see a remote fileserver's quota and
+    showed UNLIMITED instead. Now proxies linuxmuster-api's
+    GET /v1/users/{user}/quotas, which already resolves the right MSDFS
+    target.
+  * [lmn_users] Same fix applied to the per-user quota list in the admin
+    "user details" modal (second consumer of the same broken code path);
+    also fixes a latent divide-by-zero when a share reports a hard limit
+    of 0.
+  * [lmn_auth] prepare_environment() now catches
+    linuxmusterTools.common.LdapNotProvisionedError (fresh install, Samba
+    not provisioned yet) instead of letting it fall into the generic
+    except-and-log, which left context.profile/schoolmgr/lmnapi_client
+    undefined and crashed every plugin reading them. Falls back to the
+    same LDAP-less profile already used for username in [root, None].
+  * [setup] Move the linuxmuster-base7 setup module w_webui.py to its new
+    path (usr/lib/python3/dist-packages/linuxmuster_base7/setup/), the
+    old usr/lib/linuxmuster/setup.d/ location is no longer picked up by
+    linuxmuster-setup.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 08 Aug 2026 16:00:00 +0200
+
 linuxmuster-webui7 (7.4.7) lmn74; urgency=medium
 
   * [linbo_sync] Migrate the linbo-remote plugin to linuxmuster-tools:

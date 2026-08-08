@@ -233,7 +233,7 @@ angular.module('lmn.setup_wizard').controller('InitSetupController', function ($
     }
 })
 
-angular.module('lmn.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messageboxi, $q) {
+angular.module('lmn.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox, $q) {
     pageTitle.set(gettext('Setup Done'))
 
     $http.get('/api/lmn/read-config-setup').then( (resp) => {

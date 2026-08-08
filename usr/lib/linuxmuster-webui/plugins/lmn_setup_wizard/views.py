@@ -84,11 +84,36 @@ class Handler(HttpPlugin):
         """
         Launch `linuxmuster-setup` to configure all services.
 
+        Before doing so, check that /tmp/setup.ini still holds the values the
+        wizard is supposed to have collected. That file doubles as
+        linuxmuster-setup's own scratch space: its first module (a_ini.py)
+        overwrites it at the end of a run, adminpw cleared, to make it safe to
+        ship to additional VMs. If setup is launched a second time (retry, or
+        a stale wizard state after a page reload) without redoing the account
+        step, this same file gets fed back in with a blank adminpw and
+        linuxmuster-setup happily proceeds - a_ini.py never validates adminpw
+        or schoolname the way it does domainname/servername/serverip.
+
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
 
         if http_context.json_body()['start'] == 'setup':
+            required_fields = ['schoolname', 'domainname', 'servername', 'adminpw']
+            setup_data = {}
+            if os.path.isfile('/tmp/setup.ini'):
+                with LMNFile('/tmp/setup.ini', 'r') as setup:
+                    setup_data = setup.data.get('setup', {})
+
+            missing = [field for field in required_fields if not setup_data.get(field)]
+            if missing:
+                raise EndpointError(None, message=(
+                    'Setup configuration is incomplete or stale (missing: '
+                    f"{', '.join(missing)}). This can happen after a page "
+                    'reload, or if setup was already launched once before - '
+                    'please go through the wizard again from the start.'
+                ))
+
             try:
                 subprocess.check_call(
                     'linuxmuster-setup -u -c /tmp/setup.ini >> /tmp/linuxmuster-setup.log & wait $! ',

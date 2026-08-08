@@ -24,6 +24,7 @@ from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname,
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.plugins.lmn_common.lmnapi_client import LmnapiClient, LmnapiUnavailable, LmnapiError
 from aj.api.endpoint import EndpointError
+from linuxmusterTools.common import LdapNotProvisionedError
 from linuxmusterTools.ldapconnector import LMNLdapReader
 from linuxmusterTools.passwords import PasswordPolicyProvider
 
@@ -119,6 +120,18 @@ class LMAuthenticationProvider(AuthenticationProvider):
                 os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
                 logging.warning(f"Changing kerberos ticket rights for {username}")
                 os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+        except LdapNotProvisionedError as e:
+            # Fresh install, Samba/AD not provisioned yet: same fallback context
+            # as the LDAP-less root/None case above, instead of a half-initialized
+            # context.profile/schoolmgr/lmnapi_client. The frontend's own
+            # is-configured check (unauthenticated-safe) then redirects to
+            # /view/lmn/init/welcome.
+            logging.warning(f"Samba/LDAP not provisioned yet, skipping LDAP-backed environment setup for {username}: {e}")
+            self.context.schoolmgr = None
+            self.context.ldapreader = LMNLdapReader
+            self.context.profile = {'activeSchool': 'default-school', 'school_show': True, 'schoolname': 'Default School'}
+            self.context.password_policy_provider = None
+            self.context.lmnapi_client = None
         except Exception as e:
             logging.error(str(e))
 

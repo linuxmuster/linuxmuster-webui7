@@ -224,8 +224,9 @@ angular.module('lmn.setup_wizard').controller('InitSetupController', function ($
     $http.post('/api/lmn/setup-wizard/provision', {start: 'setup'}).then(() => {
         this.isWorking = false
         notify.success(gettext('Setup complete'))
-    }).catch(() => {
-        this.isWorking = true
+    }).catch((err) => {
+        this.isWorking = false
+        notify.error((err.data && err.data.message) ? err.data.message : gettext('Setup failed'))
     })
     this.finish = () => {
         return $location.path('/view/lmn/init/done')

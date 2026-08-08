@@ -255,8 +255,9 @@ angular.module('lmn.setup_wizard').controller('InitSetupController', function ($
     $http.post('/api/lmn/setup-wizard/provision', { start: 'setup' }).then(function () {
         _this6.isWorking = false;
         notify.success(gettext('Setup complete'));
-    }).catch(function () {
-        _this6.isWorking = true;
+    }).catch(function (err) {
+        _this6.isWorking = false;
+        notify.error((err.data && err.data.message) ? err.data.message : gettext('Setup failed'));
     });
     this.finish = function () {
         return $location.path('/view/lmn/init/done');

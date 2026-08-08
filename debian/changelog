@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.4.9) lmn74; urgency=medium
+
+  * [setup] Fix typo, check setup.ini before launching 
+    linuxmsuter-setup and catch errors on frontend. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 08 Aug 2026 18:07:26 +0200
+
 linuxmuster-webui7 (7.4.8) lmn74; urgency=medium
 
   * [lmn_common] Remove the plugin's own LMNFile/fieldnames.py: settings,

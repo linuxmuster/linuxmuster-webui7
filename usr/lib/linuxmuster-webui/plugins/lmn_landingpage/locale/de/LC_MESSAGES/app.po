@@ -121,8 +121,8 @@ msgid "User Details"
 msgstr "Benutzerdetails"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
-msgid "Welcome to Linuxmuster.net version 7.3 !"
-msgstr "Willkommen zu Linuxmuster.net Version 7.3!"
+msgid "Welcome to Linuxmuster.net version 7.4 !"
+msgstr "Willkommen zu Linuxmuster.net Version 7.4!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:125
 msgid "Wireguard VPN"

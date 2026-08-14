@@ -194,7 +194,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_post_image(self, http_context, image=None):
         data = http_context.json_body()['data']
-        diff = http_context.json_body()['diff']
+        diff = http_context.json_body().get('diff', False)
         try:
             self.mgr.save_extras(image, data, diff=diff)
         except (OSError, ValueError, RuntimeError) as e:

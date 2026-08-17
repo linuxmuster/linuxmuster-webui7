@@ -1,3 +1,18 @@
+linuxmuster-webui7 (7.4.10) lmn74; urgency=medium
+
+  * [lmn_linbo4] Fix KeyError 'diff' when saving an image without the
+    diff option: default to False if missing from the POST body. Hide
+    the edit button for images that are in an error state.
+  * [lmn_users] Fix a duplicate "Login" column in the users list
+    management view; replaced by the intended "Birthday" column.
+    Fix #292.
+  * [lmn_landingpage] Update landing page (index.html, po/pot, all
+    locale .js) to display version 7.4. Merge pull request #290 from
+    jolly-jump/patch-1.
+  * [lmn_setup_wizard] Rebuild all.js.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 17 Aug 2026 00:00:00 +0200
+
 linuxmuster-webui7 (7.4.9) lmn74; urgency=medium
 
   * [setup] Fix typo, check setup.ini before launching 

@@ -109,8 +109,8 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
           fx: (x) -> x.last_name
        }
        {
-          name: gettext('Login')
-          fx: (x) -> x.login
+          name: gettext('Birthday')
+          fx: (x) -> x.birthday
        }
     ]
 

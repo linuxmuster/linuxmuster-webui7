@@ -2657,9 +2657,9 @@
         }
       },
       {
-        name: gettext('Login'),
+        name: gettext('Birthday'),
         fx: function(x) {
-          return x.login;
+          return x.birthday;
         }
       }
     ];

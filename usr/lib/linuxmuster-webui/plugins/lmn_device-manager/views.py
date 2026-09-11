@@ -4,11 +4,11 @@ from aj.auth import authorize
 from aj.api.http import post, get, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from linuxmusterTools.lmnfile import LMNFile
+from linuxmusterTools.linbo import last_sync
 
 import os
 import nmap
 import subprocess
-import locale
 import time
 import logging
 
@@ -224,29 +224,15 @@ class Handler(HttpPlugin):
     def handle_api_lmn_devicemanager_getlastsync(self, http_context):
         device = http_context.json_body()['device']
         image = http_context.json_body()['image']
-        statusfile = "/var/log/linuxmuster/linbo/" + \
-            device["hostname"] + "_image.status"
-        last = False
-        last_tupln = False
+        # Parsing of the *_image.status files belongs to linuxmusterTools:
+        # last_sync() matches the image name exactly (and its .qdiff
+        # variant), keeps the most recent entry and returns an epoch in
+        # server local time, or False if the host never synced that image.
+        last_tupln = last_sync(device["hostname"], image)
+        today = time.time()
 
-        if os.path.isfile(statusfile) and os.stat(statusfile).st_size != 0:
-            for line in open(statusfile, 'r').readlines():
-                if image in line:
-                    last = line.rstrip()
-                    break
-
-        if last:
-            # Linbo locale is en_GB, not necessarily the server locale
-            saved = locale.setlocale(locale.LC_ALL)
-            locale.setlocale(locale.LC_ALL, 'C.UTF-8')
-            last = datetime.strptime(last.split(' ')[0], '%Y%m%d%H%M')
-            locale.setlocale(locale.LC_ALL, saved)
-            last_tupln = time.mktime(last.timetuple())
-
-        today = time.mktime(datetime.now().timetuple())
-
-        date = datetime.strftime(
-            last, '%d.%m.%Y %H:%M') if last_tupln else "Never"
+        date = datetime.fromtimestamp(last_tupln).strftime(
+            '%d.%m.%Y %H:%M') if last_tupln else "Never"
         tmpDict = {
             'date': date
         }

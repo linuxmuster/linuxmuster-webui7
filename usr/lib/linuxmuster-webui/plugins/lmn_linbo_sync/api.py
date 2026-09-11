@@ -53,16 +53,30 @@ def last_sync(workstation, image):
     :rtype: datetime
     """
 
-    statusfile = f'/var/log/linuxmuster/linbo/{workstation}_image.status'
+    logdir = '/var/log/linuxmuster/linbo'
+    statusfile = f'{workstation}_image.status'.lower()
     image_last_sync, diff_last_sync = '0','0'
     diff_image = image.replace('.qcow2', '.qdiff')
 
-    if os.path.isfile(statusfile) and os.stat(statusfile).st_size != 0:
-        for line in open(statusfile, 'r').readlines():
-            if image in line:
-                image_last_sync = line.rstrip().split(' ')[0]
-            if diff_image in line:
-                diff_last_sync = line.strip().split(' ')[0]
+    # The status file name is built by rsync-pre-download.sh from the reverse
+    # DNS resolution made by rsyncd, not from devices.csv, and DNS is case
+    # insensitive: PC-001_image.status and pc-001_image.status may both sit in
+    # the log directory, only one of them still being written to. Read every
+    # case variant and keep the most recent timestamp.
+    if os.path.isdir(logdir):
+        for filename in os.listdir(logdir):
+            if filename.lower() != statusfile:
+                continue
+
+            path = os.path.join(logdir, filename)
+            if not os.path.isfile(path) or os.stat(path).st_size == 0:
+                continue
+
+            for line in open(path, 'r').readlines():
+                if image in line:
+                    image_last_sync = max(image_last_sync, line.rstrip().split(' ')[0])
+                if diff_image in line:
+                    diff_last_sync = max(diff_last_sync, line.strip().split(' ')[0])
 
     last = max(image_last_sync, diff_last_sync)
 

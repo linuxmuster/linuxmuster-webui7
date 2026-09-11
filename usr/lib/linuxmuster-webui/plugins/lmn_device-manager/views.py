@@ -224,22 +224,36 @@ class Handler(HttpPlugin):
     def handle_api_lmn_devicemanager_getlastsync(self, http_context):
         device = http_context.json_body()['device']
         image = http_context.json_body()['image']
-        statusfile = "/var/log/linuxmuster/linbo/" + \
-            device["hostname"] + "_image.status"
+        logdir = "/var/log/linuxmuster/linbo"
+        statusfile = (device["hostname"] + "_image.status").lower()
         last = False
         last_tupln = False
 
-        if os.path.isfile(statusfile) and os.stat(statusfile).st_size != 0:
-            for line in open(statusfile, 'r').readlines():
-                if image in line:
-                    last = line.rstrip()
-                    break
+        # The status file name is built by rsync-pre-download.sh from the
+        # reverse DNS resolution made by rsyncd, not from devices.csv, and DNS
+        # is case insensitive: PC-001_image.status and pc-001_image.status may
+        # both sit in the log directory, only one of them still being written
+        # to. Read every case variant and keep the most recent timestamp.
+        if os.path.isdir(logdir):
+            for filename in os.listdir(logdir):
+                if filename.lower() != statusfile:
+                    continue
+
+                path = os.path.join(logdir, filename)
+                if not os.path.isfile(path) or os.stat(path).st_size == 0:
+                    continue
+
+                for line in open(path, 'r').readlines():
+                    if image in line:
+                        timestamp = line.rstrip().split(' ')[0]
+                        if not last or timestamp > last:
+                            last = timestamp
 
         if last:
             # Linbo locale is en_GB, not necessarily the server locale
             saved = locale.setlocale(locale.LC_ALL)
             locale.setlocale(locale.LC_ALL, 'C.UTF-8')
-            last = datetime.strptime(last.split(' ')[0], '%Y%m%d%H%M')
+            last = datetime.strptime(last, '%Y%m%d%H%M')
             locale.setlocale(locale.LC_ALL, saved)
             last_tupln = time.mktime(last.timetuple())
 

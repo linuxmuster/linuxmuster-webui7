@@ -1,3 +1,12 @@
+linuxmuster-webui7 (7.3.45) lmn73; urgency=medium
+
+  * Update to Ajenti 2.2.17 (security fixes).
+  * [linbo_sync][device-manager] Fix case sensitive names for image.status.
+  * [common] Accept negative values in config files, so that the unlimited
+    quota (-1) of school.conf is read as an integer.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 12 Sep 2026 16:41:41 +0200
+
 linuxmuster-webui7 (7.3.44) lmn73; urgency=medium
 
   * Typo in requirements. 

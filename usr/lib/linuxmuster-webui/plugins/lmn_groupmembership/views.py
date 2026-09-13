@@ -11,7 +11,8 @@ from urllib.parse import quote, unquote
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize, AuthenticationService
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, LMNAPI_UNAVAILABLE_MESSAGE
+from aj.plugins.lmn_common import lmnapi_client
 from aj.plugins.lmn_common.tools import sort_schoolclasses
 from linuxmusterTools.ldapconnector import LMNPrinter, LMNProject, LMNSchoolclass
 
@@ -314,32 +315,57 @@ class Handler(HttpPlugin):
         ]
 
         if action in possible_actions:
-            entities = entity.split(',')
-            if len(entities) > 1 and objtype == 'group':
-                # sophomorix-group does not support multiple users assignment to a group
-                # not the best solution, can be slow
-                results = {'TYPE':'', 'LOG':''}
-                for ent in entities:
-                    sophomorixCommand = ['sophomorix-group', '--' + action, ent, '--group', groupname, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        results['TYPE'] += result['TYPE'] + "\n"
-                        results['LOG'] += result['MESSAGE_EN'] + "\n"
-                    else:
-                        results['TYPE'] += result['TYPE'] + "\n"
-                        results['LOG'] += result['LOG'] + "\n"
-                return results['TYPE'], results['LOG']
-            else:
-                if action == 'removeproject':
-                    option = ["--removemembers", entity, "--removeadmins", entity]
-                else:
-                    option = [f"--{action}", entity]
+            entities = [e for e in entity.split(',') if e]
 
-                sophomorixCommand = ['sophomorix-'+objtype,  *option, '--'+objtype, groupname, '-jj']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                if result['TYPE'] == "ERROR":
-                    return result['TYPE'], result['MESSAGE_EN']
-                return result['TYPE'], result['LOG']
+            if objtype == 'group':
+                # Printers go through linuxmuster-api: one LDAP modify for the
+                # whole list, instead of one sophomorix-group call per entity.
+                return self.set_printer_members(action, groupname, entities)
+
+            # Projects and schoolclasses stay on sophomorix, which carries real
+            # business logic there (home directories, quotas, exam mode).
+            if action == 'removeproject':
+                option = ["--removemembers", entity, "--removeadmins", entity]
+            else:
+                option = [f"--{action}", entity]
+
+            sophomorixCommand = ['sophomorix-'+objtype,  *option, '--'+objtype, groupname, '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+            if result['TYPE'] == "ERROR":
+                return result['TYPE'], result['MESSAGE_EN']
+            return result['TYPE'], result['LOG']
+
+    def set_printer_members(self, action, printer, entities):
+        """
+        Add or remove printer members through linuxmuster-api.
+
+        Administrators patch the member list directly. A teacher may only
+        join or quit a joinable printer themselves, which is what the printer
+        checkbox does; the API enforces both rules on its side.
+
+        :return: (TYPE, message), the tuple the frontend tests in equality
+        :rtype: tuple
+        """
+
+        username = self.context.identity
+
+        try:
+            if self.context.profile['isAdmin']:
+                self.context.lmnapi_client.patch_printer_members(printer, {action: entities})
+            elif entities != [username]:
+                return 'ERROR', 'Only administrators can change the members of a printer.'
+            elif action == 'addmembers':
+                self.context.lmnapi_client.join_printer(printer)
+            elif action == 'removemembers':
+                self.context.lmnapi_client.quit_printer(printer)
+            else:
+                return 'ERROR', 'Only administrators can change the members of a printer.'
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            return 'ERROR', LMNAPI_UNAVAILABLE_MESSAGE
+        except lmnapi_client.LmnapiError as e:
+            return 'ERROR', str(e)
+
+        return 'LOG', f'Members of {printer} updated.'
 
     @post(r'/api/lmn/groupmembership/resetadmins')
     @authorize('lmn:groupmembership')
@@ -387,6 +413,13 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
 
             for _, details in result.items():
+                if details.get('sophomorixRole', '') == 'examuser':
+                    # An exam account is a copy of a real one, killed when the
+                    # exam is over: offering it here only ever adds a member
+                    # that will silently vanish. Its label barely differs from
+                    # the real account, so it is easy to pick by mistake.
+                    continue
+
                 resultArray.append({
                         'label': f"{details['sophomorixAdminClass']} {details['sn']} {details['givenName']}",
                         'sn': details['sn'],

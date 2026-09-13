@@ -154,6 +154,41 @@ class LmnapiClient:
 
         self._request('DELETE', f'/v1/users/{student}/parents', json={'users': [parent]})
 
+    def patch_printer_members(self, printer, changes):
+        """
+        Call PATCH /v1/printers/{printer} to add or remove members and member
+        groups in a single LDAP modify, instead of one sophomorix-group call
+        per entity.
+
+        `changes` maps the API's list fields (addmembers, removemembers,
+        addmembergroups, removemembergroups) to lists of cn. Attributes that
+        are not sent are left untouched.
+
+        Reserved to administrators by the API (RoleChecker "GS"). Unlike the
+        management group routes, this one takes no `school`: it reads it from
+        the caller's JWT, and printer names already carry their school prefix
+        in a multischool setup.
+        """
+
+        self._request('PATCH', f'/v1/printers/{printer}', json=changes)
+
+    def join_printer(self, printer):
+        """
+        Call POST /v1/printers/{printer}/join to add the caller themselves to
+        a joinable printer. This is the route a teacher may use: the API
+        checks sophomorixJoinable and ignores any member name sent to it.
+        """
+
+        self._request('POST', f'/v1/printers/{printer}/join')
+
+    def quit_printer(self, printer):
+        """
+        Call POST /v1/printers/{printer}/quit to remove the caller themselves
+        from a printer. See join_printer.
+        """
+
+        self._request('POST', f'/v1/printers/{printer}/quit')
+
     def _request(self, method, path, **kwargs):
         if not self.token:
             raise LmnapiUnavailable('No linuxmuster-api session token available.')

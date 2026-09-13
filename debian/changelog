@@ -1,3 +1,23 @@
+linuxmuster-webui7 (7.4.11) lmn74; urgency=medium
+
+  * [lmn_groupmembership] Enrolling several users or groups into a
+    printer at once had no visible effect: the members were written, but
+    the answer of the server was malformed and the interface neither
+    notified nor refreshed. Printer membership now goes through
+    linuxmuster-api in a single call instead of one sophomorix-group call
+    per entity. Reported by @ebert.
+  * [lmn_groupmembership] Exam accounts are no longer offered when
+    searching for a member to add: the account is temporary, and its
+    label barely differs from the real one.
+  * [lmn_common] New linuxmuster-api client methods for printers
+    (patch_printer_members, join_printer, quit_printer).
+  * [lmn_device-manager] Use last_sync from linuxmuster-tools instead of
+    a local implementation.
+  * [core] Update to Ajenti 2.2.17, which fixes three issues reachable
+    without authentication (see the Ajenti changelog).
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 13 Sep 2026 16:08:44 +0200
+
 linuxmuster-webui7 (7.4.10) lmn74; urgency=medium
 
   * [lmn_linbo4] Fix KeyError 'diff' when saving an image without the

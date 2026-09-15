@@ -1,3 +1,30 @@
+linuxmuster-webui7 (7.4.12) lmn74; urgency=medium
+
+  * [lmn_settings] An API key can be restricted to a list of endpoints,
+    the scope added in linuxmuster-api 7.4.13. Entries are added and
+    removed from the key dialog, and the dialog documents the syntax and
+    its wildcards. Leaving the scope empty keeps the current behaviour: a
+    key reaching the whole API with the permissions of its user.
+  * [lmn_settings] Saving the API keys no longer drops the fields this
+    tab does not know about: keys are merged into the ones already in the
+    API's config.yml instead of replacing them wholesale, which silently
+    discarded the scope of every key at once.
+  * [lmn_settings] A failed restart of linuxmuster-api is reported
+    instead of being swallowed. The service only reads the keys at
+    startup, so until it is restarted the change just saved is not
+    active.
+  * [packaging] postinst: the deprecated venv migration is dropped, and a
+    system-wide Ajenti is uninstalled on install and upgrade. pip skips
+    in a --system-site-packages venv any requirement the system already
+    satisfies, pinned versions included, so a system-wide copy kept the
+    venv from ever owning its own and no update would have touched it
+    again.
+  * [packaging] New linuxmuster-venv dpkg trigger: when
+    linuxmuster-tools7 rebuilds the shared venv after a Python upgrade,
+    the webui reinstalls its requirements and restarts.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 15 Sep 2026 21:19:14 +0200
+
 linuxmuster-webui7 (7.4.11) lmn74; urgency=medium
 
   * [lmn_groupmembership] Enrolling several users or groups into a

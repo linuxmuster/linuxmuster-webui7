@@ -240,6 +240,7 @@
 
             <div ng:show="!missing_lmnapi">
                 <p class="alert alert-info" translate>This tab allow you to configure the api keys for linuxmuster-api</p>
+
                 <div>
                     <span translate>Enable host key authentication</span>
                     <input type="checkbox" ng:model="api_keys.enable_host_auth" />
@@ -256,6 +257,7 @@
                         <tr>
                             <th translate>Name</th>
                             <th translate>Ips</th>
+                            <th translate>Scope</th>
                             <th translate>User context</th>
                             <th></th>
                             <th></th>
@@ -265,6 +267,9 @@
                             <td>{{name}}</td>
                             <td>
                                 <span ng:repeat="ip in key.ips" class="label label-info" style="margin-right:5px;">{{ip}}</span>
+                            </td>
+                            <td>
+                                <span ng:repeat="entry in key.scope" class="label label-warning" style="margin-right:5px;">{{entry}}</span>
                             </td>
                             <td>{{key.user}}</td>
                             <td width="1">
@@ -436,6 +441,18 @@
                     </a>
                 </div>
                 <div style="margin-top:10px;">
+                    <span translate>Scope (leave empty to allow the whole API): </span>
+                    <br />
+                    <span ng:repeat="entry in apiKey.scope" class="label label-warning" ng:click="removeApiKeyScope(entry)"
+                          style="display:inline-block; margin-right:5px;">
+                        {{entry}}
+                        <i class="far fa-times-circle"></i>
+                    </span>
+                    <a ng:click="toggleAddScope()">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <div style="margin-top:10px;">
                     <span translate>Associated user (the API will be called with this user's permissions): </span>
                     <input type="text" placeholder="{{searchText}}" ng:model="_.newApiUser" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
                 </div>
@@ -470,6 +487,18 @@
                     </a>
                 </div>
                 <div style="margin-top:10px;">
+                    <span translate>Scope (leave empty to allow the whole API): </span>
+                    <br />
+                    <span ng:repeat="entry in apiKey.scope" class="label label-warning" ng:click="removeApiKeyScope(entry)"
+                          style="display:inline-block; margin-right:5px;">
+                        {{entry}}
+                        <i class="far fa-times-circle"></i>
+                    </span>
+                    <a ng:click="toggleAddScope()">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <div style="margin-top:10px;">
                     <span translate>Associated user (the API will be called with this user's permissions): </span>
                     <input type="text" placeholder="{{searchText}}" ng:model="_.newApiUser" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
                 </div>
@@ -494,6 +523,59 @@
         <div class="modal-footer">
             <a ng:click="saveApiKeyIp()" class="btn btn-default btn-flat" ng:disabled="!validateIp(_.newIp)" translate>Save</a>
             <a ng:click="toggleAddIp()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </dialog>
+
+    <dialog ng:show="showAddApiKeyScope" style="width:900px; max-width:95vw;">
+        <div class="modal-header">
+            <h4 translate>Add scope entry</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <span translate>Method and path, without the /v1 prefix. Use * for one path segment and ** for the rest of the path.</span>
+                <input type="text" ng:model="_.newScope" class="form-control" placeholder="GET /linbo/hosts/*/status" />
+            </form>
+
+            <div class="alert alert-info" style="margin-top:20px; margin-bottom:0;">
+                <i class="fa fa-info-circle"></i>
+                <span translate>
+                    A key without a scope reaches the whole API with the permissions of its
+                    associated user. A scope restricts it to a list of endpoints; it only ever
+                    narrows, the user's permissions still apply behind it.
+                </span>
+                <br />
+                <span translate>
+                    Write the path as it appears in the API documentation but without the /v1
+                    prefix. The method may be * to allow any of them. Mind the trailing slash:
+                    /users and /users/ are not the same path.
+                </span>
+                <table class="table table-condensed" style="margin-top:10px; margin-bottom:10px; background:transparent;">
+                    <tr>
+                        <td style="width:1%; white-space:nowrap;"><code>GET /linbo/hosts/pc01/status</code></td>
+                        <td translate>exactly this path, and nothing else</td>
+                    </tr>
+                    <tr>
+                        <td style="width:1%; white-space:nowrap;"><code>GET /linbo/hosts/*/status</code></td>
+                        <td translate><code>*</code> stands for exactly one path segment, here any host</td>
+                    </tr>
+                    <tr>
+                        <td style="width:1%; white-space:nowrap;"><code>GET /linbo/**</code></td>
+                        <td translate><code>**</code> stands for the rest of the path, here every route below /linbo. It is only allowed at the end.</td>
+                    </tr>
+                    <tr>
+                        <td style="width:1%; white-space:nowrap;"><code>* /devices/list/default-school</code></td>
+                        <td translate>any method on that one path</td>
+                    </tr>
+                </table>
+                <span translate>
+                    A scope entry that matches no route of the API is written to the
+                    linuxmuster-api log when the service starts, and never allows anything.
+                </span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="saveApiKeyScope()" class="btn btn-default btn-flat" ng:disabled="!validateScope()" translate>Save</a>
+            <a ng:click="toggleAddScope()" class="btn btn-default btn-flat" translate>Close</a>
         </div>
     </dialog>
 

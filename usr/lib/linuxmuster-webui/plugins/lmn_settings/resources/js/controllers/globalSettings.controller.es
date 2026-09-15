@@ -275,6 +275,15 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         });
     }
 
+    // linuxmuster-api only reads host_keys at startup, so every change here
+    // needs a restart to take effect. The backend does it, but it can fail
+    // (service masked, not installed as a unit, ...) and the admin has to know.
+    $scope.notifyApiRestart = (resp) => {
+        if (resp.data && resp.data.api_restarted === false) {
+            notify.error(gettext('Could not restart linuxmuster-api: the change will only take effect once it is restarted.'));
+        }
+    }
+
     $scope.deleteApiKey = (keyname) => {
         messagebox.show({
             title: gettext('Delete Api key'),
@@ -283,6 +292,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
                 $http.delete(`/api/lmn/apikeys/${keyname}`).then((resp) => {
                     delete $scope.api_keys.keys[keyname];
                     notify.success(gettext('Key deleted'));
+                    $scope.notifyApiRestart(resp);
                 });
             });
     }
@@ -311,13 +321,13 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
 
     $scope.addApiKey = () => {
         $scope.showNewApiKey = true;
-        $scope.apiKey = {'name':'', 'ips':[], 'user':''};
+        $scope.apiKey = {'name':'', 'ips':[], 'user':'', 'scope':[]};
     }
 
     $scope.editApiKey = (key, name) => {
         $scope.old_api_key_name = name;
         $scope.showUpdateApiKey = true;
-        $scope.apiKey = {'name': name, 'ips': key.ips, 'user': key.user, 'secret': key.secret};
+        $scope.apiKey = {'name': name, 'ips': key.ips, 'user': key.user, 'secret': key.secret, 'scope': key.scope || []};
         $scope._.newApiUser = {'label': key.user, 'login': key.user};
     }
 
@@ -326,9 +336,11 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         $scope.apiKey.user = $scope._.newApiUser['login'];
         $http.put('/api/lmn/apikeys', {key: $scope.apiKey}).then((resp) => {
             notify.success(gettext('Api key added !'));
-            $scope.apiKey['secret'] = resp.data;
+            $scope.notifyApiRestart(resp);
+            $scope.apiKey['secret'] = resp.data.secret;
             $scope.api_keys.keys[$scope.apiKey['name']] = {
                 'ips':$scope.apiKey['ips'],
+                'scope':$scope.apiKey['scope'],
                 'secret':$scope.apiKey['secret'],
                 'user':$scope._.newApiUser['login'],
             };
@@ -344,6 +356,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             }
         }).then((resp) => {
                     notify.success(gettext('Configuration saved'));
+                    $scope.notifyApiRestart(resp);
         });
     }
 
@@ -363,11 +376,33 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
 
     $scope.validateIp = () => {return validation["isValidIP"]($scope._.newIp) == true;}
 
+    // An empty scope means no restriction: the key reaches the whole API with
+    // the LDAP role of its user. Entries read "<METHOD> <path>", the path
+    // written without the /v1 prefix, with "*" for one segment and "**" for
+    // the rest of the path.
+    $scope.toggleAddScope = () => $scope.showAddApiKeyScope = !$scope.showAddApiKeyScope;
+
+    $scope.removeApiKeyScope = (entry) => {
+        let pos = $scope.apiKey.scope.indexOf(entry);
+        $scope.apiKey.scope.splice(pos, 1);
+    }
+
+    $scope.saveApiKeyScope = () => {
+        $scope.toggleAddScope();
+        $scope.apiKey.scope.push(angular.copy($scope._.newScope));
+        $scope._.newScope = '';
+    }
+
+    $scope.validateScope = () => {
+        return /^(\*|[A-Za-z]+) \/\S*$/.test(($scope._.newScope || '').trim());
+    }
+
     $scope.updateApiKey = () => {
         $scope.showUpdateApiKey = false;
         delete $scope.api_keys.keys[$scope.old_api_key_name];
         $scope.api_keys.keys[$scope.apiKey['name']] = {
                 'ips':$scope.apiKey['ips'],
+                'scope':$scope.apiKey['scope'],
                 'secret':$scope.apiKey['secret'],
                 'user':$scope._.newApiUser['login'],
         };

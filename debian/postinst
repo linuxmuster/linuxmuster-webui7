@@ -16,20 +16,29 @@ msg()
 
 create_linuxmuster_venv()
 {
-    msg "Setting up virtual env in /opt"
-    /usr/bin/python3 -m venv /opt/linuxmuster --system-site-packages
-}
-
-migrate_to_venv()
-{
-    /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
-
-    # Checking if the linuxmuster's venv  is already installed
+    # Nothing to do if the linuxmuster's venv is already installed
     if [ -f /opt/linuxmuster/bin/activate ] ; then
       return
     fi
 
-    create_linuxmuster_venv
+    msg "Setting up virtual env in /opt"
+    /usr/bin/python3 -m venv /opt/linuxmuster --system-site-packages
+}
+
+remove_system_ajenti()
+{
+    # Ajenti must never be importable outside the venv. pip inside a
+    # --system-site-packages venv skips any requirement the system already
+    # satisfies, pinned versions included, so a system-wide copy keeps the
+    # venv from ever owning its own and the venv silently falls back to a
+    # copy no update will ever touch.
+    # The trailing [ =@] keeps sibling projects such as ajenti-dev-multitool
+    # from matching on the bare 'aj' alternative.
+    /usr/bin/python3 -m pip list --format=freeze 2>/dev/null \
+        | grep -qiE '^(aj|ajenti-panel|ajenti\.plugin\.[^ =]+)[ =@]' || return 0
+
+    msg "Removing system-wide Ajenti so that the venv copy is used"
+    /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
 }
 
 case "$1" in
@@ -51,6 +60,8 @@ case "$1" in
             msg "--------------------------------------------------------------------
 Installing linuxmuster-webui
 --------------------------------------------------------------------"
+
+            remove_system_ajenti
 
             create_linuxmuster_venv
             . /opt/linuxmuster/bin/activate
@@ -135,7 +146,9 @@ Updating linuxmuster-webui
             # Remove old lmn_session plugin
             rm -rf /usr/lib/linuxmuster-webui/plugins/lmn_session/
 
-            migrate_to_venv
+            remove_system_ajenti
+
+            create_linuxmuster_venv
             . /opt/linuxmuster/bin/activate
             PYTHON3=/opt/linuxmuster/bin/python3
 

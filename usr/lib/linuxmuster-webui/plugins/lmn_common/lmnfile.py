@@ -266,6 +266,16 @@ class CSVLoader(LMNFile):
             # Removing leading and trailing spaces for all fields
             trim = []
             for line in self.opened:
+                if line.lstrip().startswith('#'):
+                    # A comment is not CSV. Quoting the whole line for the
+                    # reader keeps it in the first field, delimiters, quotes
+                    # and spacing included, and write() puts it back
+                    # unchanged. Parsed as CSV it would lose everything after
+                    # the first delimiter, and a single unmatched quote would
+                    # swallow every row that follows it.
+                    trim.append('"' + line.rstrip('\r\n').replace('"', '""') + '"')
+                    continue
+
                 trim.append(self.delimiter.join(
                     [field.strip() for field in line.split(self.delimiter)]
                 ))
@@ -292,6 +302,11 @@ class CSVLoader(LMNFile):
                 first_field = elt[self.fieldnames[0]]
                 if first_field in ['', EMPTY_LINE_MARKER]:
                     f.write(first_field.replace(EMPTY_LINE_MARKER, '') + '\n')
+                elif first_field.startswith('#'):
+                    # Written back as read: one field holding the whole line.
+                    # Through the writer it would come back quoted and padded
+                    # with the separators of the columns it does not have.
+                    f.write(first_field + '\n')
                 else:
                     writer.writerow(elt)
         if not filecmp.cmp(tmp, self.file):

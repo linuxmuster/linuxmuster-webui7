@@ -3,6 +3,7 @@ Module to configure sophomorix.
 """
 
 # coding=utf-8
+import logging
 import os
 import subprocess
 from jadi import component
@@ -622,12 +623,19 @@ class Handler(HttpPlugin):
         """
         Restart linuxmuster-api so it picks up the config.yml just written
         (host_keys/host_key_auth are only read once at process startup).
+
+        :return: Whether the service was restarted
+        :rtype: bool
         """
 
         try:
             subprocess.check_call(['systemctl', 'restart', 'linuxmuster-api'])
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            pass
+            return True
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            # The caller tells the admin to restart it themselves: until then
+            # the key or the scope just saved is not active.
+            logging.error(f"Could not restart linuxmuster-api: {e}")
+            return False
 
     @get(r'/api/lmn/apisettings')
     @endpoint(api=True)
@@ -686,7 +694,7 @@ class Handler(HttpPlugin):
             with LMNFile(apiconfig_path, 'w') as f:
                 f.write(apiconfig)
 
-        self._restart_api_service()
+        return {'api_restarted': self._restart_api_service()}
 
     @post(r'/api/lmn/apikeys')
     @endpoint(api=True)
@@ -708,17 +716,31 @@ class Handler(HttpPlugin):
         with LMNFile(apiconfig_path, 'r') as f:
             apiconfig = f.read()
 
+        existing_keys = apiconfig.get('host_keys', {}) or {}
+        host_keys = {}
+
         for key, details in config['api_keys'].items():
-            if details.get('ips', None) == []:
-                del details['ips']
+            # Merge instead of replacing: this UI sends back only the fields it
+            # knows about, and a plain assignment would drop every other one
+            # (a key's scope, for instance) silently, for all keys at once.
+            merged = dict(existing_keys.get(key, {}))
+            merged.update(details)
+
+            # An empty list means "no restriction" for both fields, and the API
+            # reads that as the field being absent.
+            for unset_when_empty in ('ips', 'scope'):
+                if merged.get(unset_when_empty, None) == []:
+                    del merged[unset_when_empty]
+
+            host_keys[key] = merged
 
         apiconfig['host_key_auth'] = config['enable_host_auth']
-        apiconfig['host_keys'] = config['api_keys']
+        apiconfig['host_keys'] = host_keys
 
         with LMNFile(apiconfig_path, 'w') as f:
             f.write(apiconfig)
 
-        self._restart_api_service()
+        return {'api_restarted': self._restart_api_service()}
 
     @put(r'/api/lmn/apikeys')
     @endpoint(api=True)
@@ -753,9 +775,15 @@ class Handler(HttpPlugin):
         if key['ips']:
             apiconfig['host_keys'][key['name']]['ips'] = key['ips']
 
+        # Optional: without it the key reaches the whole API with the LDAP role
+        # of `user`. See host_keys in the API's config.yml.sample.
+        if key.get('scope', None):
+            apiconfig['host_keys'][key['name']]['scope'] = key['scope']
+
         with LMNFile(apiconfig_path, 'w') as f:
             f.write(apiconfig)
 
-        self._restart_api_service()
-
-        return key['secret']
+        return {
+            'secret': key['secret'],
+            'api_restarted': self._restart_api_service(),
+        }

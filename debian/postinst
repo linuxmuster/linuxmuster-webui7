@@ -218,6 +218,16 @@ Updating linuxmuster-webui ...done
     upgrade|abort-upgrade)
     ;;
     
+    triggered)
+        # linuxmuster-tools7 rebuilt the shared venv after a Python upgrade:
+        # our own requirements went with it and have to be reinstalled.
+        msg "Reinstalling Python requirements in the linuxmuster venv"
+        /opt/linuxmuster/bin/python3 -m pip install -r /usr/lib/linuxmuster-webui/etc/requirements.txt
+
+        msg "Restart service linuxmuster-webui"
+        systemctl restart linuxmuster-webui
+    ;;
+
     *)
         msg "postinst called with unknown argument \`$1'" >&2
         exit 0

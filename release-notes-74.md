@@ -1,10 +1,10 @@
-# Release Notes – linuxmuster-webui7 7.4
+# 🚀 Release Notes – linuxmuster-webui7 7.4
 
 **Package version:** 7.4.2 – 7.4.12
 
 ---
 
-## Overview
+## 📋 Overview
 
 Version 7.4 is largely a de-duplication cycle for the webui: password
 management, LINBO remote/image handling, management-group and printer
@@ -18,7 +18,7 @@ really owns.
 
 ---
 
-## Password management
+## 🔑 Password management
 
 - Password constraints are now editable from the UI, scoped by role
   (school-admin vs global-admin) and school; new passwords are validated
@@ -32,7 +32,7 @@ really owns.
 
 ---
 
-## LINBO plugins
+## 🖥️ LINBO plugins
 
 - `lmn_linbo_sync` migrated to `linuxmuster-tools`' `LinboRemote`: `api.py`
   now only maps frontend parameters and runs the command, instead of
@@ -51,7 +51,7 @@ really owns.
 
 ---
 
-## Management groups, printers and parents
+## 👥 Management groups, printers and parents
 
 - Management-group membership (wifi, internet, intranet, webfilter,
   printing) and parent assignment/removal no longer shell out to `lmncli`;
@@ -68,7 +68,7 @@ really owns.
 
 ---
 
-## API keys and settings
+## 🔐 API keys and settings
 
 - An API key can be restricted to a list of endpoints, the scope added in
   linuxmuster-api 7.4.13. Entries are added and removed from the key dialog,
@@ -85,7 +85,7 @@ really owns.
 
 ---
 
-## Shared code centralization
+## ♻️ Shared code centralization
 
 - The plugin's own `LMNFile`/`fieldnames.py` (416 + 65 lines) removed; 8
   plugins (settings, quotas, dhcp, permissions, devices, linbo4,
@@ -95,7 +95,7 @@ really owns.
 
 ---
 
-## Quota display fix
+## 🐛 Quota display fix
 
 Fixed quota display for users whose home share is hosted on a separate
 fileserver (MSDFS): the quota used to be queried locally via
@@ -107,7 +107,7 @@ zero-hard-limit share was fixed along the way.
 
 ---
 
-## Packaging
+## 📦 Packaging
 
 - postinst: the deprecated venv migration is dropped, and a system-wide
   Ajenti is uninstalled on install and upgrade. pip skips in a
@@ -120,7 +120,7 @@ zero-hard-limit share was fixed along the way.
 
 ---
 
-## Miscellaneous
+## 🔧 Miscellaneous
 
 - Updated to Ajenti 2.2.17, which fixes three issues reachable without
   authentication (see the Ajenti changelog). Security fixes in `paramiko`;

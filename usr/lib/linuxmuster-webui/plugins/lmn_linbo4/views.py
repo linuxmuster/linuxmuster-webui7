@@ -44,11 +44,11 @@ class Handler(HttpPlugin):
             path = os.path.join(self.LINBO_PATH, file)
             if (
                 file.startswith('start.conf.')
-                and not file.endswith('.vdi')
+                and name_checker.check_linbo_conf_name(file[len('start.conf.'):])
                 and not os.path.islink(path)
                 and os.path.isfile(path)
             ):
-                groups.append(file.split(".")[-1])
+                groups.append(file[len('start.conf.'):])
         return groups
 
     @get(r'/api/lmn/linbo4/configs')
@@ -60,7 +60,7 @@ class Handler(HttpPlugin):
             path = os.path.join(self.LINBO_PATH, file)
             if (
                 file.startswith('start.conf.')
-                and not file.endswith('.vdi')
+                and name_checker.check_linbo_conf_name(file[len('start.conf.'):])
                 and not os.path.islink(path)
                 and os.path.isfile(path)
             ):

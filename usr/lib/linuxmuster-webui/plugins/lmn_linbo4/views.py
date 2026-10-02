@@ -1,13 +1,12 @@
 import os
 import json
-import subprocess
 
 from jadi import component
 from aj.auth import authorize
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from linuxmusterTools.lmnfile import LMNFile
-from linuxmusterTools.linbo import LinboImageManager
+from linuxmusterTools.linbo import LinboImageManager, restart_image_services
 from linuxmusterTools.common.checks import NameChecker
 
 name_checker = NameChecker()
@@ -301,7 +300,7 @@ class Handler(HttpPlugin):
         """
 
         try:
-            subprocess.check_call(['systemctl', 'restart', 'linbo-multicast.service', 'linbo-torrent.service'])
+            restart_image_services()
             return True
         except Exception as e:
             raise EndpointError(None, message=str(e))

@@ -808,7 +808,13 @@
       var newName;
       newName = configName.substring('start.conf.'.length);
       return messagebox.prompt('New name', newName).then(function(msg) {
+        var test;
         newName = msg.value;
+        test = validation.isValidLinboConf(newName);
+        if (test !== true) {
+          notify.error(gettext(test));
+          return;
+        }
         if (newName) {
           return $http.get(`/api/lmn/linbo4/config/${configName}`).then(function(resp) {
             resp.data.config.LINBO.Group = newName;

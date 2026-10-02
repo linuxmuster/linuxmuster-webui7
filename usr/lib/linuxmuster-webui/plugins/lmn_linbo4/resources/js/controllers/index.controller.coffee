@@ -644,6 +644,10 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         newName = configName.substring('start.conf.'.length)
         messagebox.prompt('New name', newName).then (msg) ->
             newName = msg.value
+            test = validation.isValidLinboConf(newName)
+            if test != true
+                notify.error gettext(test)
+                return
             if newName
                 $http.get("/api/lmn/linbo4/config/#{configName}").then (resp) ->
                     resp.data.config.LINBO.Group = newName

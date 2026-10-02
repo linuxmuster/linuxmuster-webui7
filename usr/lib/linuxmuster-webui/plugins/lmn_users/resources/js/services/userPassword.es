@@ -1,4 +1,4 @@
-angular.module('lmn.users').service('userPassword', function($http, $uibModal, messagebox, notify, gettext) {
+angular.module('lmn.users').service('userPassword', function($http, $uibModal, messagebox, notify, gettext, lmnNotify) {
 
     this.showFirstPassword = (username) => {
         return $uibModal.open({
@@ -14,17 +14,17 @@ angular.module('lmn.users').service('userPassword', function($http, $uibModal, m
 
     this.resetFirstPassword = (userlist) => {
         $http.post('/api/lmn/users/passwords/reset-first', {users: userlist}).then((resp) => {
-            notify.success(gettext('Initial password set'));
+            lmnNotify.permanent_success(gettext('Initial password set'));
         }).catch((e) => {
-            notify.error(gettext('Password change failed: ') + e.data.message);
+            lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message);
         });
     };
 
     this.setRandomFirstPassword = (userlist) => {
         $http.post('/api/lmn/users/passwords/set-random', {users: userlist}).then((resp) => {
-            notify.success(gettext('Random password set'));
+            lmnNotify.permanent_success(gettext('Random password set'));
         }).catch((e) => {
-            notify.error(gettext('Password change failed: ') + e.data.message);
+            lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message);
         });
     };
 

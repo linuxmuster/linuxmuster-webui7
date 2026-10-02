@@ -30,7 +30,7 @@
     });
   });
 
-  angular.module('lmn.auth').controller('LMNPasswordChangeCtrl', function($scope, $http, pageTitle, gettext, notify) {
+  angular.module('lmn.auth').controller('LMNPasswordChangeCtrl', function($scope, $http, pageTitle, gettext, notify, lmnNotify) {
     pageTitle.set(gettext('Change Password'));
     $scope.showNewPassword = false;
     $scope.toggleShowNewPassword = () => {
@@ -48,7 +48,7 @@
         notify.success(gettext('Password changed'));
         return window.location.replace('landingpage');
       }).catch(function(e) {
-        return notify.error(gettext('Password change failed: ') + e.data.message);
+        return lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message);
       });
     };
   });

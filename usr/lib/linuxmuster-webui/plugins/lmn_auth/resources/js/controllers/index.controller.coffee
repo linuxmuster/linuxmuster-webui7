@@ -3,7 +3,7 @@ angular.module('lmn.auth').config ($routeProvider) ->
         controller: 'LMNPasswordChangeCtrl'
         templateUrl: '/lmn_auth:resources/partial/index.html'
 
-angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, pageTitle, gettext, notify) ->
+angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, pageTitle, gettext, notify, lmnNotify) ->
     pageTitle.set(gettext('Change Password'))
 
     $scope.showNewPassword = false;
@@ -19,4 +19,4 @@ angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, p
             notify.success gettext('Password changed')
             window.location.replace('landingpage')
         .catch (e) ->
-            notify.error(gettext('Password change failed: ') + e.data.message)
+            lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message)

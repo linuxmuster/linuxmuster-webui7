@@ -1,17 +1,10 @@
-angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, $window, messagebox, validation, notify, toaster, gettext, identity) {
+angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity, lmnNotify) {
 
     this.sessions = [];
     this.user_missing_membership = [];
     this.examMode = false;
 
-    this.error = (title, text) => {
-        toaster.pop({
-            type:'error',
-            title: title,
-            body: text,
-            timeout: 0
-        });
-    }
+    this.error = (title, text) => lmnNotify.permanent_error(title, text);
 
     this.load = () => {
         var promiseList = [];

@@ -21,7 +21,7 @@ angular.module('lmn.session_new').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, $window, messagebox, validation, notify, toaster, gettext, identity) {
+angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity, lmnNotify) {
     var _this = this;
 
     this.sessions = [];
@@ -29,12 +29,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     this.examMode = false;
 
     this.error = function (title, text) {
-        toaster.pop({
-            type: 'error',
-            title: title,
-            body: text,
-            timeout: 0
-        });
+        return lmnNotify.permanent_error(title, text);
     };
 
     this.load = function () {

@@ -33,7 +33,7 @@ angular.module('lmn.users').controller 'LMNUsersShowBindPasswordController', ($s
     $scope.close = () ->
         $uibModalInstance.close()
 
-angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype) ->
+angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype, lmnNotify) ->
     $scope.users = users
     # Single user
     if not Array.isArray(users)
@@ -48,10 +48,10 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
 
         usernames = $scope.users.flatMap((x) => x.sAMAccountName).join(',').trim()
         $http.post("/api/lmn/users/passwords/set-#{$scope.pwtype}", {users: usernames, password: $scope.userpw}).then (resp) ->
-            notify.success(gettext('New password set'))
+            lmnNotify.permanent_success(gettext('New password set'))
             $scope.close()
         .catch (e) ->
-            notify.error(gettext('Password change failed: ') + e.data.message)
+            lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message)
 
     $scope.close = () ->
         $uibModalInstance.close()

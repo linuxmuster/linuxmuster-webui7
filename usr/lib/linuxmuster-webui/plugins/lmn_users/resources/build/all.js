@@ -2001,7 +2001,7 @@
     };
   });
 
-  angular.module('lmn.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype) {
+  angular.module('lmn.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype, lmnNotify) {
     $scope.users = users;
     // Single user
     if (!Array.isArray(users)) {
@@ -2022,10 +2022,10 @@
         users: usernames,
         password: $scope.userpw
       }).then(function(resp) {
-        notify.success(gettext('New password set'));
+        lmnNotify.permanent_success(gettext('New password set'));
         return $scope.close();
       }).catch(function(e) {
-        return notify.error(gettext('Password change failed: ') + e.data.message);
+        return lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message);
       });
     };
     return $scope.close = function() {
@@ -3299,7 +3299,7 @@
 
 'use strict';
 
-angular.module('lmn.users').service('userPassword', function ($http, $uibModal, messagebox, notify, gettext) {
+angular.module('lmn.users').service('userPassword', function ($http, $uibModal, messagebox, notify, gettext, lmnNotify) {
     var _this = this;
 
     this.showFirstPassword = function (_username) {
@@ -3318,17 +3318,17 @@ angular.module('lmn.users').service('userPassword', function ($http, $uibModal, 
 
     this.resetFirstPassword = function (userlist) {
         $http.post('/api/lmn/users/passwords/reset-first', { users: userlist }).then(function (resp) {
-            notify.success(gettext('Initial password set'));
+            lmnNotify.permanent_success(gettext('Initial password set'));
         }).catch(function (e) {
-            notify.error(gettext('Password change failed: ') + e.data.message);
+            lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message);
         });
     };
 
     this.setRandomFirstPassword = function (userlist) {
         $http.post('/api/lmn/users/passwords/set-random', { users: userlist }).then(function (resp) {
-            notify.success(gettext('Random password set'));
+            lmnNotify.permanent_success(gettext('Random password set'));
         }).catch(function (e) {
-            notify.error(gettext('Password change failed: ') + e.data.message);
+            lmnNotify.permanent_error(gettext('Password change failed: ') + e.data.message);
         });
     };
 

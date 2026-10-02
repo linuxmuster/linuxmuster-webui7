@@ -8,6 +8,9 @@ from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_linbo4.images import LinboImageManager
+from linuxmusterTools.common.checks import NameChecker
+
+name_checker = NameChecker()
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -151,7 +154,13 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:configs')
     @endpoint(api=True)
     def handle_api_get_config(self, http_context, name=None):
-        path = os.path.join(self.LINBO_PATH, name)
+        directory = self.LINBO_PATH
+        if name.startswith('examples/'):
+            directory = os.path.join(self.LINBO_PATH, 'examples')
+            name = name[len('examples/'):]
+        if not name.startswith('start.conf.') or not name_checker.check_linbo_conf_name(name[len('start.conf.'):]):
+            raise EndpointError(f'{name} is not a valid LINBO config')
+        path = os.path.join(directory, name)
 
         with LMNFile(path, 'r') as f:
             config = f.read()
@@ -161,8 +170,10 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:configs')
     @endpoint(api=True)
     def handle_api_delete_config(self, http_context, name=None):
+        group = name[len('start.conf.'):]
+        if not name.startswith('start.conf.') or not name_checker.check_linbo_conf_name(group):
+            raise EndpointError(f'{name} is not a valid LINBO config')
         path = os.path.join(self.LINBO_PATH, name)
-        group = name.split(".")[-1]
         grub_cfg_path = os.path.join(self.GRUB_PATH, f'{group}.cfg')
         with LMNFile(path, 'r') as f:
             f.backup()
@@ -174,6 +185,8 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:configs')
     @endpoint(api=True)
     def handle_api_post_config(self, http_context, name=None):
+        if not name.startswith('start.conf.') or not name_checker.check_linbo_conf_name(name[len('start.conf.'):]):
+            raise EndpointError(f'{name} is not a valid LINBO config')
         path = os.path.join(self.LINBO_PATH, name)
         data = http_context.json_body()
 

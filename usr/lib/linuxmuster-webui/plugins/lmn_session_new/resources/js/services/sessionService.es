@@ -133,7 +133,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         return messagebox.prompt(gettext('Session Name'), '').then((msg) => {
             if (!msg.value) {return}
 
-            testChar = validation.isValidLinboConf(msg.value);
+            testChar = validation.isValidSession(msg.value);
             if (testChar != true) {
                 this.error(gettext(testChar));
                 return
@@ -154,7 +154,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         return messagebox.prompt(gettext('Session Name'), comment).then((msg) => {
             if (!msg.value) {return;}
 
-            testChar = validation.isValidLinboConf(msg.value);
+            testChar = validation.isValidSession(msg.value);
             if (testChar != true) {
                 this.error(gettext(testChar));
                 return

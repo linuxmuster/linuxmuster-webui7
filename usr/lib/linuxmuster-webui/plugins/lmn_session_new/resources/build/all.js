@@ -215,7 +215,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
                 return;
             }
 
-            testChar = validation.isValidLinboConf(msg.value);
+            testChar = validation.isValidSession(msg.value);
             if (testChar != true) {
                 _this.error(gettext(testChar));
                 return;
@@ -238,7 +238,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
                 return;
             }
 
-            testChar = validation.isValidLinboConf(msg.value);
+            testChar = validation.isValidSession(msg.value);
             if (testChar != true) {
                 _this.error(gettext(testChar));
                 return;

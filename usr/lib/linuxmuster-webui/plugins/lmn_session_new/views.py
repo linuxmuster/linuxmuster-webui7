@@ -8,6 +8,7 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, LMNAPI_UNAVAILABLE_MESSAGE
 from aj.plugins.lmn_common import lmnapi_client
+from linuxmusterTools.common import natural_key
 
 
 @component(HttpPlugin)
@@ -297,7 +298,7 @@ class Handler(HttpPlugin):
             if not char.isalnum():
                 return
         userList = self.context.ldapreader.schoolget(f'/users/search/student/{query}')
-        return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
+        return sorted(userList, key=lambda d: (natural_key(d['sophomorixAdminClass']), natural_key(d['sn']), natural_key(d['givenName'])))
 
     @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
     @authorize('lm:users:students:read')

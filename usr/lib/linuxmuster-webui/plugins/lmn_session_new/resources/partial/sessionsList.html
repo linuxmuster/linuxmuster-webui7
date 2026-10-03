@@ -54,7 +54,7 @@
         </div>
 
         <div class="flex-container lmn-container-list" >
-            <div class="list-group-item" ng:repeat="schoolclass in schoolclasses|filter:filter | orderBy: 'cn' :false" style="margin-bottom:30px;" ng:click="startGenerated(schoolclass)">
+            <div class="list-group-item" ng:repeat="schoolclass in schoolclasses|filter:filter" style="margin-bottom:30px;" ng:click="startGenerated(schoolclass)">
                 <div>
                     <div style="float:right;width:50%;">
                         <div class="session_container">
@@ -129,7 +129,7 @@
         </div>
 
         <div class="flex-container lmn-container-list" >
-            <div class="list-group-item" ng:repeat="project in projects|filter:filter | orderBy: 'cn' :false" style="margin-bottom:30px;" ng:click="startGenerated(project)">
+            <div class="list-group-item" ng:repeat="project in projects|filter:filter" style="margin-bottom:30px;" ng:click="startGenerated(project)">
                 <div>
                     <div style="float:right;width:50%;">
                         <div class="session_container">

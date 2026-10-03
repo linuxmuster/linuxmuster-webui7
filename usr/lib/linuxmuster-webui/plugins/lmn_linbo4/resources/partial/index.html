@@ -72,7 +72,7 @@
                     <th translate>Used in group ...</th>
                     <th colspan="3" translate>Actions</th>
                 </tr>
-                <tr ng:repeat="image in images|orderBy:'name'">
+                <tr ng:repeat="image in images">
                     <td>
                         <input type="checkbox" ng:model="image.selected" ng:click="toggleSelected(image)" />
                     </td>

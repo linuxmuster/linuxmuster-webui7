@@ -40,7 +40,9 @@ class LmnapiClient:
         try:
             r = requests.get(
                 f'https://{self.host}:{self.port}/v1/auth/',
-                auth=(username, password),
+                # requests encodes str credentials in latin-1, which can not
+                # carry a password like €uro123: send UTF-8 bytes instead.
+                auth=(username.encode('utf-8'), password.encode('utf-8')),
                 verify=False,
                 timeout=5,
             )

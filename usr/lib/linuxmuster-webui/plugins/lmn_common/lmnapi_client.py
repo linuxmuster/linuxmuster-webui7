@@ -126,7 +126,7 @@ class LmnapiClient:
                   ..., 'cloud': ..., 'mail': ...}
         """
 
-        return self._request('GET', f'/v1/users/{user}/quotas', timeout=30)
+        return self._request('GET', f'/v1/users/{user}/quotas', timeout=None)
 
     def add_management_group_members(self, group, users, school):
         """

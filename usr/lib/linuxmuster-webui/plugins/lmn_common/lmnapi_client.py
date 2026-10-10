@@ -16,6 +16,13 @@ class LmnapiError(Exception):
     """linuxmuster-api was reached but rejected the request."""
 
 
+class LmnapiTimeout(LmnapiError):
+    """
+    linuxmuster-api was reached but did not answer in time. A LmnapiError,
+    so the views show its message instead of asking to log in again.
+    """
+
+
 class LmnapiClient:
     """
     One instance per webui session (see lmn_auth/api.py), holding the
@@ -68,14 +75,14 @@ class LmnapiClient:
         new one (set_current is then meaningless and ignored on that path).
         """
 
-        self._request('POST', f'/v1/users/{user}/set-first-password', json={'password': password, 'set_current': set_current})
+        self._request('POST', f'/v1/users/{user}/set-first-password', json={'password': password, 'set_current': set_current}, timeout=30)
 
     def set_current_password(self, user, password, set_first=False):
         """
         Call POST /v1/users/{user}/set-current-password.
         """
 
-        self._request('POST', f'/v1/users/{user}/set-current-password', json={'password': password, 'set_first': set_first})
+        self._request('POST', f'/v1/users/{user}/set-current-password', json={'password': password, 'set_first': set_first}, timeout=30)
 
     def set_random_first_password(self, user):
         """
@@ -86,7 +93,7 @@ class LmnapiClient:
         :return: the generated password
         """
 
-        return self._request('POST', f'/v1/users/{user}/set-random-first-password')['password']
+        return self._request('POST', f'/v1/users/{user}/set-random-first-password', timeout=30)['password']
 
     def check_first_password(self, user):
         """
@@ -119,7 +126,7 @@ class LmnapiClient:
                   ..., 'cloud': ..., 'mail': ...}
         """
 
-        return self._request('GET', f'/v1/users/{user}/quotas')
+        return self._request('GET', f'/v1/users/{user}/quotas', timeout=30)
 
     def add_management_group_members(self, group, users, school):
         """
@@ -191,7 +198,7 @@ class LmnapiClient:
 
         self._request('POST', f'/v1/printers/{printer}/quit')
 
-    def _request(self, method, path, **kwargs):
+    def _request(self, method, path, timeout=10, **kwargs):
         if not self.token:
             raise LmnapiUnavailable('No linuxmuster-api session token available.')
 
@@ -201,8 +208,15 @@ class LmnapiClient:
                 f'https://{self.host}:{self.port}{path}',
                 headers={'X-API-Key': self.token},
                 verify=False,
-                timeout=10,
+                timeout=(3, timeout),
                 **kwargs,
+            )
+        # Not Timeout: ConnectTimeout is one too, and means unreachable.
+        except requests.exceptions.ReadTimeout:
+            logging.warning(f"linuxmuster-api did not answer {method} {path} within {timeout}s")
+            raise LmnapiTimeout(
+                f"linuxmuster-api did not answer within {timeout} seconds. "
+                "The operation may have been applied anyway, please check before trying again."
             )
         except requests.exceptions.RequestException as e:
             raise LmnapiUnavailable(str(e))

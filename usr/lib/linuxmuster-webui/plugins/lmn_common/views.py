@@ -47,8 +47,8 @@ class Handler(HttpPlugin):
             return ''
 
         with open(path) as f:
-            f.seek(int(http_context.query.get('offset', '0')))
-            return f.read()
+            # The frontend sends the length of what it already has, in characters
+            return f.read()[int(http_context.query.get('offset', '0')):]
 
     ## DEPRECATED
     ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76

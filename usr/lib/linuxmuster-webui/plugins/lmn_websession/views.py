@@ -7,7 +7,7 @@ from aj.plugins import PluginManager
 
 import aj
 import json
-import random
+import secrets
 import string
 import urllib.parse
 
@@ -77,11 +77,11 @@ class Handler(HttpPlugin):
         with open(path) as file:
             filedata = json.loads(file.read())
         data["status"] = "stopped"
-        data["id"] = replaceSpecialChars(str(data["sessionname"] + "-" + ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10))).replace(" ", ""))
+        data["id"] = replaceSpecialChars(str(data["sessionname"] + "-" + ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(10))).replace(" ", ""))
         while data["id"] in filedata:
-            data["id"] = replaceSpecialChars(str(data["sessionname"] + "-" + ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10))).replace(" ", ""))
-        data["attendeepw"] = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        data["moderatorpw"] = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(20))
+            data["id"] = replaceSpecialChars(str(data["sessionname"] + "-" + ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(10))).replace(" ", ""))
+        data["attendeepw"] = ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(20))
+        data["moderatorpw"] = ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(20))
         data["sessionname"] = replaceSpecialChars(data["sessionname"])
         data["moderator"] = self.context.identity
         filedata.append(data)

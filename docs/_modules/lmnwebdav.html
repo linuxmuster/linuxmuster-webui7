@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmnwebdav &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmnwebdav</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmnwebdav</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tools to handle files, directories and uploads.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">locale</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">zipfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">quote</span><span class="p">,</span> <span class="n">unquote</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">gevent</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">smbclient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smbprotocol.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">,</span> <span class="n">SMBAuthenticationError</span><span class="p">,</span> <span class="n">InvalidParameter</span><span class="p">,</span> <span class="n">SMBException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spnego.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">BadMechanismError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jadi</span><span class="w"> </span><span class="kn">import</span> <span class="n">component</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ElementTree</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">qrcode</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">mkcol</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">move</span><span class="p">,</span> <span class="n">put</span><span class="p">,</span> <span class="n">propfind</span><span class="p">,</span> <span class="n">delete</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.endpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span><span class="p">,</span> <span class="n">EndpointReturn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">authorize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.mimetypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">content_mimetypes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">samba_realm</span><span class="p">,</span> <span class="n">samba_netbios</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_smbclient.davxml</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebdavXMLResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.quotas</span><span class="w"> </span><span class="kn">import</span> <span class="n">samba_root_tree</span>
+
+
+<span class="c1"># Wrapper for smbclient methods in order to avoid empty credits error</span>
+<div class="viewcode-block" id="credit_wrapper">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.credit_wrapper">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">credit_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">new_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">retry</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">retry</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SMBException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;0 credits are available&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="n">retry</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">gevent</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span>
+        <span class="c1"># 5 attempts was not enough ?</span>
+        <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="s2">&quot;Still not enough credits to create working directory after five attempts. Please contact your administrator.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_func</span></div>
+
+
+<span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;copyfile&#39;</span><span class="p">,</span> <span class="s1">&#39;rename&#39;</span><span class="p">,</span> <span class="s1">&#39;makedirs&#39;</span><span class="p">,</span> <span class="s1">&#39;mkdir&#39;</span><span class="p">,</span> <span class="s1">&#39;renames&#39;</span><span class="p">,</span> <span class="s1">&#39;remove&#39;</span><span class="p">,</span> <span class="s1">&#39;removedirs&#39;</span><span class="p">,</span> <span class="s1">&#39;scandir&#39;</span><span class="p">,</span> <span class="s1">&#39;stat&#39;</span><span class="p">]:</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">smbclient</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">credit_wrapper</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">smbclient</span><span class="p">,</span> <span class="n">method</span><span class="p">)))</span>
+
+<span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.context">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.context">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="c1"># In gevent, headers are decoded with latin-1</span>
+        <span class="c1"># Dirty fix for it</span>
+        <span class="k">return</span> <span class="n">unquote</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/webdav/list&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_full_files_list">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_full_files_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_full_files_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">samba_root_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">)</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_webdav_get">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_webdav_get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_webdav_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span>
+        <span class="n">url_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;globaladministrator&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;global/&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;global&#39;</span><span class="p">:</span>
+                <span class="n">url_path</span> <span class="o">=</span> <span class="n">url_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;global</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">url_path</span> <span class="o">==</span> <span class="s1">&#39;global&#39;</span><span class="p">:</span>
+                    <span class="n">url_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolGlobalShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Surfing in the school</span>
+                <span class="c1"># TODO: not working in multischool env</span>
+                <span class="n">url_path</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">url_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">elif</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;schooladministrator&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span><span class="p">):</span>
+                <span class="n">url_path</span> <span class="o">=</span> <span class="n">url_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">isfile</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">smb_path</span><span class="p">)</span>
+            <span class="n">isdir</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">smb_path</span><span class="p">)</span>
+            <span class="c1"># Head request to handle 404</span>
+            <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">isfile</span> <span class="ow">or</span> <span class="n">isdir</span><span class="p">:</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond_ok</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">isdir</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">zip_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s1">.zip&#39;</span>
+                <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M&#39;</span><span class="p">)</span>
+                <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">now</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;/srv/.webdav&quot;</span><span class="p">)</span>
+                <span class="n">zip_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">zip_name</span><span class="si">}</span><span class="s1">&#39;</span>
+
+                <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_obj</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">folders</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">smb_path</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                            <span class="c1"># Replace backslashes and removing heading slash</span>
+                            <span class="n">relative_path</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+                            <span class="c1"># Removing domain and school</span>
+                            <span class="n">relative_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">relative_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">:])</span>
+                            <span class="n">relative_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">relative_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">&quot;</span>
+                            <span class="n">smb_file_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">&quot;</span>
+                            <span class="k">with</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">smb_file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_io</span><span class="p">:</span>
+                                <span class="n">content</span> <span class="o">=</span> <span class="n">file_io</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                            <span class="n">zip_obj</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">relative_path</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># Could be a quota error : OSError: [Errno 122] Disk quota exceeded</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;507 Insufficient Storage&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+            <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.zip&#39;</span>
+
+        <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">content_mimetypes</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="n">content_mimetypes</span><span class="p">[</span><span class="n">ext</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)</span>
+
+        <span class="n">http_range</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_RANGE&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Accept-Ranges&#39;</span><span class="p">,</span> <span class="s1">&#39;bytes&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">http_range</span> <span class="ow">and</span> <span class="n">http_range</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;bytes&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">isdir</span><span class="p">:</span>
+                    <span class="n">rsize</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">rsize</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">smb_path</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span>
+                <span class="n">range_from</span><span class="p">,</span> <span class="n">range_to</span> <span class="o">=</span> <span class="n">http_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                <span class="n">range_from</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">range_from</span><span class="p">)</span> <span class="k">if</span> <span class="n">range_from</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">range_to</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">range_to</span><span class="p">)</span> <span class="k">if</span> <span class="n">range_to</span> <span class="k">else</span> <span class="p">(</span><span class="n">rsize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">range_from</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">range_to</span> <span class="o">=</span> <span class="mi">999999999</span>
+
+            <span class="k">if</span> <span class="n">range_from</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">range_to</span> <span class="o">-</span> <span class="n">range_from</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Range&#39;</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s1">&#39;bytes </span><span class="si">{</span><span class="n">range_from</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">range_to</span><span class="si">:</span><span class="s1">d</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">rsize</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;206 Partial Content&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_ok</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">isdir</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Disposition&#39;</span><span class="p">,</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attachment; filename=</span><span class="si">{</span><span class="n">zip_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+                <span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+                <span class="n">fd</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">range_from</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">SEEK_SET</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Disposition&#39;</span><span class="p">,</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attachment; filename=</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+                <span class="n">fd</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">smb_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+                <span class="n">fd</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">range_from</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">os</span><span class="o">.</span><span class="n">SEEK_SET</span><span class="p">)</span>
+
+            <span class="n">bufsize</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">1024</span>
+            <span class="n">read</span> <span class="o">=</span> <span class="n">range_from</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">buf</span><span class="p">:</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">bufsize</span><span class="p">)</span>
+                <span class="n">gevent</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">read</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">range_to</span><span class="p">:</span>
+                    <span class="n">buf</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[:</span><span class="n">range_to</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">read</span><span class="p">]</span>
+                <span class="k">yield</span> <span class="n">buf</span>
+                <span class="n">read</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">read</span> <span class="o">&gt;=</span> <span class="n">range_to</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">isdir</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">isdir</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span></div>
+
+
+    <span class="nd">@delete</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">()</span>
+<div class="viewcode-block" id="Handler.handle_api_webdav_delete">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_webdav_delete">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_webdav_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">SMBDirEntry</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="c1"># First pass : delete files</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="c1"># item like (SMBPATH, [List of subdir], [List of files])</span>
+                    <span class="n">smbpath</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                        <span class="n">smbclient</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">smbpath</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Second pass : delete directories from bottom</span>
+                <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">directory</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">smbclient</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;204 No Content&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_server_error</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+    <span class="nd">@options</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_webdav_options">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_webdav_options">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_webdav_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span> <span class="s2">&quot;OPTIONS, GET, HEAD, PUT, DELETE, COPY, MOVE, MKCOL, PROPFIND&quot;</span><span class="p">)</span>
+        <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s2">&quot;DAV&quot;</span><span class="p">,</span> <span class="s2">&quot;1, 3&quot;</span><span class="p">)</span>
+        <span class="n">http_context</span><span class="o">.</span><span class="n">respond_ok</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+    <span class="nd">@options</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_webdav_bulk_options">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_webdav_bulk_options">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_webdav_bulk_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_api_webdav_options</span><span class="p">(</span><span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@propfind</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">()</span>
+<div class="viewcode-block" id="Handler.handle_api_webdav_propfind">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_webdav_propfind">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_webdav_propfind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span>
+        <span class="n">user_context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;adminclass&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">baseUrl</span> <span class="o">=</span> <span class="s2">&quot;/webdav/&quot;</span>
+
+        <span class="c1"># READ XML body for requested properties</span>
+        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;&lt;?xml&#39;</span> <span class="ow">in</span> <span class="n">http_context</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">http_context</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+            <span class="n">allprop</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//</span><span class="si">{DAV:}</span><span class="s1">allprop&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">allprop</span><span class="p">:</span>
+                <span class="n">requested_properties</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">requested_properties</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">tag</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//</span><span class="si">{DAV:}</span><span class="s1">prop/*&#39;</span><span class="p">)}</span>
+                <span class="n">requested_properties</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{DAV:}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">requested_properties</span><span class="p">}</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">WebdavXMLResponse</span><span class="p">(</span><span class="n">requested_properties</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+            <span class="c1"># / is asked, must give the list of shares</span>
+            <span class="n">shares</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_shares</span><span class="p">(</span><span class="n">user_context</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">share</span> <span class="ow">in</span> <span class="n">shares</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">SMBDirEntry</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">])</span>
+                <span class="n">webdav_path</span> <span class="o">=</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;webdav_url&#39;</span><span class="p">]</span>
+
+                <span class="n">href</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">baseUrl</span><span class="si">}{</span><span class="n">webdav_path</span><span class="si">}</span><span class="s1">/&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                <span class="n">items</span><span class="p">[</span><span class="n">href</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">convert_samba_entry_properties</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="n">items</span><span class="p">[</span><span class="n">href</span><span class="p">][</span><span class="s1">&#39;displayname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">url_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;globaladministrator&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;global/&#39;</span><span class="p">):</span>
+                    <span class="n">url_path</span> <span class="o">=</span> <span class="n">url_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;global</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolGlobalShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Surfing in the school</span>
+                    <span class="c1"># TODO: not working in multischool env</span>
+                    <span class="n">url_path</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">url_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
+                    <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">elif</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;schooladministrator&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span><span class="p">):</span>
+                    <span class="n">url_path</span> <span class="o">=</span> <span class="n">url_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">url_path</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">smb_entity</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">SMBDirEntry</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">smb_path</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">smb_entity</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                    <span class="c1"># Listing a directory</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">smb_path</span><span class="p">):</span>
+                        <span class="n">item_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="c1"># TODO</span>
+                        <span class="n">href</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">baseUrl</span><span class="si">}{</span><span class="n">item_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                        <span class="n">items</span><span class="p">[</span><span class="n">href</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">convert_samba_entry_properties</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Request only the properties of one single file</span>
+                    <span class="n">item</span> <span class="o">=</span> <span class="n">smb_entity</span>
+                    <span class="n">item_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="c1"># TODO</span>
+                    <span class="n">href</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">baseUrl</span><span class="si">}{</span><span class="n">item_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                    <span class="n">items</span><span class="p">[</span><span class="n">href</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">convert_samba_entry_properties</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="p">(</span><span class="n">BadMechanismError</span><span class="p">,</span> <span class="n">SMBAuthenticationError</span><span class="p">,</span> <span class="n">InvalidParameter</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                 <span class="n">http_context</span><span class="o">.</span><span class="n">respond_server_error</span><span class="p">()</span>
+                 <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">except</span> <span class="n">SMBOSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">:</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;207 Multi-Status&#39;</span><span class="p">)</span>
+        <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/xml; charset=&quot;utf-8&quot;&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">make_propfind_response</span><span class="p">(</span><span class="n">items</span><span class="p">)</span></div>
+
+
+    <span class="nd">@propfind</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">()</span>
+<div class="viewcode-block" id="Handler.handle_api_webdav_bulk_propfind">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_webdav_bulk_propfind">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_webdav_bulk_propfind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_api_webdav_propfind</span><span class="p">(</span><span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@mkcol</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">()</span>
+<div class="viewcode-block" id="Handler.handle_api_dav_create_directory">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_dav_create_directory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_dav_create_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s2">&quot;201 Created&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;405 Method Not Allowed&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_server_error</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+    <span class="nd">@move</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">()</span>
+<div class="viewcode-block" id="Handler.handle_api_dav_move">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_dav_move">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_dav_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">src</span><span class="si">}</span><span class="s1">&#39;</span>
+
+            <span class="n">env</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">env</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_DESTINATION&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">dst</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+
+            <span class="n">host</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/webdav/&quot;</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>  <span class="c1"># Delete host domain</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">dst</span><span class="si">}</span><span class="s1">&#39;</span>
+
+            <span class="n">overwrite</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Overwrite&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;F&#39;</span>
+
+            <span class="k">if</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">SMBDirEntry</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;201 Created&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;204 No Content&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;201 Created&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;204 No Content&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_server_error</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+    <span class="nd">@copy</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">()</span>
+<div class="viewcode-block" id="Handler.handle_api_dav_copy">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_dav_copy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_dav_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">src</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">env</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_DESTINATION&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">dst</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+
+            <span class="n">host</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/webdav/&quot;</span>
+
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>  <span class="c1"># Delete host domain</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">dst</span><span class="si">}</span><span class="s1">&#39;</span>
+
+            <span class="n">overwrite</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Overwrite&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;F&#39;</span>
+
+            <span class="k">if</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">SMBDirEntry</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="c1"># First pass : create directory tree</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+                    <span class="c1"># item like (SMBPATH, [List of subdir], [List of files])</span>
+                    <span class="n">smbpath</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">smbpath</span><span class="p">):</span>
+                        <span class="n">smbpath</span> <span class="o">=</span> <span class="n">smbpath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                        <span class="n">smbclient</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">smbpath</span><span class="p">)</span>
+
+                <span class="c1"># Second pass : copy all files</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+                    <span class="n">smbpath</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                        <span class="n">smbpathsrc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">smbpath</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="n">smbpathdst</span> <span class="o">=</span> <span class="n">smbpathsrc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                        <span class="n">smbclient</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">smbpathsrc</span><span class="p">,</span> <span class="n">smbpathdst</span><span class="p">)</span>
+                
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;204 No Content&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;201 Created&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;204 No Content&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+                    <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_server_error</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+    <span class="nd">@put</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/webdav/(?P&lt;path&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">()</span>
+<div class="viewcode-block" id="Handler.handle_api_dav_put">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_dav_put">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_dav_put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">dst</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolShare</span><span class="si">}{</span><span class="n">dst</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">body</span> <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">body</span> <span class="k">else</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+            <span class="k">with</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s2">&quot;201 Created&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s2">&quot;409 Conflict&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_server_error</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/webdav/qrcode&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_webdav_get_qrcode">
+<a class="viewcode-back" href="../autoapi/lmnwebdav/index.html#lmnwebdav.Handler.handle_api_webdav_get_qrcode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_webdav_get_qrcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+
+        <span class="n">env</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">env</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolname</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/webdav&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">,</span>
+            <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">}</span>
+
+        <span class="n">qr</span> <span class="o">=</span> <span class="n">qrcode</span><span class="o">.</span><span class="n">QRCode</span><span class="p">(</span>
+            <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">error_correction</span><span class="o">=</span><span class="n">qrcode</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">ERROR_CORRECT_L</span><span class="p">,</span>
+            <span class="n">box_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">border</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">qr</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">qr</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">make_image</span><span class="p">(</span><span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">back_color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;PNG&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolname</span><span class="p">,</span>
+            <span class="s2">&quot;qrcode&quot;</span><span class="p">:</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/webdav&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="p">}</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

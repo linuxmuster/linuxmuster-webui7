@@ -1,0 +1,16 @@
+lmn_groupmembership
+===================
+
+.. py:module:: lmn_groupmembership
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_groupmembership/main/index
+   /autoapi/lmn_groupmembership/views/index
+
+

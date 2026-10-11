@@ -1,0 +1,16 @@
+lmn_vdi_dashboard
+=================
+
+.. py:module:: lmn_vdi_dashboard
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_vdi_dashboard/main/index
+   /autoapi/lmn_vdi_dashboard/views/index
+
+

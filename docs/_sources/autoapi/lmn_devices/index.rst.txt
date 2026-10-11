@@ -1,0 +1,16 @@
+lmn_devices
+===========
+
+.. py:module:: lmn_devices
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_devices/main/index
+   /autoapi/lmn_devices/views/index
+
+

@@ -1,0 +1,34 @@
+lmn_links.views
+===============
+
+.. py:module:: lmn_links.views
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_example_ni_links(http_context)
+
+

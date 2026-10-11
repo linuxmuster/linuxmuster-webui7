@@ -1,0 +1,43 @@
+lmn_w_datetime.widget
+=====================
+
+.. py:module:: lmn_w_datetime.widget
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:data:: now
+
+.. py:class:: RandomWidget(context)
+
+   Bases: :py:obj:`aj.plugins.dashboard.api.Widget`
+
+
+   .. py:attribute:: id
+      :value: 'datetime'
+
+
+
+   .. py:attribute:: name
+      :value: 'Date Time'
+
+
+
+   .. py:attribute:: template
+      :value: '/lmn_w_datetime:resources/partial/widget.html'
+
+
+
+   .. py:attribute:: config_template
+      :value: '/lmn_w_datetime:resources/partial/widget.config.html'
+
+
+
+   .. py:method:: get_value(config)
+
+

@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_common.lmnapi_client &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_common.lmnapi_client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_common.lmnapi_client</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Minimal HTTP client to call linuxmuster-api from the webui</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">lmnapi_host</span><span class="p">,</span> <span class="n">lmnapi_port</span>
+
+
+<div class="viewcode-block" id="LmnapiUnavailable">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiUnavailable">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LmnapiUnavailable</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;linuxmuster-api could not be reached at all.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="LmnapiError">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LmnapiError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;linuxmuster-api was reached but rejected the request.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="LmnapiTimeout">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiTimeout">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LmnapiTimeout</span><span class="p">(</span><span class="n">LmnapiError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    linuxmuster-api was reached but did not answer in time. A LmnapiError,</span>
+<span class="sd">    so the views show its message instead of asking to log in again.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="LmnapiClient">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LmnapiClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    One instance per webui session (see lmn_auth/api.py), holding the</span>
+<span class="sd">    linuxmuster-api JWT obtained at login so callers don&#39;t have to thread it</span>
+<span class="sd">    through every call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LmnapiClient.host">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.host">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">lmnapi_host</span></div>
+
+<div class="viewcode-block" id="LmnapiClient.port">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.port">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">lmnapi_port</span></div>
+
+<div class="viewcode-block" id="LmnapiClient.token">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.token">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.authenticate">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.authenticate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Exchange LDAP credentials for a linuxmuster-api JWT (GET /v1/auth/)</span>
+<span class="sd">        and keep it on the instance for subsequent password calls.</span>
+
+<span class="sd">        :return: JWT string, or None if linuxmuster-api refused the credentials</span>
+<span class="sd">                 or could not be reached at all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;https://</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s1">/v1/auth/&#39;</span><span class="p">,</span>
+                <span class="c1"># requests encodes str credentials in latin-1, which can not</span>
+                <span class="c1"># carry a password like €uro123: send UTF-8 bytes instead.</span>
+                <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)),</span>
+                <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not reach linuxmuster-api to get a JWT for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;linuxmuster-api refused to deliver a JWT for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2"> (HTTP </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.set_first_password">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.set_first_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_first_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call POST /v1/users/{user}/set-first-password.</span>
+
+<span class="sd">        If password is None, linuxmuster-api resets the user&#39;s current</span>
+<span class="sd">        password back to their existing first password instead of setting a</span>
+<span class="sd">        new one (set_current is then meaningless and ignored on that path).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">/set-first-password&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span> <span class="s1">&#39;set_current&#39;</span><span class="p">:</span> <span class="n">set_current</span><span class="p">},</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.set_current_password">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.set_current_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_current_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">set_first</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call POST /v1/users/{user}/set-current-password.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">/set-current-password&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span> <span class="s1">&#39;set_first&#39;</span><span class="p">:</span> <span class="n">set_first</span><span class="p">},</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.set_random_first_password">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.set_random_first_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_random_first_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call POST /v1/users/{user}/set-random-first-password: linuxmuster-api</span>
+<span class="sd">        generates a password satisfying the current password policy and sets</span>
+<span class="sd">        it as the user&#39;s first and current password.</span>
+
+<span class="sd">        :return: the generated password</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">/set-random-first-password&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.check_first_password">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.check_first_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_first_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call GET /v1/users/{user}?check_first_pw=true.</span>
+
+<span class="sd">        :return: True if the user&#39;s current password still matches their</span>
+<span class="sd">                 stored first password, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;check_first_pw&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})[</span><span class="s1">&#39;FirstPasswordSet&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.get_first_password">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.get_first_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_first_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call GET /v1/users/{user} and return the user&#39;s stored first password.</span>
+
+<span class="sd">        :return: The user&#39;s sophomorixFirstPassword, in clear text.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)[</span><span class="s1">&#39;sophomorixFirstPassword&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.get_user_quotas">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.get_user_quotas">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_user_quotas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call GET /v1/users/{user}/quotas.</span>
+
+<span class="sd">        Unlike sophomorix-query, this resolves quotas hosted on a separate</span>
+<span class="sd">        fileserver (MSDFS) instead of always querying the local domain</span>
+<span class="sd">        controller.</span>
+
+<span class="sd">        :return: {&lt;share&gt;: {&#39;used&#39;, &#39;soft_limit&#39;, &#39;hard_limit&#39;} or {&#39;ERROR&#39;: ...},</span>
+<span class="sd">                  ..., &#39;cloud&#39;: ..., &#39;mail&#39;: ...}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">/quotas&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.add_management_group_members">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.add_management_group_members">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_management_group_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="n">school</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call POST /v1/managementgroups/{group}/members to add users</span>
+<span class="sd">        (wifi, internet, intranet, webfilter, printing) to a management group.</span>
+
+<span class="sd">        `school` is required: linuxmuster-api has no notion of the webui&#39;s</span>
+<span class="sd">        current school context, and a global-administrator&#39;s own JWT carries</span>
+<span class="sd">        no single school at all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/managementgroups/</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s1">/members&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="n">users</span><span class="p">},</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;school&#39;</span><span class="p">:</span> <span class="n">school</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.remove_management_group_members">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.remove_management_group_members">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_management_group_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="n">school</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call DELETE /v1/managementgroups/{group}/members to remove users</span>
+<span class="sd">        from a management group. See add_management_group_members for `school`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/managementgroups/</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s1">/members&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="n">users</span><span class="p">},</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;school&#39;</span><span class="p">:</span> <span class="n">school</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.add_parent">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.add_parent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call POST /v1/users/{student}/parents to assign an existing parent</span>
+<span class="sd">        to an existing student.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">student</span><span class="si">}</span><span class="s1">/parents&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">parent</span><span class="p">]})</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.remove_parent">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.remove_parent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call DELETE /v1/users/{student}/parents to unassign a parent from a student.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/users/</span><span class="si">{</span><span class="n">student</span><span class="si">}</span><span class="s1">/parents&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">parent</span><span class="p">]})</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.patch_printer_members">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.patch_printer_members">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">patch_printer_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">,</span> <span class="n">changes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call PATCH /v1/printers/{printer} to add or remove members and member</span>
+<span class="sd">        groups in a single LDAP modify, instead of one sophomorix-group call</span>
+<span class="sd">        per entity.</span>
+
+<span class="sd">        `changes` maps the API&#39;s list fields (addmembers, removemembers,</span>
+<span class="sd">        addmembergroups, removemembergroups) to lists of cn. Attributes that</span>
+<span class="sd">        are not sent are left untouched.</span>
+
+<span class="sd">        Reserved to administrators by the API (RoleChecker &quot;GS&quot;). Unlike the</span>
+<span class="sd">        management group routes, this one takes no `school`: it reads it from</span>
+<span class="sd">        the caller&#39;s JWT, and printer names already carry their school prefix</span>
+<span class="sd">        in a multischool setup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;PATCH&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/printers/</span><span class="si">{</span><span class="n">printer</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">changes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.join_printer">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.join_printer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">join_printer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call POST /v1/printers/{printer}/join to add the caller themselves to</span>
+<span class="sd">        a joinable printer. This is the route a teacher may use: the API</span>
+<span class="sd">        checks sophomorixJoinable and ignores any member name sent to it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/printers/</span><span class="si">{</span><span class="n">printer</span><span class="si">}</span><span class="s1">/join&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LmnapiClient.quit_printer">
+<a class="viewcode-back" href="../../autoapi/lmn_common/lmnapi_client/index.html#lmn_common.lmnapi_client.LmnapiClient.quit_printer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">quit_printer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call POST /v1/printers/{printer}/quit to remove the caller themselves</span>
+<span class="sd">        from a printer. See join_printer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/v1/printers/</span><span class="si">{</span><span class="n">printer</span><span class="si">}</span><span class="s1">/quit&#39;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LmnapiUnavailable</span><span class="p">(</span><span class="s1">&#39;No linuxmuster-api session token available.&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+                <span class="n">method</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s1">&#39;https://</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="si">}{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;X-API-Key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">},</span>
+                <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">timeout</span><span class="p">),</span>
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="c1"># Not Timeout: ConnectTimeout is one too, and means unreachable.</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ReadTimeout</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;linuxmuster-api did not answer </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> within </span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">LmnapiTimeout</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;linuxmuster-api did not answer within </span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2"> seconds. &quot;</span>
+                <span class="s2">&quot;The operation may have been applied anyway, please check before trying again.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LmnapiUnavailable</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">detail</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;detail&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">detail</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span>
+            <span class="k">raise</span> <span class="n">LmnapiError</span><span class="p">(</span><span class="n">detail</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

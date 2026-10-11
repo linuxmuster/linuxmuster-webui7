@@ -1,0 +1,16 @@
+lmn_vdi_administration
+======================
+
+.. py:module:: lmn_vdi_administration
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_vdi_administration/main/index
+   /autoapi/lmn_vdi_administration/views/index
+
+

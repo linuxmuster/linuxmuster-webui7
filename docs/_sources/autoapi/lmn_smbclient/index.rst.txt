@@ -1,0 +1,16 @@
+lmn_smbclient
+=============
+
+.. py:module:: lmn_smbclient
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_smbclient/davxml/index
+   /autoapi/lmn_smbclient/main/index
+
+

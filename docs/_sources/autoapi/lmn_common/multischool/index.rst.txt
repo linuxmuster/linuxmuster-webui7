@@ -1,0 +1,107 @@
+lmn_common.multischool
+======================
+
+.. py:module:: lmn_common.multischool
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: SchoolManager
+
+   In a multischool environment, it's necessary to have the possibility
+   to switch between the differents schools configurations and specific options
+
+
+   .. py:attribute:: school
+      :value: 'default-school'
+
+
+
+   .. py:attribute:: schools
+
+
+   .. py:attribute:: schoolname
+      :value: 'default-school'
+
+
+
+   .. py:attribute:: schoolShare
+
+
+   .. py:attribute:: schoolGlobalShare
+
+
+   .. py:method:: load()
+
+      Main method of the object : load all schools specific options when
+      switching to another school.
+
+
+
+   .. py:method:: switch(school)
+
+      Switch to another school and then reload all configurations.
+
+
+
+   .. py:method:: load_custom_fields()
+
+      Load custom fields configurations.
+
+
+
+   .. py:method:: load_holidays()
+
+      Load holidays configurations.
+
+
+
+   .. py:method:: get_configpath()
+
+      Return the default absolute path for config files in multischool env.
+
+
+
+   .. py:method:: get_schoolname()
+
+      Read the school name from school.conf.
+
+
+
+   .. py:method:: get_schoolname_by_school(school)
+
+      Returns schoolname by school
+
+
+
+   .. py:method:: get_schools()
+
+      Returns array of all schools with schoolname
+
+
+
+   .. py:method:: load_school_dfs_shares()
+
+      Read the output of 'net conf list' to get the share path, which could be
+      different in case of DFS.
+
+
+
+   .. py:method:: load_drives()
+
+      Load Drives.xml content from school policies
+
+
+
+   .. py:method:: get_share_prefix(school=None)
+
+
+   .. py:method:: get_homepath(user_context)
+
+
+   .. py:method:: get_shares(user_context)
+
+

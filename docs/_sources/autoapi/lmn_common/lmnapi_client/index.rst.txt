@@ -1,0 +1,190 @@
+lmn_common.lmnapi_client
+========================
+
+.. py:module:: lmn_common.lmnapi_client
+
+.. autoapi-nested-parse::
+
+   Minimal HTTP client to call linuxmuster-api from the webui
+
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:exception:: LmnapiUnavailable
+
+   Bases: :py:obj:`Exception`
+
+
+   linuxmuster-api could not be reached at all.
+
+
+.. py:exception:: LmnapiError
+
+   Bases: :py:obj:`Exception`
+
+
+   linuxmuster-api was reached but rejected the request.
+
+
+.. py:exception:: LmnapiTimeout
+
+   Bases: :py:obj:`LmnapiError`
+
+
+   linuxmuster-api was reached but did not answer in time. A LmnapiError,
+   so the views show its message instead of asking to log in again.
+
+
+.. py:class:: LmnapiClient
+
+   One instance per webui session (see lmn_auth/api.py), holding the
+   linuxmuster-api JWT obtained at login so callers don't have to thread it
+   through every call.
+
+
+   .. py:attribute:: host
+
+
+   .. py:attribute:: port
+
+
+   .. py:attribute:: token
+      :value: None
+
+
+
+   .. py:method:: authenticate(username, password)
+
+      Exchange LDAP credentials for a linuxmuster-api JWT (GET /v1/auth/)
+      and keep it on the instance for subsequent password calls.
+
+      :return: JWT string, or None if linuxmuster-api refused the credentials
+               or could not be reached at all.
+
+
+
+   .. py:method:: set_first_password(user, password=None, set_current=False)
+
+      Call POST /v1/users/{user}/set-first-password.
+
+      If password is None, linuxmuster-api resets the user's current
+      password back to their existing first password instead of setting a
+      new one (set_current is then meaningless and ignored on that path).
+
+
+
+   .. py:method:: set_current_password(user, password, set_first=False)
+
+      Call POST /v1/users/{user}/set-current-password.
+
+
+
+   .. py:method:: set_random_first_password(user)
+
+      Call POST /v1/users/{user}/set-random-first-password: linuxmuster-api
+      generates a password satisfying the current password policy and sets
+      it as the user's first and current password.
+
+      :return: the generated password
+
+
+
+   .. py:method:: check_first_password(user)
+
+      Call GET /v1/users/{user}?check_first_pw=true.
+
+      :return: True if the user's current password still matches their
+               stored first password, False otherwise.
+
+
+
+   .. py:method:: get_first_password(user)
+
+      Call GET /v1/users/{user} and return the user's stored first password.
+
+      :return: The user's sophomorixFirstPassword, in clear text.
+
+
+
+   .. py:method:: get_user_quotas(user)
+
+      Call GET /v1/users/{user}/quotas.
+
+      Unlike sophomorix-query, this resolves quotas hosted on a separate
+      fileserver (MSDFS) instead of always querying the local domain
+      controller.
+
+      :return: {<share>: {'used', 'soft_limit', 'hard_limit'} or {'ERROR': ...},
+                ..., 'cloud': ..., 'mail': ...}
+
+
+
+   .. py:method:: add_management_group_members(group, users, school)
+
+      Call POST /v1/managementgroups/{group}/members to add users
+      (wifi, internet, intranet, webfilter, printing) to a management group.
+
+      `school` is required: linuxmuster-api has no notion of the webui's
+      current school context, and a global-administrator's own JWT carries
+      no single school at all.
+
+
+
+   .. py:method:: remove_management_group_members(group, users, school)
+
+      Call DELETE /v1/managementgroups/{group}/members to remove users
+      from a management group. See add_management_group_members for `school`.
+
+
+
+   .. py:method:: add_parent(student, parent)
+
+      Call POST /v1/users/{student}/parents to assign an existing parent
+      to an existing student.
+
+
+
+   .. py:method:: remove_parent(student, parent)
+
+      Call DELETE /v1/users/{student}/parents to unassign a parent from a student.
+
+
+
+   .. py:method:: patch_printer_members(printer, changes)
+
+      Call PATCH /v1/printers/{printer} to add or remove members and member
+      groups in a single LDAP modify, instead of one sophomorix-group call
+      per entity.
+
+      `changes` maps the API's list fields (addmembers, removemembers,
+      addmembergroups, removemembergroups) to lists of cn. Attributes that
+      are not sent are left untouched.
+
+      Reserved to administrators by the API (RoleChecker "GS"). Unlike the
+      management group routes, this one takes no `school`: it reads it from
+      the caller's JWT, and printer names already carry their school prefix
+      in a multischool setup.
+
+
+
+   .. py:method:: join_printer(printer)
+
+      Call POST /v1/printers/{printer}/join to add the caller themselves to
+      a joinable printer. This is the route a teacher may use: the API
+      checks sophomorixJoinable and ignores any member name sent to it.
+
+
+
+   .. py:method:: quit_printer(printer)
+
+      Call POST /v1/printers/{printer}/quit to remove the caller themselves
+      from a printer. See join_printer.
+
+
+

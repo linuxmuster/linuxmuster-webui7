@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_quotas.views &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_quotas.views</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_quotas.views</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Manage per user or group quota configuration.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pwd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jadi</span><span class="w"> </span><span class="kn">import</span> <span class="n">component</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">authorize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.endpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">lmn_getSophomorixValue</span><span class="p">,</span> <span class="n">samba_workgroup</span><span class="p">,</span> <span class="n">LMNAPI_UNAVAILABLE_MESSAGE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common</span><span class="w"> </span><span class="kn">import</span> <span class="n">lmnapi_client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.lmnfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMNFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.quotas</span><span class="w"> </span><span class="kn">import</span> <span class="n">list_user_files</span>
+
+
+<span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.context">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.context">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/quota/user/(?P&lt;user&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_quota">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_api_quota">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_quota</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get quota informations for a user through linuxmuster-api.</span>
+
+<span class="sd">        Goes through linuxmuster-api (linuxmusterTools.quotas) rather than</span>
+<span class="sd">        sophomorix-query: the latter always queries the local domain</span>
+<span class="sd">        controller for smbcquotas, giving wrong numbers for a share hosted</span>
+<span class="sd">        on a separate fileserver (MSDFS proxy) - linuxmuster-api resolves</span>
+<span class="sd">        the real fileserver address.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param user: User login</span>
+<span class="sd">        :type user: string</span>
+<span class="sd">        :return: {&lt;share&gt;: {&#39;used&#39;, &#39;soft_limit&#39;, &#39;hard_limit&#39;} or {&#39;ERROR&#39;: ...},</span>
+<span class="sd">                  ..., &#39;cloud&#39;: ..., &#39;mail&#39;: ...}</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">user</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">lmnapi_client</span><span class="o">.</span><span class="n">get_user_quotas</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="n">lmnapi_client</span><span class="o">.</span><span class="n">LmnapiUnavailable</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">LMNAPI_UNAVAILABLE_MESSAGE</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">lmnapi_client</span><span class="o">.</span><span class="n">LmnapiError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/quota/usermap/(?P&lt;user&gt;[a-z0-9\-_]*)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_group_quota">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_group_quota">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_group_quota</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get samba share limits for a group list. Prepare type key for style</span>
+<span class="sd">        (danger, warning, success) to display status.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-quota&#39;</span><span class="p">,</span> <span class="s1">&#39;--smbcquotas-only&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;--user&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">json_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;QUOTA/USERS/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">/SHARES/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/smbcquotas&#39;</span>
+        <span class="n">share</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="n">json_path</span><span class="p">)</span>
+
+        <span class="n">quotaMap</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">]:</span>
+            <span class="c1"># Avoid strings for non set quotas</span>
+            <span class="n">used</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="s1">&#39;USED_MiB&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="n">soft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="s1">&#39;SOFTLIMIT_MiB&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">used</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;danger&quot;</span>
+            <span class="k">elif</span> <span class="n">used</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;warning&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;success&quot;</span>
+
+            <span class="n">quotaMap</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;USED&quot;</span><span class="p">:</span> <span class="n">used</span><span class="p">,</span>
+                <span class="s2">&quot;SOFTLIMIT&quot;</span><span class="p">:</span> <span class="n">soft</span><span class="p">,</span>
+                <span class="s2">&quot;TYPE&quot;</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">quotaMap</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;USED&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;SOFTLIMIT&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;TYPE&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="n">quotaMap</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/quota/quotas&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:quotas:configure&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_quotas">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_api_quotas">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_quotas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all quotas informations from `school.conf` and LDAP tree.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas informations</span>
+<span class="sd">        :rtype: list of dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">settings_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">configpath</span><span class="si">}</span><span class="s1">school.conf&#39;</span>
+
+        <span class="n">quota_types</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;QUOTA_DEFAULT_GLOBAL&#39;</span><span class="p">:</span><span class="s1">&#39;linuxmuster-global&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUOTA_DEFAULT_SCHOOL&#39;</span><span class="p">:</span><span class="n">school</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1">## Parse csv config file</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">settings_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="c1">## Get list of non default quota user, others get the default value</span>
+        <span class="c1">## Teachers and students are mixed in the same dict</span>
+        <span class="n">non_default</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;teacher&#39;</span><span class="p">:{</span><span class="s1">&#39;list&#39;</span><span class="p">:[]},</span> <span class="s1">&#39;student&#39;</span><span class="p">:{</span><span class="s1">&#39;list&#39;</span><span class="p">:[]},</span> <span class="s1">&#39;schooladministrator&#39;</span><span class="p">:{</span><span class="s1">&#39;list&#39;</span><span class="p">:[]}}</span>
+
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-quota&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;NONDEFAULT_QUOTA/&#39;</span> <span class="o">+</span> <span class="n">school</span> <span class="o">+</span> <span class="s1">&#39;/USER&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">login</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">role</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span>
+            <span class="n">non_default</span><span class="p">[</span><span class="n">role</span><span class="p">][</span><span class="n">login</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+            <span class="n">non_default</span><span class="p">[</span><span class="n">role</span><span class="p">][</span><span class="s1">&#39;list&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span><span class="n">values</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">],</span> <span class="s1">&#39;login&#39;</span><span class="p">:</span><span class="n">login</span><span class="p">,</span> <span class="s1">&#39;givenname&#39;</span><span class="p">:</span><span class="n">values</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">]})</span>
+
+            <span class="c1"># Normal shares</span>
+            <span class="k">if</span> <span class="s1">&#39;QUOTA&#39;</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">share</span> <span class="ow">in</span> <span class="n">quota_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">share</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">share</span><span class="p">][</span><span class="s1">&#39;VALUE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;---&quot;</span><span class="p">:</span>
+                        <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;role.&#39;</span><span class="o">+</span><span class="n">role</span><span class="p">][</span><span class="n">tag</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">share</span><span class="p">][</span><span class="s1">&#39;VALUE&#39;</span><span class="p">])</span>
+                        <span class="k">del</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">share</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">quota_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;role.&#39;</span><span class="o">+</span><span class="n">role</span><span class="p">][</span><span class="n">tag</span><span class="p">]</span>
+
+            <span class="c1"># Mailquota</span>
+            <span class="k">if</span> <span class="s1">&#39;MAILQUOTA&#39;</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="s1">&#39;MAILQUOTA_DEFAULT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s1">&#39;MAILQUOTA&#39;</span><span class="p">][</span><span class="s1">&#39;VALUE&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="s1">&#39;MAILQUOTA_DEFAULT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;role.&#39;</span><span class="o">+</span><span class="n">role</span><span class="p">][</span><span class="s1">&#39;MAILQUOTA_DEFAULT&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Cloudquota</span>
+            <span class="n">values</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="s1">&#39;CLOUDQUOTA_PERCENTAGE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;role.&#39;</span><span class="o">+</span><span class="n">role</span><span class="p">][</span><span class="s1">&#39;CLOUDQUOTA_PERCENTAGE&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">non_default</span><span class="p">,</span> <span class="n">settings</span><span class="p">]</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/quota/groups&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:quotas:configure&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_class_quotas">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_api_class_quotas">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_class_quotas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get quotas for projects and classes.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Dict with all quotas informations</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+
+        <span class="n">groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;adminclass&#39;</span><span class="p">:{},</span> <span class="s1">&#39;project&#39;</span><span class="p">:{}}</span>
+        <span class="n">shares</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;linuxmuster-global&#39;</span><span class="p">,</span> <span class="n">school</span><span class="p">]</span>
+
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-class&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;GROUPS&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s1">&#39;sophomorixType&#39;</span> <span class="ow">in</span> <span class="n">details</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="c1">## Class</span>
+                <span class="k">if</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;adminclass&#39;</span><span class="p">:</span>
+                    <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="s1">&#39;mailquota&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">0</span> <span class="k">if</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixMailQuota&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixMailQuota&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])}</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixQuota&#39;</span><span class="p">]:</span>
+                        <span class="n">share</span><span class="p">,</span><span class="n">value</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                        <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">share</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;---&#39;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;comment&#39;</span><span class="p">:</span><span class="n">comment</span><span class="p">}</span>
+                    <span class="k">for</span> <span class="n">share</span> <span class="ow">in</span> <span class="n">shares</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">share</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">share</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;comment&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">}</span>
+
+                    <span class="n">groups</span><span class="p">[</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixType&#39;</span><span class="p">]][</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">details</span>
+
+                <span class="c1">## Project</span>
+                <span class="k">elif</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;project&#39;</span><span class="p">:</span>
+                    <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="s1">&#39;mailquota&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">0</span> <span class="k">if</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAddMailQuota&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAddMailQuota&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])}</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAddQuota&#39;</span><span class="p">]:</span>
+                        <span class="n">share</span><span class="p">,</span><span class="n">value</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                        <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">share</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;---&#39;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Comment&#39;</span><span class="p">:</span><span class="n">comment</span><span class="p">}</span>
+                    <span class="k">for</span> <span class="n">share</span> <span class="ow">in</span> <span class="n">shares</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">share</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">details</span><span class="p">[</span><span class="s1">&#39;QUOTA&#39;</span><span class="p">][</span><span class="n">share</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Comment&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">}</span>
+                    <span class="n">groups</span><span class="p">[</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixType&#39;</span><span class="p">]][</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">details</span>
+        <span class="k">return</span> <span class="n">groups</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/quota/save&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:quotas:configure&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_save_quotas">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_api_save_quotas">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_save_quotas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register the new quota values through sophomorix.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+
+        <span class="n">quota_types</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;QUOTA_DEFAULT_GLOBAL&#39;</span><span class="p">:</span><span class="s1">&#39;linuxmuster-global&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUOTA_DEFAULT_SCHOOL&#39;</span><span class="p">:</span><span class="n">school</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1">## Update quota per user, but not applied yet</span>
+        <span class="c1">## Not possible to factorise the command for many users</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">userDict</span> <span class="ow">in</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;users&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">values</span> <span class="ow">in</span> <span class="n">userDict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;quota&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MAILQUOTA_DEFAULT&#39;</span><span class="p">:</span>
+                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;--mailquota&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">values</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;login&#39;</span><span class="p">],</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;--quota&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">quota_types</span><span class="p">[</span><span class="n">values</span><span class="p">[</span><span class="s1">&#39;quota&#39;</span><span class="p">]]</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">values</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:---&quot;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;login&#39;</span><span class="p">],</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1">## Update quota per class, but not applied yet</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">grpDict</span> <span class="ow">in</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;groups&#39;</span><span class="p">][</span><span class="s1">&#39;adminclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;quota&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;mailquota&#39;</span><span class="p">:</span>
+                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-class&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">],</span> <span class="s1">&#39;--mailquota&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-class&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">],</span> <span class="s1">&#39;--quota&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;quota&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:---&quot;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1">## Update quota per project, but not applied yet</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">grpDict</span> <span class="ow">in</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;groups&#39;</span><span class="p">][</span><span class="s1">&#39;project&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;quota&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;mailquota&#39;</span><span class="p">:</span>
+                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">],</span> <span class="s1">&#39;--addmailquota&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">],</span> <span class="s1">&#39;--addquota&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;quota&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:---&quot;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/ldap-search&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:quotas:ldap-search&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_ldap_search">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_api_ldap_search">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_ldap_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query usernames for filter in frontend.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: list of usernames with details, one user per dict</span>
+<span class="sd">        :rtype: list of dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># TODO : url already exists in groupmembership, must be factorized ?</span>
+
+        <span class="c1"># Problem with unicode In&amp;egraves --&gt; In\xe8s (py) --&gt; In\ufffds (replace)</span>
+        <span class="c1"># Should be In&amp;egraves --&gt; Ines ( sophomorix supports this )</span>
+        <span class="c1"># login = http_context.json_body()[&#39;login&#39;].decode(&#39;utf-8&#39;, &#39;replace&#39;)</span>
+
+        <span class="n">login</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;login&#39;</span><span class="p">]</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;role&#39;</span><span class="p">]</span>
+
+        <span class="c1">## --teacher limit the query only to teachers</span>
+        <span class="k">if</span> <span class="n">role</span><span class="p">:</span>
+            <span class="n">role</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">role</span>
+
+        <span class="n">resultArray</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="n">login</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;USER&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">user</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">resultArray</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s1">&#39;label&#39;</span><span class="p">:</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="n">user</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+                        <span class="s1">&#39;login&#39;</span><span class="p">:</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;displayName&#39;</span><span class="p">:</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">]</span>
+                        <span class="p">})</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># Ignore SophomorixValue errors</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">resultArray</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/quota/apply&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:quotas:apply&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_apply">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_api_apply">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply new quota configuration.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="s1">&#39;sophomorix-quota &gt; /tmp/apply-sophomorix.log&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/quota/check/(?P&lt;user&gt;[a-z0-9\-_]*)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:quotas:apply&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_check_quota">
+<a class="viewcode-back" href="../../autoapi/lmn_quotas/views/index.html#lmn_quotas.views.Handler.handle_api_check_quota">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_check_quota</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists main directories used quota for a given user.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param user: user login</span>
+<span class="sd">        :type user: basestring</span>
+<span class="sd">        :return: directories containing user&#39;s files and the total size used</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># if isAdmin or user == self.context.identity</span>
+
+        <span class="k">return</span> <span class="n">list_user_files</span><span class="p">(</span><span class="n">user</span><span class="p">)</span></div>
+</div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

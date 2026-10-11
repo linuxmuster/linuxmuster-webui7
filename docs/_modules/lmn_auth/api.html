@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_auth.api &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_auth.api</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_auth.api</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Authentication classes to communicate with LDAP tree and load user&#39;s informations.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stat</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pexpect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ldap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ldap.filter</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ldap.modlist</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">modlist</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pwd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">grp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">simplejson</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jadi</span><span class="w"> </span><span class="kn">import</span> <span class="n">component</span><span class="p">,</span> <span class="n">service</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthenticationProvider</span><span class="p">,</span> <span class="n">OSAuthenticationProvider</span><span class="p">,</span> <span class="n">AuthenticationService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserConfigProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ldap_config</span> <span class="k">as</span> <span class="n">params</span><span class="p">,</span> <span class="n">lmsetup_schoolname</span><span class="p">,</span> <span class="n">pwreset_config</span><span class="p">,</span> <span class="n">allowed_roles</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.multischool</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchoolManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.lmnapi_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LmnapiClient</span><span class="p">,</span> <span class="n">LmnapiUnavailable</span><span class="p">,</span> <span class="n">LmnapiError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.endpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">EndpointError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">LdapNotProvisionedError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.ldapconnector</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMNLdapReader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.passwords</span><span class="w"> </span><span class="kn">import</span> <span class="n">PasswordPolicyProvider</span>
+
+
+<span class="nd">@component</span><span class="p">(</span><span class="n">AuthenticationProvider</span><span class="p">)</span>
+<div class="viewcode-block" id="LMAuthenticationProvider">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LMAuthenticationProvider</span><span class="p">(</span><span class="n">AuthenticationProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    LDAP Authentication provider for linuxmuster.net</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LMAuthenticationProvider.id">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.id">[docs]</a>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;lm&#39;</span></div>
+
+<div class="viewcode-block" id="LMAuthenticationProvider.name">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.name">[docs]</a>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Linux Muster LDAP&#39;</span><span class="p">)</span> <span class="c1"># skipcq: PYL-E0602</span></div>
+
+<div class="viewcode-block" id="LMAuthenticationProvider.pw_reset">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.pw_reset">[docs]</a>
+    <span class="n">pw_reset</span> <span class="o">=</span> <span class="n">pwreset_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;activate&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="LMAuthenticationProvider.context">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.context">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="LMAuthenticationProvider.lr">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.lr">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">LMNLdapReader</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.get_ldap_user">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.get_ldap_user">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ldap_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">[]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the user&#39;s informations to initialize his session.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :param context: &#39;auth&#39; to get permissions and &#39;userconfig&#39; to get user&#39;s personal config, e.g. for Dashboard</span>
+<span class="sd">        :type context: string</span>
+<span class="sd">        :return: Dict of values</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">if</span> <span class="n">username</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;-exam&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/users/exam/</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/users/</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.prepare_environment">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.prepare_environment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">prepare_environment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform some objects initialization (multischool environment, kerberos</span>
+<span class="sd">        ticket) before switching to worker.</span>
+
+<span class="sd">        :param username: sAMAccountName</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Initialize school manager</span>
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="n">active_school</span> <span class="o">=</span> <span class="s2">&quot;default-school&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+            <span class="c1"># Test purpose for multischool</span>
+            <span class="k">if</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixSchoolname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;global&#39;</span><span class="p">:</span>
+                <span class="n">active_school</span> <span class="o">=</span> <span class="s2">&quot;default-school&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">active_school</span> <span class="o">=</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixSchoolname&#39;</span><span class="p">]</span>
+
+        <span class="c1">#active_school = self.get_profile(username)[&#39;activeSchool&#39;]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">schoolmgr</span> <span class="o">=</span> <span class="n">SchoolManager</span><span class="p">()</span>
+            <span class="n">schoolmgr</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">active_school</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span> <span class="o">=</span> <span class="n">schoolmgr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">ldapreader</span> <span class="o">=</span> <span class="n">LMNLdapReader</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_profile</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">password_policy_provider</span> <span class="o">=</span> <span class="n">PasswordPolicyProvider</span><span class="p">()</span>
+
+            <span class="c1"># Cache samba domain&#39;s policies</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">password_policy_provider</span><span class="o">.</span><span class="n">_samba_policy</span><span class="p">()</span>
+
+            <span class="n">auth_info</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="s1">&#39;auth_info&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">lmnapi_client</span> <span class="o">=</span> <span class="n">LmnapiClient</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">auth_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">lmnapi_client</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">auth_info</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">schoolget</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                This alias allow to automatically pass the school context for school</span>
+<span class="sd">                specific requests.</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">ldapreader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">school</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">result</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">ldapreader</span><span class="o">.</span><span class="n">schoolget</span> <span class="o">=</span> <span class="n">schoolget</span>
+
+            <span class="c1"># Permissions for kerberos ticket</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_isolation_uid</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Changing kerberos ticket rights for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">LdapNotProvisionedError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Fresh install, Samba/AD not provisioned yet: same fallback context</span>
+            <span class="c1"># as the LDAP-less root/None case above, instead of a half-initialized</span>
+            <span class="c1"># context.profile/schoolmgr/lmnapi_client. The frontend&#39;s own</span>
+            <span class="c1"># is-configured check (unauthenticated-safe) then redirects to</span>
+            <span class="c1"># /view/lmn/init/welcome.</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Samba/LDAP not provisioned yet, skipping LDAP-backed environment setup for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">ldapreader</span> <span class="o">=</span> <span class="n">LMNLdapReader</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;activeSchool&#39;</span><span class="p">:</span> <span class="s1">&#39;default-school&#39;</span><span class="p">,</span> <span class="s1">&#39;school_show&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;schoolname&#39;</span><span class="p">:</span> <span class="s1">&#39;Default School&#39;</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">password_policy_provider</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">lmnapi_client</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_krb_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a new Kerberos ticket for username stored in /tmp/krb5cc_UIDUID</span>
+<span class="sd">        This ticket will later be renamed as /tmp/krb5cc_UID.</span>
+<span class="sd">        The reason is that this function is running as user nobody and cannot</span>
+<span class="sd">        overwrite an existing ticket.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :param password: Password</span>
+<span class="sd">        :type password: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_isolation_uid</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">uid</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="c1"># No ticket for root user</span>
+            <span class="k">return</span>
+
+        <span class="n">krb_cache</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="s2">&quot;klist&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Kerberos ticket not available, continuing</span>
+            <span class="k">pass</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initializing Kerberos ticket for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="s1">&#39;/usr/bin/kinit&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="n">krb_cache</span><span class="p">,</span> <span class="n">username</span><span class="p">])</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="s1">&#39;.*:&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="n">pexpect</span><span class="o">.</span><span class="n">EOF</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">exit_code</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">exitstatus</span>
+            <span class="k">if</span> <span class="n">exit_code</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Was not able to initialize Kerberos ticket for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">child</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Was not able to initialize Kerberos ticket for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">dn</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check username&#39;s password against LDAP server</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :param password: Password</span>
+<span class="sd">        :type password: string</span>
+<span class="sd">        :param dn: User&#39;s DN</span>
+<span class="sd">        :type dn: string</span>
+<span class="sd">        :return: User&#39;s permissions</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dn</span><span class="p">:</span>
+            <span class="n">dn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dn&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Is the password right ?</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s1">&#39;ldap://&#39;</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">ldap</span><span class="o">.</span><span class="n">OPT_REFERRALS</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">protocol_version</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">VERSION3</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">bind_s</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="LMAuthenticationProvider.authenticate">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.authenticate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test credentials against LDAP and parse permissions for the session.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :param password: Password</span>
+<span class="sd">        :type password: string</span>
+<span class="sd">        :return: User&#39;s permissions</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">OSAuthenticationProvider</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+        <span class="n">username</span> <span class="o">=</span> <span class="n">username</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="c1"># Does the user exist in LDAP ?</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dn&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorixWebuiPermissionsCalculated&#39;</span><span class="p">,</span> <span class="s1">&#39;permissions&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span>
+            <span class="n">userAttrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">userAttrs</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">userAttrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dn&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="n">userAttrs</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_roles</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="c1"># TODO authorize access to exam users ?</span>
+            <span class="c1"># if userAttrs.get(&#39;sophomorixRole&#39;, &#39;&#39;) == &#39;examuser&#39;:</span>
+            <span class="c1">#     return False</span>
+
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_password</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">dn</span><span class="o">=</span><span class="n">userAttrs</span><span class="p">[</span><span class="s1">&#39;dn&#39;</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_krb_ticket</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+            <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span>
+            <span class="s1">&#39;permissions&#39;</span><span class="p">:</span> <span class="n">userAttrs</span><span class="p">[</span><span class="s1">&#39;permissions&#39;</span><span class="p">],</span>
+            <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.authorize">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.authorize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">authorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">permission</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get permissions from session, default false.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :param permission: Permission as dict</span>
+<span class="sd">        :type permission: dict</span>
+<span class="sd">        :return: Bool</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1">## When 2FA is activated, auth_info is missing in prepare_session</span>
+        <span class="c1">## Must be fixed in Ajenti</span>
+        <span class="n">auth_info</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="s1">&#39;auth_info&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auth_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">permissions</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">webuiPermissions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/users/</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sophomorixWebuiPermissionsCalculated&#39;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">webuiPermissions</span><span class="p">:</span>
+                <span class="n">module</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">perm</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">permissions</span><span class="p">[</span><span class="n">module</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Bad value in LDAP field SophomorixUserPermissions! Python error:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+            <span class="c1"># Populating session.auth_info for further use</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">auth_info</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+                <span class="s1">&#39;permissions&#39;</span><span class="p">:</span>  <span class="n">permissions</span>
+            <span class="p">}</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">auth_info</span><span class="p">[</span><span class="s1">&#39;permissions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">permission</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.change_password">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.change_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">new_password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change user password through linuxmuster-api.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :param password: Old password</span>
+<span class="sd">        :type password: string</span>
+<span class="sd">        :param new_password: New password</span>
+<span class="sd">        :type new_password: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong password&#39;</span><span class="p">)</span>
+
+        <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">password_policy_provider</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
+            <span class="n">new_password</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">],</span> <span class="n">school</span><span class="o">=</span><span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixSchoolname&#39;</span><span class="p">],</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Password does not meet requirements: </span><span class="si">{</span><span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">violations</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">lmnapi_client</span><span class="o">.</span><span class="n">set_current_password</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">new_password</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="n">LmnapiUnavailable</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;linuxmuster-api is not available for this session. Please try logging in again or contact your administrator.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">LmnapiError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.get_isolation_gid">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.get_isolation_gid">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_isolation_gid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For each session there will be an isolated worker. This function returns</span>
+<span class="sd">        the right gid for the worker process.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :return: GID of the user</span>
+<span class="sd">        :rtype: integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1"># GROUP CONTEXT</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">groupmembership</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;memberOf&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">groupmembership</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;role-globaladministrator&#39;</span> <span class="ow">in</span> <span class="n">groupmembership</span> <span class="ow">or</span> <span class="s1">&#39;role-schooladministrator&#39;</span> <span class="ow">in</span> <span class="n">groupmembership</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">roles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;role-teacher&#39;</span><span class="p">,</span> <span class="s1">&#39;role-student&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">role</span> <span class="ow">in</span> <span class="n">roles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">role</span> <span class="ow">in</span> <span class="n">groupmembership</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">gid</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrnam</span><span class="p">(</span><span class="n">role</span><span class="p">)</span><span class="o">.</span><span class="n">gr_gid</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running Webui as </span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">gid</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrnam</span><span class="p">(</span><span class="s1">&#39;nogroup&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gr_gid</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Context group not found, running Webui as group &#39;nogroup&#39;.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">gid</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.get_isolation_uid">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.get_isolation_uid">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_isolation_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For each session there will be an isolated worker. This function returns</span>
+<span class="sd">        the right uid for the worker process.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :return: UID of the user</span>
+<span class="sd">        :rtype: integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1"># USER CONTEXT</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">groupmembership</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;memberOf&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">groupmembership</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="s1">&#39;role-globaladministrator&#39;</span> <span class="ow">in</span> <span class="n">groupmembership</span> <span class="ow">or</span> <span class="s1">&#39;role-schooladministrator&#39;</span> <span class="ow">in</span> <span class="n">groupmembership</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="o">.</span><span class="n">pw_uid</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running Webui as </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="s1">&#39;nobody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pw_uid</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Context user not found, running Webui as user &#39;nobody&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">uid</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare identity profile for angular.</span>
+
+<span class="sd">        :param username: Username</span>
+<span class="sd">        :type username: string</span>
+<span class="sd">        :return: User&#39;s informations from LDAP</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">,</span><span class="kc">None</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;activeSchool&#39;</span><span class="p">:</span> <span class="s1">&#39;default-school&#39;</span><span class="p">,</span> <span class="s1">&#39;school_show&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;schoolname&#39;</span><span class="p">:</span> <span class="s2">&quot;Default School&quot;</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;sophomorixSchoolname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;global&#39;</span><span class="p">:</span>
+                <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;activeSchool&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default-school&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span><span class="p">:</span>
+                    <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;activeSchool&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;activeSchool&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;sophomorixSchoolname&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schools</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schools</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="s2">&quot;role-globaladministrator&quot;</span> <span class="ow">in</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;memberOf&#39;</span><span class="p">,</span> <span class="p">[])):</span>
+                <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;school_show&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;school_show&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolname</span><span class="p">:</span>
+                <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;schoolname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">schoolname</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">profile</span><span class="p">[</span><span class="s1">&#39;schoolname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lmsetup_schoolname</span>
+
+            <span class="k">return</span> <span class="n">profile</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="LMAuthenticationProvider.get_profile">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.get_profile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_profile</span><span class="p">(</span><span class="n">username</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.check_mail">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.check_mail">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_mail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mail</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a given mail actually exists in the LDAP tree, in order to send</span>
+<span class="sd">        or not a password reset email.</span>
+<span class="sd">        The tested field must be given in the config file.</span>
+
+<span class="sd">        :param mail: Email of the user</span>
+<span class="sd">        :type mail: basestring</span>
+<span class="sd">        :return: Existing or not</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">ldap_filter</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;(&amp;</span>
+<span class="s2">                            (objectClass=user)</span>
+<span class="s2">                            (|</span>
+<span class="s2">                                (sophomorixRole=globaladministrator)</span>
+<span class="s2">                                (sophomorixRole=schooladministrator)</span>
+<span class="s2">                                (sophomorixRole=teacher)</span>
+<span class="s2">                                (sophomorixRole=student)</span>
+<span class="s2">                            )</span>
+<span class="s2">                            (</span><span class="si">{</span><span class="n">pwreset_config</span><span class="p">[</span><span class="s1">&#39;ldap_mail_field&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">=%s)</span>
+<span class="s2">                        )&quot;&quot;&quot;</span>
+
+        <span class="c1"># Apply escape chars on mail value</span>
+        <span class="n">searchFilter</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">filter_format</span><span class="p">(</span><span class="n">ldap_filter</span><span class="p">,</span> <span class="p">[</span><span class="n">mail</span><span class="p">])</span>
+
+        <span class="n">l</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s1">&#39;ldap://&#39;</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+        <span class="c1"># Binduser bind to the  server</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">ldap</span><span class="o">.</span><span class="n">OPT_REFERRALS</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">protocol_version</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">VERSION3</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">bind_s</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;binddn&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;bindpw&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">search_s</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;searchdn&#39;</span><span class="p">],</span> <span class="n">ldap</span><span class="o">.</span><span class="n">SCOPE_SUBTREE</span><span class="p">,</span> <span class="n">searchFilter</span><span class="p">,</span> <span class="n">attrlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Don&#39;t show any hint if the email doesn&#39;t exists in ldap</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="c1"># What to do if email is not unique ?</span>
+            <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">ldap</span><span class="o">.</span><span class="n">LDAPError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">l</span><span class="o">.</span><span class="n">unbind_s</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.check_password_complexity">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.check_password_complexity">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_password_complexity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a given password for a user for the password reset function</span>
+<span class="sd">        respects some standards.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">strong_pw</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&amp;*()+</span><span class="si">{}</span><span class="s1">\-[\]]|(?=.*\d)).{7,}&#39;</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="n">valid_pw</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[a-zA-Z0-9!@#§+\-$%&amp;*</span><span class="si">{}</span><span class="s1">()\][]+$&#39;</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">valid_pw</span> <span class="ow">and</span> <span class="n">strong_pw</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!).&#39;</span> 
+            <span class="sa">f</span><span class="s1">&#39;Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;amp;*( )[ ]</span><span class="se">{{</span><span class="s1"> </span><span class="se">}}</span><span class="s1">&#39;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.update_password">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.update_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">lmnapi_client</span><span class="o">.</span><span class="n">set_current_password</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="LMAuthenticationProvider.signout">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.LMAuthenticationProvider.signout">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">signout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform some cleaning while destroying the session (removing the</span>
+<span class="sd">        kerberos ticket).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_isolation_uid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">uid</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="c1"># No ticket for root user</span>
+            <span class="k">return</span>
+        <span class="c1"># Remove Kerberos ticket</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;/usr/bin/kdestroy&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span></div>
+</div>
+
+
+<span class="nd">@component</span><span class="p">(</span><span class="n">UserConfigProvider</span><span class="p">)</span>
+<div class="viewcode-block" id="UserLdapConfig">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.UserLdapConfig">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserLdapConfig</span><span class="p">(</span><span class="n">UserConfigProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    User config class compliant with linuxmuster.net LDAP config&#39;s scheme</span>
+<span class="sd">    TODO : currently not used, must be updated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UserLdapConfig.id">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.UserLdapConfig.id">[docs]</a>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;lm&#39;</span></div>
+
+<div class="viewcode-block" id="UserLdapConfig.name">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.UserLdapConfig.name">[docs]</a>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Linuxmuster LDAP user config&#39;</span><span class="p">)</span> <span class="c1"># skipcq: PYL-E0602</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">UserConfigProvider</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+<div class="viewcode-block" id="UserLdapConfig.context">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.UserLdapConfig.context">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span></div>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="UserLdapConfig.load">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.UserLdapConfig.load">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load attributes from LDAP.</span>
+
+<span class="sd">        :return: User&#39;s attributes</span>
+<span class="sd">        :rtype: yaml object if root or dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/root/.config/ajenti.yml&#39;</span><span class="p">),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">## Load ldap attribute webuidashboard</span>
+            <span class="n">userAttrs</span> <span class="o">=</span> <span class="n">AuthenticationService</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">get_provider</span><span class="p">()</span><span class="o">.</span><span class="n">get_ldap_user</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">userAttrs</span><span class="p">[</span><span class="s1">&#39;sophomorixWebuiDashboard&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Error retrieving userconfig from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s1">, &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;value: </span><span class="si">{</span><span class="n">userAttrs</span><span class="p">[</span><span class="s2">&quot;sophomorixWebuiDashboard&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">.&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;This will be overwritten.&#39;</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="UserLdapConfig.save">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.UserLdapConfig.save">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save user&#39;s config. If root, this goes in a file, otherwise in LDAP tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/root/.config/ajenti.yml&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">allow_unicode</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">harden</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">## Save ldap attribute webuidashboard</span>
+            <span class="n">ldap_filter</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;(&amp;</span>
+<span class="s2">                            (cn=</span><span class="si">%s</span><span class="s2">)</span>
+<span class="s2">                            (objectClass=user)</span>
+<span class="s2">                            (|</span>
+<span class="s2">                                (sophomorixRole=globaladministrator)</span>
+<span class="s2">                                (sophomorixRole=schooladministrator)</span>
+<span class="s2">                                (sophomorixRole=teacher)</span>
+<span class="s2">                                (sophomorixRole=staff)</span>
+<span class="s2">                                (sophomorixRole=parent)</span>
+<span class="s2">                                (sophomorixRole=student)</span>
+<span class="s2">                            )</span>
+<span class="s2">                        )&quot;&quot;&quot;</span>
+            <span class="n">ldap_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorixWebuiDashboard&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Apply escape chars on self.user value</span>
+            <span class="n">searchFilter</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">filter_format</span><span class="p">(</span><span class="n">ldap_filter</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">])</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/etc/linuxmuster/.secret/administrator&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">admin_pw</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+            <span class="n">l</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s1">&#39;ldap://&#39;</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+            <span class="c1"># Binduser bind to the  server</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">ldap</span><span class="o">.</span><span class="n">OPT_REFERRALS</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">protocol_version</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">VERSION3</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">bind_s</span><span class="p">(</span><span class="s2">&quot;CN=Administrator,CN=Users,&quot;</span><span class="o">+</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;searchdn&#39;</span><span class="p">],</span> <span class="n">admin_pw</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">search_s</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;searchdn&#39;</span><span class="p">],</span> <span class="n">ldap</span><span class="o">.</span><span class="n">SCOPE_SUBTREE</span><span class="p">,</span> <span class="n">searchFilter</span><span class="p">,</span> <span class="n">attrlist</span><span class="o">=</span><span class="n">ldap_attrs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span>
+                <span class="n">dn</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">userconfig_old</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">except</span> <span class="n">ldap</span><span class="o">.</span><span class="n">LDAPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+            <span class="n">userconfig_new</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;sophomorixWebuiDashboard&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()]}</span>
+
+            <span class="n">ldif</span> <span class="o">=</span> <span class="n">modlist</span><span class="o">.</span><span class="n">modifyModlist</span><span class="p">(</span><span class="n">userconfig_old</span><span class="p">,</span><span class="n">userconfig_new</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">modify_s</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span><span class="n">ldif</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">unbind_s</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="UserLdapConfig.harden">
+<a class="viewcode-back" href="../../autoapi/lmn_auth/api/index.html#lmn_auth.api.UserLdapConfig.harden">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">harden</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change mode to &quot;read, write, and execute by owner&quot; only for root,</span>
+<span class="sd">        since other data are stored in LDAP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="s1">&#39;/root/.config/ajenti.yml&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRWXU</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

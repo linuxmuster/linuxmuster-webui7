@@ -1,0 +1,37 @@
+lmn_vdi_dashboard.views
+=======================
+
+.. py:module:: lmn_vdi_dashboard.views
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_lmn_vdi_dashboard_session(http_context, group)
+
+
+   .. py:method:: handle_api_download_config(http_context, name=None)
+
+

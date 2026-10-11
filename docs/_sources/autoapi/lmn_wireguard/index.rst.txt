@@ -1,0 +1,16 @@
+lmn_wireguard
+=============
+
+.. py:module:: lmn_wireguard
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_wireguard/main/index
+   /autoapi/lmn_wireguard/views/index
+
+

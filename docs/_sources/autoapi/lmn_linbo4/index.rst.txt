@@ -1,0 +1,16 @@
+lmn_linbo4
+==========
+
+.. py:module:: lmn_linbo4
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_linbo4/main/index
+   /autoapi/lmn_linbo4/views/index
+
+

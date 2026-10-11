@@ -1,26 +1,28 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en-GB" >
+<html class="writer-html5" lang="en-GB" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plugin lmn_auth &mdash; linuxmuster-webui7 7.2.71 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Plugin lmn_auth &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/translations.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API: aj.plugins.lmn_auth" href="../python/lmn_auth.html" />
+    <link rel="next" title="API Reference" href="../autoapi/index.html" />
     <link rel="prev" title="Linuxmuster-webui7’s developer documentation" href="../index.html" /> 
 </head>
 
@@ -36,9 +38,6 @@
             linuxmuster-webui7
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                7.2.71
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -53,21 +52,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python API</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_common.html">API: aj.plugins.lmn_common</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_session.html">API: aj.plugins.lmn_session</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_setup_wizard.html">API: aj.plugins.lmn_setup_wizard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python/lmn_users.html">API: aj.plugins.lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -95,8 +80,9 @@
            <div itemprop="articleBody">
              
   <section id="plugin-lmn-auth">
-<h1>Plugin lmn_auth<a class="headerlink" href="#plugin-lmn-auth" title="Permalink to this headline">¶</a></h1>
-<a class="reference internal image-reference" href="../_images/login.png"><img alt="Screenshot from login page" class="align-center" src="../_images/login.png" style="width: 800px;" /></a>
+<h1>Plugin lmn_auth<a class="headerlink" href="#plugin-lmn-auth" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="../_images/login.png"><img alt="Screenshot from login page" class="align-center" src="../_images/login.png" style="width: 800px;" />
+</a>
 <p>This plugin doesn’t have any view at all. It only provides a class in order to allow authentification and profile management against the LDAP server used in Samba 4.</p>
 <p>Once an user is authenticated, a new worker is created with restricted permissions ( same uid and gid as the user ). This means that an user can only perform limited tasks on the server.</p>
 </section>
@@ -106,13 +92,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Linuxmuster-webui7’s developer documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../python/lmn_auth.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_auth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../autoapi/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,0 +1,70 @@
+lmn_device-manager.views
+========================
+
+.. py:module:: lmn_device-manager.views
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_lmn_devicemanager_getdevices(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_checkOnline(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_checkOS(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_shutdown(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_reboot(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_start(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_getlinboconfig(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_getlastsync(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_getlinboremotelog(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_getrunninglinboremotecommands(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_getPrestartCommands(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_removePrestartCommands(http_context)
+
+
+   .. py:method:: handle_api_lmn_devicemanager_editPrestartCommands(http_context)
+
+

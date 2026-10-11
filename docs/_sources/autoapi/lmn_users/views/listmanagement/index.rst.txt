@@ -1,0 +1,121 @@
+lmn_users.views.listmanagement
+==============================
+
+.. py:module:: lmn_users.views.listmanagement
+
+.. autoapi-nested-parse::
+
+   APIs for user lists management in linuxmuster.net.
+
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:data:: UTF8_BOM
+   :value: b'\xef\xbb\xbf'
+
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_filelistImport(http_context)
+
+      Import and save users's import lists (teachers, students, ...).
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Users lists in import mode, one dict per user
+      :rtype: list of dict in import mode
+
+
+
+   .. py:method:: handle_api_get_lists(http_context, role)
+
+      Read roles csv lists.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param role: which role list to get
+      :type role: str
+      :return: List of students in read mode, one dict per student.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_get_schoolconf(http_context)
+
+      Read school.conf config for frontend settings.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_post_lists(http_context, role)
+
+      Write roles csv lists.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param role: which role list to write
+      :type role: str
+      :return: List of students in read mode, one dict per student.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_users_check(http_context)
+
+      Launch `sophomorix-check` to find out if more actions are required to
+      save the changes to the sophomorix objects.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Output of `sophomorix-check`
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_users_apply(http_context)
+
+      Performs an add, update or kill of sophomorix objects after a
+      `sophomorix-check` if necessary.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_users_list_custom_csv(http_context)
+
+      Run sophomorix-newfile in order to apply a custom script for a newly custom csv file.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All quotas for specified users
+      :rtype: dict
+
+
+

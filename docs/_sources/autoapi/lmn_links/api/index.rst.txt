@@ -1,0 +1,36 @@
+lmn_links.api
+=============
+
+.. py:module:: lmn_links.api
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ConfigLoader(path)
+
+   .. py:attribute:: data
+      :value: None
+
+
+
+   .. py:attribute:: path
+      :value: b'.'
+
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: load()
+
+
+   .. py:method:: save()
+
+
+.. py:function:: loadList()
+

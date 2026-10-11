@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_users.views.customFields &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_users.views.customFields</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_users.views.customFields</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">API for custom fields management.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jadi</span><span class="w"> </span><span class="kn">import</span> <span class="n">component</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">patch</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.endpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span><span class="p">,</span> <span class="n">EndpointReturn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">authorize</span><span class="p">,</span> <span class="n">AuthenticationService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">lmn_getSophomorixValue</span>
+
+
+<span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.context">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler.context">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/users/(?P&lt;user&gt;[a-z0-9\-_]*)/custom/(?P&lt;index&gt;[1-5])&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:customfields:write&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_update_custom">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler.handle_update_custom">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_update_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update a custom sophomorix field.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">user</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--custom</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="c1"># No error output from sophomorix yet</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/users/(?P&lt;user&gt;[a-z0-9\-_]*)/custommulti/(?P&lt;index&gt;[1-5])&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:customfields:write&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_custom_mutli_add">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler.handle_custom_mutli_add">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_custom_mutli_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a sophomorix field in custom multi.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">user</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--add-custom-multi</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="c1"># No error output from sophomorix yet</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+    <span class="nd">@patch</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/users/(?P&lt;user&gt;[a-z0-9\-_]*)/custommulti/(?P&lt;index&gt;[1-5])&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:customfields:write&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_custom_multi_remove">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler.handle_custom_multi_remove">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_custom_multi_remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a sophomorix field in custom multi.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">user</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--remove-custom-multi</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="c1"># No error output from sophomorix yet</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/users/(?P&lt;user&gt;[a-z0-9\-_]*)/proxyaddresses&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:customfields:write&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_add_proxy_addresses">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler.handle_add_proxy_addresses">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_add_proxy_addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an email in proxyAddresses, e.g. emails, for an user.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">user</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">address</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--add-proxy-addresses&#39;</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="c1"># No error output from sophomorix yet</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+    <span class="nd">@patch</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/users/(?P&lt;user&gt;[a-z0-9\-_]*)/proxyaddresses&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:customfields:write&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_remove_proxy_addresses">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler.handle_remove_proxy_addresses">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_remove_proxy_addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove an email in proxyAddresses, e.g. emails, for an user.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">user</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">address</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--remove-proxy-addresses&#39;</span><span class="p">,</span>
+                       <span class="n">address</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="c1"># No error output from sophomorix yet</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/users/(?P&lt;user&gt;[a-z0-9\-_]*)/customfields&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:customfields:read&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_get_custom_fields">
+<a class="viewcode-back" href="../../../autoapi/lmn_users/views/customFields/index.html#lmn_users.views.customFields.Handler.handle_get_custom_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_get_custom_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get custom fields informations from user and prepare it for landingpage</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param user: User login</span>
+<span class="sd">        :type user: string</span>
+<span class="sd">        :return: All displayable custom fields informations from user</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">if</span> <span class="n">user</span> <span class="o">!=</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+            <span class="n">custom_fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">custom_fields</span>
+            <span class="n">custom_fields_to_show</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">profil</span> <span class="o">=</span> <span class="n">AuthenticationService</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">get_provider</span><span class="p">()</span><span class="o">.</span><span class="n">get_profile</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+            <span class="n">role</span> <span class="o">=</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;s&#39;</span>
+
+            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="s1">&#39;customMulti&#39;</span><span class="p">,</span> <span class="s1">&#39;proxyAddresses&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">custom_fields</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">custom_fields</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="s1">&#39;custom&#39;</span> <span class="ow">in</span> <span class="n">field</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">entry</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">custom_fields</span><span class="p">[</span><span class="n">field</span><span class="p">][</span><span class="n">role</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">show</span> <span class="o">=</span> <span class="n">details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                        <span class="n">title</span> <span class="o">=</span> <span class="n">details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                        <span class="n">editable</span> <span class="o">=</span> <span class="n">details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;editable&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+                            <span class="n">attr</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sophomorixC</span><span class="si">{</span><span class="n">field</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}{</span><span class="n">entry</span><span class="si">}</span><span class="s1">&#39;</span>
+
+                            <span class="k">if</span> <span class="s1">&#39;Multi&#39;</span> <span class="ow">in</span> <span class="n">field</span><span class="p">:</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="n">profil</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="p">[])</span>
+                                <span class="c1"># Sophomorix sends a string if there&#39;s only one address</span>
+                                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                                    <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="n">profil</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                            <span class="n">custom_fields_to_show</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                                <span class="s1">&#39;attr&#39;</span><span class="p">:</span> <span class="n">attr</span><span class="p">,</span>
+                                <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+                                <span class="s1">&#39;editable&#39;</span><span class="p">:</span> <span class="n">editable</span><span class="p">,</span>
+                                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+                            <span class="p">})</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Proxyaddresses</span>
+                    <span class="k">if</span> <span class="n">custom_fields</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">addresses</span> <span class="o">=</span> <span class="n">profil</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">,</span> <span class="p">[])</span>
+                        <span class="c1"># Sophomorix sends a string if there&#39;s only one address</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">addresses</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                            <span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">addresses</span><span class="p">]</span>
+
+                        <span class="n">custom_fields_to_show</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                            <span class="s1">&#39;attr&#39;</span><span class="p">:</span> <span class="s1">&#39;proxyAddresses&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">custom_fields</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                            <span class="s1">&#39;editable&#39;</span><span class="p">:</span> <span class="n">custom_fields</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;editable&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">addresses</span><span class="p">,</span>
+                        <span class="p">})</span>
+
+            <span class="k">return</span> <span class="n">custom_fields_to_show</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

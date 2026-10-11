@@ -1,0 +1,17 @@
+lmn_links
+=========
+
+.. py:module:: lmn_links
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_links/api/index
+   /autoapi/lmn_links/main/index
+   /autoapi/lmn_links/views/index
+
+

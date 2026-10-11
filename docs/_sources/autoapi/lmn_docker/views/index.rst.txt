@@ -1,0 +1,102 @@
+lmn_docker.views
+================
+
+.. py:module:: lmn_docker.views
+
+.. autoapi-nested-parse::
+
+   Simple module to get informations from docker host on 10.0.0.3
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:attribute:: docker
+      :value: ['ssh', '10.0.0.3', 'docker']
+
+
+
+   .. py:method:: handle_api_which_docker(http_context)
+
+      Test ssh connection and retrieve docker version.
+      Store the command line as list in self.docker for use in subprocess
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_resources_docker(http_context)
+
+      Retrieve stats informations (memory, cpu, ... ) from docker and load one json per container in a list.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Json informations per container
+      :rtype: list of json
+
+
+
+   .. py:method:: handle_api_details_container(http_context, container_id=None)
+
+      Retrieve all informations from docker inspect for one container.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All container informations
+      :rtype: json
+
+
+
+   .. py:method:: handle_api_container_stop(http_context)
+
+      Some controls for container : start, stop and remove. The hash of the container is sent per POST.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_list_images(http_context)
+
+      List all images contained on the docker host.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All informations from all images
+      :rtype: list of json
+
+
+
+   .. py:method:: handle_api_remove_image(http_context, image_id=None)
+
+      Delete one image (given as hash) on the docker host.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+

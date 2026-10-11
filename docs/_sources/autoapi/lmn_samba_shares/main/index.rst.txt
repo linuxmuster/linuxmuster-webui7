@@ -1,0 +1,19 @@
+lmn_samba_shares.main
+=====================
+
+.. py:module:: lmn_samba_shares.main
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ItemProvider(context)
+
+   Bases: :py:obj:`aj.plugins.core.api.sidebar.SidebarItemProvider`
+
+
+   .. py:method:: provide()
+
+

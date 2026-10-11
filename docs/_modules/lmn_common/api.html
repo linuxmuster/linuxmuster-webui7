@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_common.api &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_common.api</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_common.api</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Common tools to communicate with sophomorix and handle config files.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dpath.util</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pformat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.lmnfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMNFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">configparser</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
+
+<span class="c1"># Load Webui settings</span>
+<div class="viewcode-block" id="config_path">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.config_path">[docs]</a>
+<span class="n">config_path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/webui/config.yml&#39;</span></div>
+
+<div class="viewcode-block" id="ALL_ROLES">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.ALL_ROLES">[docs]</a>
+<span class="n">ALL_ROLES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;globaladministrator&#39;</span><span class="p">,</span> <span class="s1">&#39;schooladministrator&#39;</span><span class="p">,</span> <span class="s1">&#39;teacher&#39;</span><span class="p">,</span> <span class="s1">&#39;student&#39;</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;staff&#39;</span><span class="p">]</span></div>
+
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">webui</span><span class="p">:</span>
+<div class="viewcode-block" id="lmconfig">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.lmconfig">[docs]</a>
+        <span class="n">lmconfig</span> <span class="o">=</span> <span class="n">webui</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+
+
+        <span class="c1"># LDAP config for auth</span>
+        <span class="n">ldap_config</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">][</span><span class="s1">&#39;ldap&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Password reset configuration for restricted worker</span>
+        <span class="n">pwreset_config</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pw_reset&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">pwreset_config</span><span class="p">[</span><span class="s1">&#39;activate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pwreset_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;activate&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">pwreset_config</span><span class="p">[</span><span class="s1">&#39;ldap_mail_field&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pwreset_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ldap_mail_field&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Samba config to eventually override the share prefix</span>
+        <span class="n">samba_override</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;samba&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">samba_override</span><span class="p">[</span><span class="s1">&#39;share_prefix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samba_override</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;share_prefix&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Display options</span>
+        <span class="n">display_options</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;display&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">display_options</span><span class="p">[</span><span class="s1">&#39;show_webdav&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">display_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;show_webdav&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">display_options</span><span class="p">[</span><span class="s1">&#39;show_wireguard&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">display_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;show_wireguard&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Roles auth</span>
+        <span class="n">auth_config</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">allowed_roles</span> <span class="o">=</span> <span class="n">auth_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;allowed_roles&#39;</span><span class="p">,</span> <span class="n">ALL_ROLES</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">lmconfig</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">ldap_config</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">pwreset_config</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">samba_override</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">display_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Without config.yml the users will not be able to login.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load linuxmuster-api&#39;s host/port</span>
+<div class="viewcode-block" id="lmnapi_config_path">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.lmnapi_config_path">[docs]</a>
+<span class="n">lmnapi_config_path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/api/config.yml&#39;</span></div>
+
+<div class="viewcode-block" id="lmnapi_host">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.lmnapi_host">[docs]</a>
+<span class="n">lmnapi_host</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span></div>
+
+<div class="viewcode-block" id="lmnapi_port">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.lmnapi_port">[docs]</a>
+<span class="n">lmnapi_port</span> <span class="o">=</span> <span class="mi">8001</span></div>
+
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">lmnapi_config_path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">lmnapi_config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">lmnapi_conf</span><span class="p">:</span>
+<div class="viewcode-block" id="uvicorn_conf">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.uvicorn_conf">[docs]</a>
+            <span class="n">uvicorn_conf</span> <span class="o">=</span> <span class="p">(</span><span class="n">lmnapi_conf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uvicorn&#39;</span><span class="p">,</span> <span class="p">{})</span></div>
+
+            <span class="n">configured_host</span> <span class="o">=</span> <span class="n">uvicorn_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">configured_host</span> <span class="ow">and</span> <span class="n">configured_host</span> <span class="o">!=</span> <span class="s1">&#39;0.0.0.0&#39;</span><span class="p">:</span>
+                <span class="n">lmnapi_host</span> <span class="o">=</span> <span class="n">configured_host</span>
+            <span class="n">lmnapi_port</span> <span class="o">=</span> <span class="n">uvicorn_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="n">lmnapi_port</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not read linuxmuster-api&#39;s host/port from </span><span class="si">{</span><span class="n">lmnapi_config_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LMNAPI_UNAVAILABLE_MESSAGE">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.LMNAPI_UNAVAILABLE_MESSAGE">[docs]</a>
+<span class="n">LMNAPI_UNAVAILABLE_MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;linuxmuster-api is not available for this session. Please try logging in again or contact your administrator.&quot;</span></div>
+
+
+<span class="c1"># Load samba domain</span>
+<div class="viewcode-block" id="smbconf">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.smbconf">[docs]</a>
+<span class="n">smbconf</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">delimiters</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">,))</span></div>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">smbconf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;/etc/samba/smb.conf&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="samba_realm">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.samba_realm">[docs]</a>
+    <span class="n">samba_realm</span> <span class="o">=</span> <span class="n">smbconf</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">][</span><span class="s2">&quot;realm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+
+    <span class="n">samba_workgroup</span> <span class="o">=</span> <span class="n">smbconf</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">][</span><span class="s2">&quot;workgroup&quot;</span><span class="p">]</span>
+    <span class="n">samba_netbios</span> <span class="o">=</span> <span class="n">smbconf</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">][</span><span class="s2">&quot;netbios name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">samba_domain</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">samba_netbios</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">samba_realm</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Can not read realm and domain from smb.conf&quot;</span><span class="p">)</span>
+    <span class="n">samba_domain</span><span class="p">,</span> <span class="n">samba_realm</span><span class="p">,</span> <span class="n">samba_netbios</span><span class="p">,</span> <span class="n">samba_workgroup</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span>
+
+<span class="c1"># Fix missing entries in the lmconfig. Should be later refactored</span>
+<span class="c1"># and the config file should be splitted</span>
+<span class="c1"># Main linuxmuster config entry</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;ldap&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="c1"># Templates for password printing</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+<span class="c1"># Used for pageTitle, see lmn_auth.api</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="s1">&#39;/var/lib/linuxmuster/setup.ini&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+<div class="viewcode-block" id="lmsetup_schoolname">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.lmsetup_schoolname">[docs]</a>
+            <span class="n">lmsetup_schoolname</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;schoolname&#39;</span><span class="p">]</span></div>
+
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">lmsetup_schoolname</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="n">lmsetup_schoolname</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="SophomorixProcess">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.SophomorixProcess">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SophomorixProcess</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Worker for processing sophomorix commands.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">sensitive</span><span class="p">):</span>
+<div class="viewcode-block" id="SophomorixProcess.stdout">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.SophomorixProcess.stdout">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SophomorixProcess.stderr">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.SophomorixProcess.stderr">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SophomorixProcess.command">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.SophomorixProcess.command">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">=</span> <span class="n">command</span></div>
+
+<div class="viewcode-block" id="SophomorixProcess.sensitive">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.SophomorixProcess.sensitive">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensitive</span> <span class="o">=</span> <span class="n">sensitive</span></div>
+
+        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SophomorixProcess.run">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.SophomorixProcess.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sensitive</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sensitive</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span></div>
+</div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sophomorixoutput_as_dict</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+    <span class="c1"># Cleanup stderr output</span>
+    <span class="c1"># output = t.stderr.replace(&#39;:null,&#39;, &quot;:\&quot;null\&quot;,&quot;)</span>
+    <span class="c1"># TODO: Maybe sophomorix should provide the null value  in  a python usable format</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:null&#39;</span><span class="p">,</span> <span class="s2">&quot;:</span><span class="se">\&quot;</span><span class="s2">null</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:null}&#39;</span><span class="p">,</span> <span class="s2">&quot;:</span><span class="se">\&quot;</span><span class="s2">null</span><span class="se">\&quot;</span><span class="s2">}&quot;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:null]&#39;</span><span class="p">,</span> <span class="s2">&quot;:</span><span class="se">\&quot;</span><span class="s2">null</span><span class="se">\&quot;</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+
+    <span class="c1"># Some commands get many dicts, we just want the first</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;# JSON-end&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;# JSON-begin&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;# JSON-begin&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix filter result time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Convert str to dict</span>
+    <span class="n">jsonDict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="n">jsonDict</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix convert to dict time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">jsonDict</span>
+
+<div class="viewcode-block" id="lmn_getSophomorixValue">
+<a class="viewcode-back" href="../../autoapi/lmn_common/api/index.html#lmn_common.api.lmn_getSophomorixValue">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">,</span> <span class="n">ignoreErrors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connector to all sophomorix commands. Run a sophomorix command with -j</span>
+<span class="sd">    option (output as json) through a SophomorixProcess and parse the results.</span>
+
+<span class="sd">    :param sophomorixCommand: Command with options to run</span>
+<span class="sd">    :type sophomorixCommand: list</span>
+<span class="sd">    :param jsonpath: Key to search in the resulted dict, e.g. /USERS/doe</span>
+<span class="sd">    :type jsonpath: string</span>
+<span class="sd">    :param ignoreErrors: Quiet mode</span>
+<span class="sd">    :type ignoreErrors: bool</span>
+<span class="sd">    :return: Whole output or key if jsonpath is defined</span>
+<span class="sd">    :rtype: dict or value (list, dict, integer, string)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">debug</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sophomorix-debug&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">uid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">uid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sudo&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">sophomorixCommand</span>
+
+    <span class="c1"># New Thread for one process to avoid conflicts</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">SophomorixProcess</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="n">sensitive</span><span class="o">=</span><span class="n">sensitive</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix command time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">jsonDict</span> <span class="o">=</span> <span class="n">_sophomorixoutput_as_dict</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Sophomorix stdout :</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Sophomorix sdterr :</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">pformat</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Without key, simply return the dict</span>
+    <span class="k">if</span> <span class="n">jsonpath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonDict</span>
+
+    <span class="k">if</span> <span class="n">ignoreErrors</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+            <span class="n">resultString</span> <span class="o">=</span> <span class="n">dpath</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix search in dict time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;Sophomorix Value error !</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;Either sophomorix field does not exist or user does not have sufficient permissions:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;Error Message: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;Dictionary we looked for information:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">jsonDict</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">resultString</span> <span class="o">=</span> <span class="n">dpath</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">resultString</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+lmn_common.tools
+================
+
+.. py:module:: lmn_common.tools
+
+.. autoapi-nested-parse::
+
+   Useful common functions for the project.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:function:: sort_schoolclasses(schoolclasses)
+
+   Sort a list of schoolclasses. The list can be a list of cn of schoolclasses, or a list of dict of schoolclasses.
+
+
+.. py:function:: testSSH(host, username='root', password='Muster!', port=22)
+
+   Basic connection test with SSH.
+
+   :return: bool result and error type
+   :rtype: tuple of bool and string
+
+

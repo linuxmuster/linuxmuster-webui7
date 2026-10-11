@@ -1,0 +1,46 @@
+lmn_websession.api
+==================
+
+.. py:module:: lmn_websession.api
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ConfigLoader(path)
+
+   .. py:attribute:: data
+      :value: None
+
+
+
+   .. py:attribute:: path
+      :value: b'.'
+
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: load()
+
+
+   .. py:method:: save()
+
+
+.. py:function:: replaceSpecialChars(string)
+
+.. py:function:: loadSettings()
+
+.. py:function:: loadList()
+
+.. py:function:: bbbApiCall(action)
+
+.. py:function:: getURL(action)
+
+.. py:function:: bbbGenerateChecksum(action)
+

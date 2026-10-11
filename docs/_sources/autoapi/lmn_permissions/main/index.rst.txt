@@ -1,0 +1,22 @@
+lmn_permissions.main
+====================
+
+.. py:module:: lmn_permissions.main
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ItemProvider(context)
+
+   Bases: :py:obj:`aj.plugins.core.api.sidebar.SidebarItemProvider`
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: provide()
+
+

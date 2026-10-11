@@ -1,0 +1,149 @@
+lmn_common.views
+================
+
+.. py:module:: lmn_common.views
+
+.. autoapi-nested-parse::
+
+   Common tools to manipulate user's files and config files on the OS.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_log(http_context, path=None)
+
+      Query a part of a log file to simulate a continuously flow on the
+      frontend.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of the log file
+      :type path: string
+      :return: Part of the log at offset `offset`
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_remove_file(http_context)
+
+      Remove file with given path.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: True if success
+      :rtype: bool or None
+
+
+
+   .. py:method:: handle_api_read_setup_ini(http_context)
+
+      Read linuxmuster setup file for linbo and setup wizard.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Config content
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_diff(http_context)
+
+      Check differences between two files.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Lines that differ
+      :rtype: list
+
+
+
+   .. py:method:: handle_api_version(http_context)
+
+      Get the versions of the installed LMN packages using dpkg.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: List of packages with informations
+      :rtype: dict
+
+
+
+   .. py:method:: handle_get_activeSchool(http_context)
+
+      Get  activeSchool.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: String containing active school
+      :rtype: string 
+
+
+
+   .. py:method:: handle_get_listSchools(http_context)
+
+      Get list of all schools
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Array containing all schools
+      :rtype: array 
+
+
+
+   .. py:method:: handle_post_changeschool(http_context)
+
+      Switch active school
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Switch school successful or not
+      :rtype: boolean 
+
+
+
+   .. py:method:: handle_post_getschoolname(http_context)
+
+      Get schoolname by school
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Schoolname
+      :rtype: string 
+
+
+
+   .. py:method:: handle_get_display_options(http_context)
+
+      Provide display options stored in the webui config file.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: display options
+      :rtype: dict
+
+
+

@@ -1,0 +1,86 @@
+lmn_session_new.views
+=====================
+
+.. py:module:: lmn_session_new.views
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_get_sessions(http_context)
+
+
+   .. py:method:: handle_api_get_schoolclasses(http_context)
+
+
+   .. py:method:: handle_api_get_projects(http_context)
+
+
+   .. py:method:: handle_api_userinfo(http_context)
+
+
+   .. py:method:: handle_api_exam_userinfo(http_context)
+
+
+   .. py:method:: handle_api_put_session(http_context, session=None)
+
+
+   .. py:method:: handle_api_delete_session(http_context, session=None)
+
+
+   .. py:method:: handle_api_start_exam(http_context)
+
+
+   .. py:method:: handle_api_stop_exam(http_context)
+
+
+   .. py:method:: handle_api_management_group(http_context)
+
+
+   .. py:method:: handle_api_session_add_participants(http_context)
+
+
+   .. py:method:: handle_api_session_remove_participants(http_context)
+
+
+   .. py:method:: handle_api_session_sessions(http_context)
+
+
+   .. py:method:: handle_api_get_user_in_room(http_context)
+
+
+   .. py:method:: handle_api_ldap_user_search(http_context, query='')
+
+
+   .. py:method:: handle_api_ldap_group_search(http_context, query='')
+
+
+   .. py:method:: handle_api_create_dir(http_context)
+
+      Create directory with given path, ignoring errors
+      Only used in upload service. Deprecated ?
+
+
+

@@ -1,0 +1,15 @@
+lmn_samba_shares
+================
+
+.. py:module:: lmn_samba_shares
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_samba_shares/main/index
+
+

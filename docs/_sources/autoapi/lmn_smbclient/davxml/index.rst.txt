@@ -1,0 +1,22 @@
+lmn_smbclient.davxml
+====================
+
+.. py:module:: lmn_smbclient.davxml
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: WebdavXMLResponse(requested_properties=None)
+
+   .. py:attribute:: valid_properties
+
+
+   .. py:method:: make_propfind_response(items)
+
+
+   .. py:method:: convert_samba_entry_properties(item)
+
+

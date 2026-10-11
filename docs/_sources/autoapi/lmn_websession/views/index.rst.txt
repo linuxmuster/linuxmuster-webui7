@@ -1,0 +1,70 @@
+lmn_websession.views
+====================
+
+.. py:module:: lmn_websession.views
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_get_webConferenceEnabled(http_context)
+
+
+   .. py:method:: handle_api_get_webConferences(http_context)
+
+
+   .. py:method:: handle_api_get_webConferenceByName(http_context, sessionname='')
+
+
+   .. py:method:: handle_api_create_webConference(http_context)
+
+
+   .. py:method:: handle_api_start_webConference(http_context)
+
+
+   .. py:method:: handle_api_join_webConference(http_context)
+
+
+   .. py:method:: handle_api_stop_webConference(http_context)
+
+
+   .. py:method:: handle_api_delete_webConference(http_context, id)
+
+
+   .. py:method:: handle_api_hasPassword_webConference(http_context)
+
+
+   .. py:method:: handle_api_getSessionName_webConference(http_context)
+
+
+   .. py:method:: handle_api_checkPassword_webConference(http_context)
+
+
+   .. py:method:: handle_api_isRunning_webConference(http_context)
+
+
+   .. py:method:: handle_view(http_context, name)
+
+

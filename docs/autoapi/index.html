@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_dhcp" href="lmn_dhcp/index.html" />
+    <link rel="prev" title="Plugin lmn_auth" href="../plugins/lmn_auth.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_dhcp/index.html">lmn_dhcp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_auth/index.html">lmn_auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_links/index.html">lmn_links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_users/index.html">lmn_users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmnwebdav/index.html">lmnwebdav</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_quotas/index.html">lmn_quotas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_linbo4/index.html">lmn_linbo4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_docker/index.html">lmn_docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/index.html">lmn_common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_crontab/index.html">lmn_crontab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_devices/index.html">lmn_devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_clients/index.html">lmn_clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_settings/index.html">lmn_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmnsmbclient/index.html">lmnsmbclient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_smbclient/index.html">lmn_smbclient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_wireguard/index.html">lmn_wireguard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_samba_dns/index.html">lmn_samba_dns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_nextcloud/index.html">lmn_nextcloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_linbo_sync/index.html">lmn_linbo_sync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_w_datetime/index.html">lmn_w_datetime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_websession/index.html">lmn_websession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_session_new/index.html">lmn_session_new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_permissions/index.html">lmn_permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_landingpage/index.html">lmn_landingpage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_samba_shares/index.html">lmn_samba_shares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_setup_wizard/index.html">lmn_setup_wizard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_vdi_dashboard/index.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_device-manager/index.html">lmn_device-manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_groupmembership/index.html">lmn_groupmembership</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_vdi_administration/index.html">lmn_vdi_administration</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/autoapi/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>This page contains auto-generated API reference documentation <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp/index.html">lmn_dhcp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_dhcp/main/index.html">lmn_dhcp.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_dhcp/views/index.html">lmn_dhcp.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth/index.html">lmn_auth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_auth/api/index.html">lmn_auth.api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_auth/views/index.html">lmn_auth.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links/index.html">lmn_links</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_links/api/index.html">lmn_links.api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_links/main/index.html">lmn_links.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_links/views/index.html">lmn_links.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users/index.html">lmn_users</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_users/main/index.html">lmn_users.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_users/views/index.html">lmn_users.views</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lmn_users/views/customFields/index.html">lmn_users.views.customFields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lmn_users/views/listmanagement/index.html">lmn_users.views.listmanagement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lmn_users/views/passwords/index.html">lmn_users.views.passwords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lmn_users/views/sophomorixUsers/index.html">lmn_users.views.sophomorixUsers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmnwebdav/index.html">lmnwebdav</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas/index.html">lmn_quotas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_quotas/main/index.html">lmn_quotas.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_quotas/views/index.html">lmn_quotas.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4/index.html">lmn_linbo4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_linbo4/main/index.html">lmn_linbo4.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_linbo4/views/index.html">lmn_linbo4.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker/index.html">lmn_docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_docker/main/index.html">lmn_docker.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_docker/views/index.html">lmn_docker.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common/index.html">lmn_common</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/api/index.html">lmn_common.api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/lmnapi_client/index.html">lmn_common.lmnapi_client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/main/index.html">lmn_common.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/mimetypes/index.html">lmn_common.mimetypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/multischool/index.html">lmn_common.multischool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/tools/index.html">lmn_common.tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_common/views/index.html">lmn_common.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab/index.html">lmn_crontab</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_crontab/main/index.html">lmn_crontab.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_crontab/manager/index.html">lmn_crontab.manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_crontab/views/index.html">lmn_crontab.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices/index.html">lmn_devices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_devices/main/index.html">lmn_devices.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_devices/views/index.html">lmn_devices.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients/index.html">lmn_clients</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_clients/main/index.html">lmn_clients.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_clients/views/index.html">lmn_clients.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings/index.html">lmn_settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_settings/main/index.html">lmn_settings.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_settings/views/index.html">lmn_settings.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmnsmbclient/index.html">lmnsmbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient/index.html">lmn_smbclient</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_smbclient/davxml/index.html">lmn_smbclient.davxml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_smbclient/main/index.html">lmn_smbclient.main</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard/index.html">lmn_wireguard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_wireguard/main/index.html">lmn_wireguard.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_wireguard/views/index.html">lmn_wireguard.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns/index.html">lmn_samba_dns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_samba_dns/main/index.html">lmn_samba_dns.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_samba_dns/views/index.html">lmn_samba_dns.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud/index.html">lmn_nextcloud</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_nextcloud/api/index.html">lmn_nextcloud.api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_nextcloud/main/index.html">lmn_nextcloud.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_nextcloud/views/index.html">lmn_nextcloud.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync/index.html">lmn_linbo_sync</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_linbo_sync/api/index.html">lmn_linbo_sync.api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_linbo_sync/main/index.html">lmn_linbo_sync.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_linbo_sync/views/index.html">lmn_linbo_sync.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime/index.html">lmn_w_datetime</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_w_datetime/widget/index.html">lmn_w_datetime.widget</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession/index.html">lmn_websession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_websession/api/index.html">lmn_websession.api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_websession/main/index.html">lmn_websession.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_websession/views/index.html">lmn_websession.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new/index.html">lmn_session_new</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_session_new/main/index.html">lmn_session_new.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_session_new/views/index.html">lmn_session_new.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions/index.html">lmn_permissions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_permissions/main/index.html">lmn_permissions.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_permissions/views/index.html">lmn_permissions.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage/index.html">lmn_landingpage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_landingpage/main/index.html">lmn_landingpage.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_landingpage/views/index.html">lmn_landingpage.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares/index.html">lmn_samba_shares</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_samba_shares/main/index.html">lmn_samba_shares.main</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard/index.html">lmn_setup_wizard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_setup_wizard/views/index.html">lmn_setup_wizard.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard/index.html">lmn_vdi_dashboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_vdi_dashboard/main/index.html">lmn_vdi_dashboard.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_vdi_dashboard/views/index.html">lmn_vdi_dashboard.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager/index.html">lmn_device-manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_device-manager/main/index.html">lmn_device-manager.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_device-manager/views/index.html">lmn_device-manager.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership/index.html">lmn_groupmembership</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_groupmembership/main/index.html">lmn_groupmembership.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_groupmembership/views/index.html">lmn_groupmembership.views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration/index.html">lmn_vdi_administration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lmn_vdi_administration/main/index.html">lmn_vdi_administration.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmn_vdi_administration/views/index.html">lmn_vdi_administration.views</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Created with <a class="reference external" href="https://github.com/readthedocs/sphinx-autoapi">sphinx-autoapi</a></p>
+</aside>
+</aside>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../plugins/lmn_auth.html" class="btn btn-neutral float-left" title="Plugin lmn_auth" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_dhcp/index.html" class="btn btn-neutral float-right" title="lmn_dhcp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

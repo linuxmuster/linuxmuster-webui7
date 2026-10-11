@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_common.multischool &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_common.multischool</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_common.multischool</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">configobj</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigObj</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_output</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.samba_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">DriveManager</span><span class="p">,</span> <span class="n">GPOManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.ldapconnector</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMNLdapReader</span> <span class="k">as</span> <span class="n">lr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">samba_realm</span><span class="p">,</span> <span class="n">samba_netbios</span><span class="p">,</span> <span class="n">samba_override</span><span class="p">,</span> <span class="n">lmn_getSophomorixValue</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.lmnfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMNFile</span>
+
+
+<div class="viewcode-block" id="SchoolManager">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SchoolManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In a multischool environment, it&#39;s necessary to have the possibility</span>
+<span class="sd">    to switch between the differents schools configurations and specific options</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SchoolManager.school">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.school">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span></div>
+
+<div class="viewcode-block" id="SchoolManager.schools">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.schools">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schools</span> <span class="o">=</span> <span class="p">[</span><span class="n">school</span><span class="p">[</span><span class="s1">&#39;ou&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">school</span> <span class="ow">in</span> <span class="n">lr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/schools&#39;</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="SchoolManager.schoolname">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.schoolname">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schoolname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">school</span></div>
+
+<div class="viewcode-block" id="SchoolManager.schoolShare">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.schoolShare">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schoolShare</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="si">{</span><span class="n">samba_realm</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="se">\\</span><span class="s1">&#39;</span></div>
+
+<div class="viewcode-block" id="SchoolManager.schoolGlobalShare">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.schoolGlobalShare">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schoolGlobalShare</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="si">{</span><span class="n">samba_realm</span><span class="si">}</span><span class="se">\\</span><span class="s1">linuxmuster-global</span><span class="se">\\</span><span class="s1">&#39;</span></div>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gpomgr</span> <span class="o">=</span> <span class="n">GPOManager</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SchoolManager.load">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.load">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Main method of the object : load all schools specific options when</span>
+<span class="sd">        switching to another school.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_configpath</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_custom_fields</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_holidays</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_school_dfs_shares</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_share_prefix</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_drives</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_schoolname</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.switch">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.switch">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">switch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">school</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Switch to another school and then reload all configurations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">school</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">school</span> <span class="o">=</span> <span class="n">school</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schoolShare</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="si">{</span><span class="n">samba_realm</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="se">\\</span><span class="s1">&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.load_custom_fields">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.load_custom_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_custom_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load custom fields configurations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s1">/custom_fields.yml&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_fields</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">custom_fields</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not load custom fields config: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.load_holidays">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.load_holidays">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_holidays</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load holidays configurations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s1">/holidays.yml&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">holidays</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Enforce read permissions for crontab users</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="mo">0o644</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">holidays</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not load custom fields config: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.get_configpath">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.get_configpath">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_configpath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the default absolute path for config files in multischool env.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">school</span> <span class="o">==</span> <span class="s2">&quot;default-school&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configpath</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/default-school/&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s1">.&#39;</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.get_schoolname">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.get_schoolname">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_schoolname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read the school name from school.conf.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">configpath</span><span class="si">}</span><span class="s1">school.conf&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">schoolname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">][</span><span class="s1">&#39;SCHOOL_LONGNAME&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.get_schoolname_by_school">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.get_schoolname_by_school">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_schoolname_by_school</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">school</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns schoolname by school</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">configpath</span><span class="si">}</span><span class="s1">school.conf&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">][</span><span class="s1">&#39;SCHOOL_LONGNAME&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.get_schools">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.get_schools">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_schools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns array of all schools with schoolname</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">allSchools</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">school</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schools</span><span class="p">:</span>
+            <span class="n">allSchools</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;school&quot;</span><span class="p">:</span> <span class="n">school</span><span class="p">,</span> <span class="s2">&quot;schoolname&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_schoolname_by_school</span><span class="p">(</span><span class="n">school</span><span class="p">)})</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">allSchools</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.load_school_dfs_shares">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.load_school_dfs_shares">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_school_dfs_shares</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read the output of &#39;net conf list&#39; to get the share path, which could be</span>
+<span class="sd">        different in case of DFS.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&quot;/usr/bin/net&quot;</span><span class="p">,</span> <span class="s2">&quot;conf&quot;</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()))</span>
+        <span class="k">for</span> <span class="n">share_name</span><span class="p">,</span> <span class="n">share_config</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># DFS activated ?</span>
+            <span class="k">if</span> <span class="n">share_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;msdfs root&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">:</span>
+                <span class="n">dfs_proxy</span> <span class="o">=</span> <span class="n">share_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;msdfs proxy&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">dfs_proxy</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="c1"># //sub.domain.lan/school to \\\\sub.domain.lan\\school</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dfs</span><span class="p">[</span><span class="n">share_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;dfs_proxy&#39;</span><span class="p">:</span> <span class="n">dfs_proxy</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">),</span>
+                    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.load_drives">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.load_drives">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_drives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load Drives.xml content from school policies</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gpo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpomgr</span><span class="o">.</span><span class="n">gpos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sophomorix:school:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpo</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">drivemgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpo</span><span class="o">.</span><span class="n">drivemgr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">drivemgr</span> <span class="o">=</span> <span class="n">DriveManager</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">drives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">drivemgr</span><span class="o">.</span><span class="n">drives</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.get_share_prefix">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.get_share_prefix">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_share_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">school</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">school</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">school</span>
+            <span class="n">other_school</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">other_school</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">school</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schools</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">school</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">share_prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfs</span><span class="p">[</span><span class="n">school</span><span class="p">][</span><span class="s1">&#39;dfs_proxy&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">samba_override</span><span class="p">[</span><span class="s1">&#39;share_prefix&#39;</span><span class="p">]:</span>
+            <span class="n">share_prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="si">{</span><span class="n">samba_override</span><span class="p">[</span><span class="s2">&quot;share_prefix&quot;</span><span class="p">]</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">share_prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="si">{</span><span class="n">samba_netbios</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">if</span> <span class="n">other_school</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">share_prefix</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span> <span class="o">=</span> <span class="n">share_prefix</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.get_homepath">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.get_homepath">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_homepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_context</span><span class="p">):</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="n">user_context</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">user_context</span><span class="p">[</span><span class="s1">&#39;role&#39;</span><span class="p">]</span>
+
+        <span class="n">adminclass</span> <span class="o">=</span> <span class="n">user_context</span><span class="p">[</span><span class="s1">&#39;adminclass&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">school</span> <span class="o">!=</span> <span class="s1">&#39;default-school&#39;</span><span class="p">:</span>
+            <span class="c1"># Remove prefix from adminclass in home path.</span>
+            <span class="n">adminclass</span> <span class="o">=</span> <span class="n">adminclass</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="si">}</span><span class="s2">-&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="s1">&#39;globaladministrator&#39;</span><span class="p">:</span>
+            <span class="n">home_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="si">{</span><span class="n">samba_netbios</span><span class="si">}</span><span class="se">\\</span><span class="s1">linuxmuster-global</span><span class="se">\\</span><span class="s1">management</span><span class="se">\\</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="s1">&#39;schooladministrator&#39;</span><span class="p">:</span>
+            <span class="n">home_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="s1">management</span><span class="se">\\</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;teacher&quot;</span><span class="p">,</span> <span class="s2">&quot;parent&quot;</span><span class="p">]:</span>
+            <span class="n">home_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s1">s</span><span class="se">\\</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="s1">&#39;staff&#39;</span><span class="p">:</span>
+            <span class="n">home_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">adminclass</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">home_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s1">s</span><span class="se">\\</span><span class="si">{</span><span class="n">adminclass</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">return</span> <span class="n">home_path</span></div>
+
+
+<div class="viewcode-block" id="SchoolManager.get_shares">
+<a class="viewcode-back" href="../../autoapi/lmn_common/multischool/index.html#lmn_common.multischool.SchoolManager.get_shares">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_shares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_context</span><span class="p">):</span>
+
+        <span class="n">home_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_homepath</span><span class="p">(</span><span class="n">user_context</span><span class="p">)</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">user_context</span><span class="p">[</span><span class="s1">&#39;role&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="s1">&#39;globaladministrator&#39;</span><span class="p">:</span>
+            <span class="n">home_webdav</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;global/management/</span><span class="si">{</span><span class="n">user_context</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">home_webdav</span> <span class="o">=</span> <span class="n">home_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">get_share_label</span><span class="p">(</span><span class="n">share_name</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">drive</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">drives</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">share_name</span> <span class="o">==</span> <span class="n">drive</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">drive</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="n">default</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drive </span><span class="si">{</span><span class="n">share_name</span><span class="si">}</span><span class="s2"> not found in Drives.xml&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">get_share_disabled</span><span class="p">(</span><span class="n">share_id</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">drive</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">drives</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">share_id</span> <span class="o">==</span> <span class="n">drive</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">drive</span><span class="o">.</span><span class="n">disabled</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drive </span><span class="si">{</span><span class="n">share_id</span><span class="si">}</span><span class="s2"> not found in Drives.xml&quot;</span><span class="p">)</span>
+            <span class="c1"># &quot;Not found&quot; means disabled</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">home</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="s1">&#39;Home&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="n">home_path</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="n">home_webdav</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-home&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">linuxmuster_global</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="s1">&#39;Linuxmuster-Global&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="si">{</span><span class="n">samba_netbios</span><span class="si">}</span><span class="se">\\</span><span class="s1">linuxmuster-global&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="s1">&#39;global&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-globe&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">school</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-school&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">all_schools</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="n">s</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_share_prefix</span><span class="p">(</span><span class="n">school</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-school&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">}</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schools</span>
+        <span class="p">]</span>
+
+        <span class="c1"># teachers = {</span>
+        <span class="c1">#     &#39;name&#39; : &#39;Teachers&#39;,</span>
+        <span class="c1">#     &#39;path&#39; : f&#39;{share_prefix}\\teachers&#39;,</span>
+        <span class="c1">#     &#39;webdav_url&#39;: f&quot;teachers/&quot;,</span>
+        <span class="c1">#     &#39;icon&#39; : &#39;fas fa-chalkboard-teacher&#39;,</span>
+        <span class="c1">#     &#39;active&#39;: False,</span>
+        <span class="c1"># }</span>
+
+        <span class="n">students</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="n">get_share_label</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="s1">&#39;Students&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="s1">students&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="s2">&quot;students&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-user-graduate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;students&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">share</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="n">get_share_label</span><span class="p">(</span><span class="s1">&#39;share&#39;</span><span class="p">,</span> <span class="s1">&#39;Share&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="s1">share&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="s2">&quot;share&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-hand-holding&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;share&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">program</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="n">get_share_label</span><span class="p">(</span><span class="s1">&#39;program&#39;</span><span class="p">,</span> <span class="s1">&#39;Programs&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="s1">program&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="s2">&quot;program&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-desktop&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;program&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">iso</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="n">get_share_label</span><span class="p">(</span><span class="s1">&#39;iso&#39;</span><span class="p">,</span> <span class="s1">&#39;ISO&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="s1">iso&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="s2">&quot;iso&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-compact-disc&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;iso&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">projects</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="n">get_share_label</span><span class="p">(</span><span class="s1">&#39;projects&#39;</span><span class="p">,</span> <span class="s1">&#39;Projects&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;path&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">share_prefix</span><span class="si">}</span><span class="se">\\</span><span class="s1">share</span><span class="se">\\</span><span class="s1">projects&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;webdav_url&#39;</span><span class="p">:</span> <span class="s2">&quot;share/projects&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;icon&#39;</span> <span class="p">:</span> <span class="s1">&#39;fas fa-atlas&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;projects&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">standard_shares</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span>
+            <span class="s1">&#39;iso&#39;</span><span class="p">:</span> <span class="n">iso</span><span class="p">,</span>
+            <span class="s1">&#39;program&#39;</span><span class="p">:</span> <span class="n">program</span><span class="p">,</span>
+            <span class="s1">&#39;share&#39;</span><span class="p">:</span><span class="n">share</span><span class="p">,</span>
+            <span class="s1">&#39;students&#39;</span><span class="p">:</span><span class="n">students</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">roles_shares</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;globaladministrator&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">home</span><span class="p">,</span>
+                <span class="n">linuxmuster_global</span><span class="p">,</span>
+            <span class="p">]</span> <span class="o">+</span> <span class="n">all_schools</span><span class="p">,</span>
+            <span class="s1">&#39;schooladministrator&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">home</span><span class="p">,</span>
+                <span class="n">school</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="p">,</span>
+            <span class="s1">&#39;teacher&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">home</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;student&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">home</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;parent&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">home</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;staff&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">home</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="c1"># TODO: Use visible method from lmntools, but first when it interprets</span>
+        <span class="c1"># the filter correctly. Something like:</span>
+        <span class="c1"># drive.visible(user)</span>
+        <span class="c1"># where user is a user object from ldapreader, containing all infos.</span>
+        <span class="c1"># TODO: Missing user defined shares</span>
+        <span class="k">for</span> <span class="n">share_id</span><span class="p">,</span><span class="n">standard_share</span> <span class="ow">in</span> <span class="n">standard_shares</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># This basic test only get the disabled attribute.</span>
+            <span class="k">if</span> <span class="n">share_id</span> <span class="o">!=</span> <span class="s1">&#39;students&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">get_share_disabled</span><span class="p">(</span><span class="n">share_id</span><span class="p">):</span>
+                    <span class="n">roles_shares</span><span class="p">[</span><span class="s1">&#39;teacher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standard_share</span><span class="p">)</span>
+                    <span class="n">roles_shares</span><span class="p">[</span><span class="s1">&#39;student&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standard_share</span><span class="p">)</span>
+                    <span class="n">roles_shares</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standard_share</span><span class="p">)</span>
+                    <span class="n">roles_shares</span><span class="p">[</span><span class="s1">&#39;staff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standard_share</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">get_share_disabled</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">):</span>
+            <span class="n">roles_shares</span><span class="p">[</span><span class="s1">&#39;teacher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">students</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">roles_shares</span><span class="p">[</span><span class="n">role</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

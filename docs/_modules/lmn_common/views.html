@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_common.views &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_common.views</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_common.views</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Common tools to manipulate user&#39;s files and config files on the OS.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">difflib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pwd</span><span class="o">,</span><span class="w"> </span><span class="nn">grp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jadi</span><span class="w"> </span><span class="kn">import</span> <span class="n">component</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.endpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">endpoint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">linuxmusterTools.lmnfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMNFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">display_options</span>
+
+
+<span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.context">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.context">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span></div>
+
+
+    <span class="c1">## TODO authorize</span>
+    <span class="c1">## Used in lmn_common/resources/js/directives.coffee:22</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/log(?P&lt;path&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_log">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_api_log">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query a part of a log file to simulate a continuously flow on the</span>
+<span class="sd">        frontend.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of the log file</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        :return: Part of the log at offset `offset`</span>
+<span class="sd">        :rtype: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="c1"># The frontend sends the length of what it already has, in characters</span>
+            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()[</span><span class="nb">int</span><span class="p">(</span><span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;offset&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)):]</span></div>
+
+
+    <span class="c1">## DEPRECATED</span>
+    <span class="c1">## Used in lmn_session/resources/js/controllers/session.controller.coffee:76</span>
+    <span class="c1"># @post(r&#39;/api/lmn/create-dir&#39;)</span>
+    <span class="c1"># @endpoint(api=True)</span>
+    <span class="c1"># def handle_api_create_dir(self, http_context):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Create directory with given path, ignoring errors.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     :param http_context: HttpContext</span>
+    <span class="c1">#     :type http_context: HttpContext</span>
+    <span class="c1">#     :return: True if success</span>
+    <span class="c1">#     :rtype: bool or None</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#</span>
+    <span class="c1">#     filepath = http_context.json_body()[&#39;filepath&#39;]</span>
+    <span class="c1">#     if not os.path.exists(filepath):</span>
+    <span class="c1">#         os.makedirs(filepath)</span>
+    <span class="c1">#         return True</span>
+    <span class="c1">#     return</span>
+
+    <span class="c1">## DEPRECATED</span>
+    <span class="c1"># ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76</span>
+    <span class="c1"># @post(r&#39;/api/lmn/remove-dir&#39;)</span>
+    <span class="c1"># @endpoint(api=True)</span>
+    <span class="c1"># def handle_api_remove_dir(self, http_context):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Remove directory and its content with given path, ignoring errors.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     :param http_context: HttpContext</span>
+    <span class="c1">#     :type http_context: HttpContext</span>
+    <span class="c1">#     :return: True if success</span>
+    <span class="c1">#     :rtype: bool or None</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#</span>
+    <span class="c1">#     filepath = http_context.json_body()[&#39;filepath&#39;]</span>
+    <span class="c1">#     if not os.path.exists(filepath):</span>
+    <span class="c1">#         return</span>
+    <span class="c1">#     shutil.rmtree(filepath, ignore_errors=True)</span>
+    <span class="c1">#     return True</span>
+
+    <span class="c1">## TODO authorize</span>
+    <span class="c1">## Used in directive upload, lmFileBackups and lmn_session/resources/js/controllers/session.controller.coffee:60</span>
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/remove-file&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_remove_file">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_api_remove_file">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_remove_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove file with given path.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: True if success</span>
+<span class="sd">        :rtype: bool or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+    <span class="c1">## DEPRECATED</span>
+    <span class="c1">## Used in directive upload</span>
+    <span class="c1"># @post(r&#39;/api/lmn/chown&#39;)</span>
+    <span class="c1"># @endpoint(api=True)</span>
+    <span class="c1"># def handle_api_chown(self, http_context):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Chown file with given path, owner and group.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     :param http_context: HttpContext</span>
+    <span class="c1">#     :type http_context: HttpContext</span>
+    <span class="c1">#     :return: True if success</span>
+    <span class="c1">#     :rtype: bool or None</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#</span>
+    <span class="c1">#     filepath = http_context.json_body()[&#39;filepath&#39;]</span>
+    <span class="c1">#     owner = http_context.json_body()[&#39;owner&#39;]</span>
+    <span class="c1">#     group = http_context.json_body()[&#39;group&#39;]</span>
+    <span class="c1">#     if not os.path.exists(filepath):</span>
+    <span class="c1">#         return</span>
+    <span class="c1">#     try:</span>
+    <span class="c1">#         user_id  = pwd.getpwnam(owner).pw_uid</span>
+    <span class="c1">#         group_id = grp.getgrnam(group).gr_gid</span>
+    <span class="c1">#         os.chown(filepath, user_id, group_id)</span>
+    <span class="c1">#         return True</span>
+    <span class="c1">#     except:</span>
+    <span class="c1">#         return</span>
+
+    <span class="c1">## TODO authorize : authorize possible with setup_wizard ?</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/read-config-setup&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_read_setup_ini">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_api_read_setup_ini">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_read_setup_ini</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read linuxmuster setup file for linbo and setup wizard.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Config content</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/var/lib/linuxmuster/setup.ini&#39;</span>
+            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">setup</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">setup</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">return</span></div>
+
+
+    <span class="c1"># TODO authorize</span>
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/diff&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_diff">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_api_diff">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check differences between two files.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Lines that differ</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbiddent</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="n">file1</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;file1&#39;</span><span class="p">]</span>
+        <span class="n">file2</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;file2&#39;</span><span class="p">]</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file1</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">fromlines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file2</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">tolines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">unified_diff</span><span class="p">(</span><span class="n">fromlines</span><span class="p">,</span> <span class="n">tolines</span><span class="p">,</span> <span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Some formatting</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">format_diff</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^---&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;&lt;&lt;&lt;&#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\+\+\+&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;&gt;&gt;&gt;&#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^-&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;&lt; &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\+&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;&gt; &#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">entry</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">format_diff</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">diff</span><span class="p">]</span></div>
+
+
+    <span class="c1">## TODO authorize</span>
+    <span class="c1">## Used in</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/version&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_version">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_api_version">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the versions of the installed LMN packages using dpkg.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: List of packages with informations</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">packages</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;dpkg -l | grep &#39;linuxmuster-\|sophomorix&#39; | awk &#39;BEGIN {OFS=</span><span class="se">\&quot;</span><span class="s2">=</span><span class="se">\&quot;</span><span class="s2">;} {print $2,$3}&#39;&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">([</span><span class="n">package</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span><span class="p">])</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/activeschool&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_get_activeSchool">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_get_activeSchool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_get_activeSchool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get  activeSchool.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: String containing active school</span>
+<span class="sd">        :rtype: string </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span></div>
+
+    
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/list-schools&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_get_listSchools">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_get_listSchools">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_get_listSchools</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get list of all schools</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Array containing all schools</span>
+<span class="sd">        :rtype: array </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_schools</span><span class="p">()</span></div>
+
+    
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/change-school&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_post_changeschool">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_post_changeschool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_post_changeschool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Switch active school</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Switch school successful or not</span>
+<span class="sd">        :rtype: boolean </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">school</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+        
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/get-schoolname&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_post_getschoolname">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_post_getschoolname">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_post_getschoolname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get schoolname by school</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Schoolname</span>
+<span class="sd">        :rtype: string </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_schoolname_by_school</span><span class="p">(</span><span class="n">school</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/display_options&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_get_display_options">
+<a class="viewcode-back" href="../../autoapi/lmn_common/views/index.html#lmn_common.views.Handler.handle_get_display_options">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_get_display_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provide display options stored in the webui config file.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: display options</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">display_options</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

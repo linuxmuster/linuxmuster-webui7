@@ -1,0 +1,30 @@
+lmn_session_new.main
+====================
+
+.. py:module:: lmn_session_new.main
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ItemProvider(context)
+
+   Bases: :py:obj:`aj.plugins.core.api.sidebar.SidebarItemProvider`
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: provide()
+
+
+.. py:class:: Permissions(context)
+
+   Bases: :py:obj:`aj.auth.PermissionProvider`
+
+
+   .. py:method:: provide()
+
+

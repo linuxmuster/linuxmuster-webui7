@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_dhcp.views &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="lmn_auth" href="../../lmn_auth/index.html" />
+    <link rel="prev" title="lmn_dhcp.main" href="../main/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">lmn_dhcp</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../main/index.html">lmn_dhcp.main</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">lmn_dhcp.views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_auth/index.html">lmn_auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_links/index.html">lmn_links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_users/index.html">lmn_users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmnwebdav/index.html">lmnwebdav</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_quotas/index.html">lmn_quotas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_linbo4/index.html">lmn_linbo4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_docker/index.html">lmn_docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_common/index.html">lmn_common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_crontab/index.html">lmn_crontab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_devices/index.html">lmn_devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_clients/index.html">lmn_clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_settings/index.html">lmn_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmnsmbclient/index.html">lmnsmbclient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_smbclient/index.html">lmn_smbclient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_wireguard/index.html">lmn_wireguard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_samba_dns/index.html">lmn_samba_dns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_nextcloud/index.html">lmn_nextcloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_linbo_sync/index.html">lmn_linbo_sync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_w_datetime/index.html">lmn_w_datetime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_websession/index.html">lmn_websession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_session_new/index.html">lmn_session_new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_permissions/index.html">lmn_permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_landingpage/index.html">lmn_landingpage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_samba_shares/index.html">lmn_samba_shares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_setup_wizard/index.html">lmn_setup_wizard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_vdi_dashboard/index.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_device-manager/index.html">lmn_device-manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_groupmembership/index.html">lmn_groupmembership</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_vdi_administration/index.html">lmn_vdi_administration</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">lmn_dhcp</a></li>
+      <li class="breadcrumb-item active">lmn_dhcp.views</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/lmn_dhcp/views/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-lmn_dhcp.views">
+<span id="lmn-dhcp-views"></span><h1>lmn_dhcp.views<a class="headerlink" href="#module-lmn_dhcp.views" title="Link to this heading"></a></h1>
+<p>Module to handle dchp leases and eventually add a new device.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lmn_dhcp.views.Handler">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lmn_dhcp.views.</span></span><span class="sig-name descname"><span class="pre">Handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_dhcp/views.html#Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_dhcp.views.Handler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">aj.api.http.HttpPlugin</span></code></p>
+<p>A base interface for HTTP request handling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@component</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HelloHttp</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="s1">&#39;/hello/(?P&lt;name&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">respond_ok</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s1">&#39;Hello, f&quot;</span><span class="si">{name}</span><span class="s1">&quot;!&#39;</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lmn_dhcp.views.Handler.context">
+<span class="sig-name descname"><span class="pre">context</span></span><a class="reference internal" href="../../../_modules/lmn_dhcp/views.html#Handler.context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_dhcp.views.Handler.context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lmn_dhcp.views.Handler.path">
+<span class="sig-name descname"><span class="pre">path</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/etc/linuxmuster/sophomorix/default-school/devices.csv'</span></span><a class="reference internal" href="../../../_modules/lmn_dhcp/views.html#Handler.path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_dhcp.views.Handler.path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_dhcp.views.Handler.handle_api_get_dhcp">
+<span class="sig-name descname"><span class="pre">handle_api_get_dhcp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_dhcp/views.html#Handler.handle_api_get_dhcp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_dhcp.views.Handler.handle_api_get_dhcp" title="Link to this definition"></a></dt>
+<dd><p>Read dhcp lease file and sort it for each LMN devices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All lease and LMN devices ip details</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)">tuple</a> of <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_dhcp.views.Handler.handle_api_register_dhcp">
+<span class="sig-name descname"><span class="pre">handle_api_register_dhcp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_dhcp/views.html#Handler.handle_api_register_dhcp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_dhcp.views.Handler.handle_api_register_dhcp" title="Link to this definition"></a></dt>
+<dd><p>When a new device get an ip through dhcp, this method allows to register it in the LMN devices file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../main/index.html" class="btn btn-neutral float-left" title="lmn_dhcp.main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../lmn_auth/index.html" class="btn btn-neutral float-right" title="lmn_auth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

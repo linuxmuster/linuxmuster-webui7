@@ -1,0 +1,105 @@
+lmn_common.api
+==============
+
+.. py:module:: lmn_common.api
+
+.. autoapi-nested-parse::
+
+   Common tools to communicate with sophomorix and handle config files.
+
+
+
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:data:: config_path
+   :value: '/etc/linuxmuster/webui/config.yml'
+
+
+.. py:data:: ALL_ROLES
+   :value: ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff']
+
+
+.. py:data:: lmconfig
+
+.. py:data:: lmnapi_config_path
+   :value: '/etc/linuxmuster/api/config.yml'
+
+
+.. py:data:: lmnapi_host
+   :value: '127.0.0.1'
+
+
+.. py:data:: lmnapi_port
+   :value: 8001
+
+
+.. py:data:: uvicorn_conf
+
+.. py:data:: LMNAPI_UNAVAILABLE_MESSAGE
+   :value: 'linuxmuster-api is not available for this session. Please try logging in again or contact your...
+
+
+.. py:data:: smbconf
+
+.. py:data:: samba_realm
+
+.. py:data:: lmsetup_schoolname
+
+.. py:class:: SophomorixProcess(command, sensitive)
+
+   Bases: :py:obj:`threading.Thread`
+
+
+   Worker for processing sophomorix commands.
+
+
+   .. py:attribute:: stdout
+      :value: None
+
+
+
+   .. py:attribute:: stderr
+      :value: None
+
+
+
+   .. py:attribute:: command
+
+
+   .. py:attribute:: sensitive
+
+
+   .. py:method:: run()
+
+      Method representing the thread's activity.
+
+      You may override this method in a subclass. The standard run() method
+      invokes the callable object passed to the object's constructor as the
+      target argument, if any, with sequential and keyword arguments taken
+      from the args and kwargs arguments, respectively.
+
+
+
+
+.. py:function:: lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sensitive=False)
+
+   Connector to all sophomorix commands. Run a sophomorix command with -j
+   option (output as json) through a SophomorixProcess and parse the results.
+
+   :param sophomorixCommand: Command with options to run
+   :type sophomorixCommand: list
+   :param jsonpath: Key to search in the resulted dict, e.g. /USERS/doe
+   :type jsonpath: string
+   :param ignoreErrors: Quiet mode
+   :type ignoreErrors: bool
+   :return: Whole output or key if jsonpath is defined
+   :rtype: dict or value (list, dict, integer, string)
+
+

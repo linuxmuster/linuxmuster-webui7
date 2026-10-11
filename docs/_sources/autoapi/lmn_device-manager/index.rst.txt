@@ -1,0 +1,16 @@
+lmn_device-manager
+==================
+
+.. py:module:: lmn_device-manager
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_device-manager/main/index
+   /autoapi/lmn_device-manager/views/index
+
+

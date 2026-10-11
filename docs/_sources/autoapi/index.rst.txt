@@ -1,0 +1,40 @@
+API Reference
+=============
+
+This page contains auto-generated API reference documentation [#f1]_.
+
+.. toctree::
+   :titlesonly:
+
+   /autoapi/lmn_dhcp/index
+   /autoapi/lmn_auth/index
+   /autoapi/lmn_links/index
+   /autoapi/lmn_users/index
+   /autoapi/lmnwebdav/index
+   /autoapi/lmn_quotas/index
+   /autoapi/lmn_linbo4/index
+   /autoapi/lmn_docker/index
+   /autoapi/lmn_common/index
+   /autoapi/lmn_crontab/index
+   /autoapi/lmn_devices/index
+   /autoapi/lmn_clients/index
+   /autoapi/lmn_settings/index
+   /autoapi/lmnsmbclient/index
+   /autoapi/lmn_smbclient/index
+   /autoapi/lmn_wireguard/index
+   /autoapi/lmn_samba_dns/index
+   /autoapi/lmn_nextcloud/index
+   /autoapi/lmn_linbo_sync/index
+   /autoapi/lmn_w_datetime/index
+   /autoapi/lmn_websession/index
+   /autoapi/lmn_session_new/index
+   /autoapi/lmn_permissions/index
+   /autoapi/lmn_landingpage/index
+   /autoapi/lmn_samba_shares/index
+   /autoapi/lmn_setup_wizard/index
+   /autoapi/lmn_vdi_dashboard/index
+   /autoapi/lmn_device-manager/index
+   /autoapi/lmn_groupmembership/index
+   /autoapi/lmn_vdi_administration/index
+
+.. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

@@ -1,0 +1,27 @@
+lmn_device-manager.main
+=======================
+
+.. py:module:: lmn_device-manager.main
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ItemProvider(context)
+
+   Bases: :py:obj:`aj.plugins.core.api.sidebar.SidebarItemProvider`
+
+
+   .. py:method:: provide()
+
+
+.. py:class:: Permissions(context)
+
+   Bases: :py:obj:`aj.auth.PermissionProvider`
+
+
+   .. py:method:: provide()
+
+

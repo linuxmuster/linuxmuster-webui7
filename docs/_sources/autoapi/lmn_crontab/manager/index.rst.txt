@@ -1,0 +1,42 @@
+lmn_crontab.manager
+===================
+
+.. py:module:: lmn_crontab.manager
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: CronManager(context)
+
+   Manage crontab file from user.
+
+
+   .. py:attribute:: context
+
+
+   .. py:attribute:: crons
+
+
+   .. py:method:: load_tab(user)
+
+      Load crontab file from user.
+      :param user: user
+      :type user: string
+      :return: CrontabConfig
+      :rtype: object
+
+
+
+   .. py:method:: save_tab(user, config)
+
+      Save new crontab data into crontab file.
+      :param user: user
+      :type user: string
+      :param config: CrontabConfig
+      :type config: CrontabConfig
+
+
+

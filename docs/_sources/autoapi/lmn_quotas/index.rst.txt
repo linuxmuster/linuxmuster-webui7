@@ -1,0 +1,16 @@
+lmn_quotas
+==========
+
+.. py:module:: lmn_quotas
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_quotas/main/index
+   /autoapi/lmn_quotas/views/index
+
+

@@ -1,0 +1,19 @@
+lmn_links.main
+==============
+
+.. py:module:: lmn_links.main
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ItemProvider(context)
+
+   Bases: :py:obj:`aj.plugins.core.api.sidebar.SidebarItemProvider`
+
+
+   .. py:method:: provide()
+
+

@@ -1,0 +1,287 @@
+lmn_settings.views
+==================
+
+.. py:module:: lmn_settings.views
+
+.. autoapi-nested-parse::
+
+   Module to configure sophomorix.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: EMAIL_MAPPING
+
+
+   .. py:attribute:: EMAIL_REVERSE_MAPPING
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_session_sessions(http_context)
+
+      Determine encoding using sophomorix-check.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Encoding type of the file, e.g. utf-8
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_get_schoolsettings(http_context)
+
+      Read the config file `school.conf`.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Settings in read mode
+      :rtype: dict in read mode
+
+
+
+   .. py:method:: handle_api_write_schoolsettings(http_context)
+
+      Write the config file `school.conf`.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Settings in read mode
+      :rtype: dict in read mode
+
+
+
+   .. py:method:: handle_api_latex_template(http_context)
+
+      Get list of latex templates for printing with sophomorix.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_get_subnet(http_context)
+
+      Get `subnets.csv` config file for subnets.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Settings in read mode
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_write_subnet(http_context)
+
+      Write `subnets.csv` config file for subnets.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Settings in read mode
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_read_custom_config(http_context, role='')
+
+      Read webui yaml config and return the settings for custom fields.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Settings in read mode
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_save_custom_config(http_context)
+
+      Save customs sophomorix fields settings in the webui yaml config.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return:
+      :rtype:
+
+
+
+   .. py:attribute:: PASSWORD_CONSTRAINTS_PATH
+      :value: '/etc/linuxmuster/tools/password_constraints.yml'
+
+
+
+   .. py:attribute:: PASSWORD_CONSTRAINTS_ROLES
+      :value: ['student', 'teacher', 'parent', 'staff', 'schooladministrator', 'globaladministrator']
+
+
+
+   .. py:method:: handle_api_read_password_constraints(http_context)
+
+      Read the password constraints config
+      (/etc/linuxmuster/tools/password_constraints.yml). Every known role
+      is always present under 'default' (empty rule list if unconfigured),
+      so the frontend never has to guard against missing keys.
+
+      'schools' is scoped by the caller's actual sophomorixRole (like
+      lmn_users/views/passwords.py's _checkPasswordPermissions), not by
+      the session's active school: global-administrators get every
+      school's override, everyone else only their current school's,
+      never another school's.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Configuration, with keys 'default' and 'schools' (all schools for global-administrators, own school only otherwise)
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_save_password_constraints(http_context)
+
+      Validate and save the password constraints config.
+
+      'schools' is scoped by the caller's actual sophomorixRole, like
+      handle_api_read_password_constraints: global-administrators may
+      write any school present in the posted 'schools' payload (every
+      other school's existing override is preserved untouched);
+      everyone else may only write their own current school, any other
+      school in the payload is ignored.
+
+      The global 'default' rules are only changed by global-administrators:
+      'lm:schoolsettings' (required to reach this endpoint at all) is also
+      granted to school-administrators, so a posted 'default' that actually
+      differs from what's on disk is rejected unless the caller also holds
+      'lm:globalsettings'. Omitting 'default' (or resending it unchanged)
+      never triggers this check, so school-administrators can still save
+      their own school's override normally.
+
+      Every rule is validated with linuxmusterTools' own rule builder
+      before writing (pure validation, no Samba/LDAP access), so a
+      malformed rule (unknown type, invalid classes, bad count) is
+      rejected here instead of silently breaking lmnapi/webui/cli later.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return:
+      :rtype:
+
+
+
+   .. py:method:: handle_api_get_holidays(http_context)
+
+      Get `holidays.yml` config file for holidays.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Settings in read mode
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_write_holidays(http_context)
+
+      Write `holidays.yml` config file for holidays.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Settings in read mode
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_get_edulution_status(http_context)
+
+      Check the status of edulution requirements
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Status of api
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_get_edulution_generate(http_context)
+
+      Generate the edulution setup hash
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Edulution Setup Hash
+      :rtype: str
+
+
+
+   .. py:method:: handle_api_get_webuisettings(http_context)
+
+      Get the allowed roles from /etc/linuxmuster/webui/config.yml
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_post_webuisettings(http_context)
+
+      Save the allowed roles to /etc/linuxmuster/webui/config.yml
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_get_apisettings(http_context)
+
+      Get the api keys from /etc/linuxmuster/api/config.yml
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_delete_apikey(http_context, keyname='')
+
+      Delete a specific api key secret from /etc/linuxmuster/api/config.yml
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_post_apisettings(http_context)
+
+      Save the api keys to /etc/linuxmuster/api/config.yml
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_put_apikey(http_context)
+
+      Generate a secret for a new key and save it in the config.yml
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+

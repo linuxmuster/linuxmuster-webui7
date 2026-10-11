@@ -1,0 +1,17 @@
+lmn_nextcloud
+=============
+
+.. py:module:: lmn_nextcloud
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_nextcloud/api/index
+   /autoapi/lmn_nextcloud/main/index
+   /autoapi/lmn_nextcloud/views/index
+
+

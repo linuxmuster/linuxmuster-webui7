@@ -1,0 +1,45 @@
+lmn_auth.views
+==============
+
+.. py:module:: lmn_auth.views
+
+.. autoapi-nested-parse::
+
+   Authentication module for linuxmuster.net that enable and manage LDAP auth.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_change_password(http_context)
+
+      Change user password through authentication provider.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+

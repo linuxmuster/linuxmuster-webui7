@@ -1,0 +1,104 @@
+lmn_users.views.customFields
+============================
+
+.. py:module:: lmn_users.views.customFields
+
+.. autoapi-nested-parse::
+
+   API for custom fields management.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_update_custom(http_context, user, index)
+
+      Update a custom sophomorix field.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All quotas for specified users
+      :rtype: dict
+
+
+
+   .. py:method:: handle_custom_mutli_add(http_context, user, index)
+
+      Add a sophomorix field in custom multi.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All quotas for specified users
+      :rtype: dict
+
+
+
+   .. py:method:: handle_custom_multi_remove(http_context, user, index)
+
+      Remove a sophomorix field in custom multi.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All quotas for specified users
+      :rtype: dict
+
+
+
+   .. py:method:: handle_add_proxy_addresses(http_context, user)
+
+      Add an email in proxyAddresses, e.g. emails, for an user.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All quotas for specified users
+      :rtype: dict
+
+
+
+   .. py:method:: handle_remove_proxy_addresses(http_context, user)
+
+      Remove an email in proxyAddresses, e.g. emails, for an user.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All quotas for specified users
+      :rtype: dict
+
+
+
+   .. py:method:: handle_get_custom_fields(http_context, user)
+
+      Get custom fields informations from user and prepare it for landingpage
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param user: User login
+      :type user: string
+      :return: All displayable custom fields informations from user
+      :rtype: list
+
+
+

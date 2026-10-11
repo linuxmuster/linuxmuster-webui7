@@ -1,0 +1,16 @@
+lmn_samba_dns
+=============
+
+.. py:module:: lmn_samba_dns
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_samba_dns/main/index
+   /autoapi/lmn_samba_dns/views/index
+
+

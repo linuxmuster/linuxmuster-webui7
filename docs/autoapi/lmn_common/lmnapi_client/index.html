@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_common.lmnapi_client &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="lmn_common.main" href="../main/index.html" />
+    <link rel="prev" title="lmn_common.api" href="../api/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_dhcp/index.html">lmn_dhcp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_auth/index.html">lmn_auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_links/index.html">lmn_links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_users/index.html">lmn_users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmnwebdav/index.html">lmnwebdav</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_quotas/index.html">lmn_quotas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_linbo4/index.html">lmn_linbo4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_docker/index.html">lmn_docker</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">lmn_common</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../api/index.html">lmn_common.api</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">lmn_common.lmnapi_client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../main/index.html">lmn_common.main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mimetypes/index.html">lmn_common.mimetypes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../multischool/index.html">lmn_common.multischool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/index.html">lmn_common.tools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../views/index.html">lmn_common.views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_crontab/index.html">lmn_crontab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_devices/index.html">lmn_devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_clients/index.html">lmn_clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_settings/index.html">lmn_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmnsmbclient/index.html">lmnsmbclient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_smbclient/index.html">lmn_smbclient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_wireguard/index.html">lmn_wireguard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_samba_dns/index.html">lmn_samba_dns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_nextcloud/index.html">lmn_nextcloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_linbo_sync/index.html">lmn_linbo_sync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_w_datetime/index.html">lmn_w_datetime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_websession/index.html">lmn_websession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_session_new/index.html">lmn_session_new</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_permissions/index.html">lmn_permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_landingpage/index.html">lmn_landingpage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_samba_shares/index.html">lmn_samba_shares</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_setup_wizard/index.html">lmn_setup_wizard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_vdi_dashboard/index.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_device-manager/index.html">lmn_device-manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_groupmembership/index.html">lmn_groupmembership</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lmn_vdi_administration/index.html">lmn_vdi_administration</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">lmn_common</a></li>
+      <li class="breadcrumb-item active">lmn_common.lmnapi_client</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/lmn_common/lmnapi_client/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-lmn_common.lmnapi_client">
+<span id="lmn-common-lmnapi-client"></span><h1>lmn_common.lmnapi_client<a class="headerlink" href="#module-lmn_common.lmnapi_client" title="Link to this heading"></a></h1>
+<p>Minimal HTTP client to call linuxmuster-api from the webui</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiUnavailable">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lmn_common.lmnapi_client.</span></span><span class="sig-name descname"><span class="pre">LmnapiUnavailable</span></span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiUnavailable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiUnavailable" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#Exception" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>linuxmuster-api could not be reached at all.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lmn_common.lmnapi_client.</span></span><span class="sig-name descname"><span class="pre">LmnapiError</span></span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#Exception" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>linuxmuster-api was reached but rejected the request.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiTimeout">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lmn_common.lmnapi_client.</span></span><span class="sig-name descname"><span class="pre">LmnapiTimeout</span></span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiTimeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiTimeout" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lmn_common.lmnapi_client.LmnapiError" title="lmn_common.lmnapi_client.LmnapiError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LmnapiError</span></code></a></p>
+<p>linuxmuster-api was reached but did not answer in time. A LmnapiError,
+so the views show its message instead of asking to log in again.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lmn_common.lmnapi_client.</span></span><span class="sig-name descname"><span class="pre">LmnapiClient</span></span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient" title="Link to this definition"></a></dt>
+<dd><p>One instance per webui session (see lmn_auth/api.py), holding the
+linuxmuster-api JWT obtained at login so callers don’t have to thread it
+through every call.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.host">
+<span class="sig-name descname"><span class="pre">host</span></span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.host"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.host" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.port">
+<span class="sig-name descname"><span class="pre">port</span></span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.port" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.token">
+<span class="sig-name descname"><span class="pre">token</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.token" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.authenticate">
+<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.authenticate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.authenticate" title="Link to this definition"></a></dt>
+<dd><p>Exchange LDAP credentials for a linuxmuster-api JWT (GET /v1/auth/)
+and keep it on the instance for subsequent password calls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JWT string, or None if linuxmuster-api refused the credentials
+or could not be reached at all.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.set_first_password">
+<span class="sig-name descname"><span class="pre">set_first_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.set_first_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.set_first_password" title="Link to this definition"></a></dt>
+<dd><p>Call POST /v1/users/{user}/set-first-password.</p>
+<p>If password is None, linuxmuster-api resets the user’s current
+password back to their existing first password instead of setting a
+new one (set_current is then meaningless and ignored on that path).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.set_current_password">
+<span class="sig-name descname"><span class="pre">set_current_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.set_current_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.set_current_password" title="Link to this definition"></a></dt>
+<dd><p>Call POST /v1/users/{user}/set-current-password.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.set_random_first_password">
+<span class="sig-name descname"><span class="pre">set_random_first_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.set_random_first_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.set_random_first_password" title="Link to this definition"></a></dt>
+<dd><p>Call POST /v1/users/{user}/set-random-first-password: linuxmuster-api
+generates a password satisfying the current password policy and sets
+it as the user’s first and current password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the generated password</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.check_first_password">
+<span class="sig-name descname"><span class="pre">check_first_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.check_first_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.check_first_password" title="Link to this definition"></a></dt>
+<dd><p>Call GET /v1/users/{user}?check_first_pw=true.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the user’s current password still matches their
+stored first password, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.get_first_password">
+<span class="sig-name descname"><span class="pre">get_first_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.get_first_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.get_first_password" title="Link to this definition"></a></dt>
+<dd><p>Call GET /v1/users/{user} and return the user’s stored first password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The user’s sophomorixFirstPassword, in clear text.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.get_user_quotas">
+<span class="sig-name descname"><span class="pre">get_user_quotas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.get_user_quotas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.get_user_quotas" title="Link to this definition"></a></dt>
+<dd><p>Call GET /v1/users/{user}/quotas.</p>
+<p>Unlike sophomorix-query, this resolves quotas hosted on a separate
+fileserver (MSDFS) instead of always querying the local domain
+controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>{&lt;share&gt;: {‘used’, ‘soft_limit’, ‘hard_limit’} or {‘ERROR’: …},
+…, ‘cloud’: …, ‘mail’: …}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.add_management_group_members">
+<span class="sig-name descname"><span class="pre">add_management_group_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">school</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.add_management_group_members"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.add_management_group_members" title="Link to this definition"></a></dt>
+<dd><p>Call POST /v1/managementgroups/{group}/members to add users
+(wifi, internet, intranet, webfilter, printing) to a management group.</p>
+<p><cite>school</cite> is required: linuxmuster-api has no notion of the webui’s
+current school context, and a global-administrator’s own JWT carries
+no single school at all.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.remove_management_group_members">
+<span class="sig-name descname"><span class="pre">remove_management_group_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">school</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.remove_management_group_members"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.remove_management_group_members" title="Link to this definition"></a></dt>
+<dd><p>Call DELETE /v1/managementgroups/{group}/members to remove users
+from a management group. See add_management_group_members for <cite>school</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.add_parent">
+<span class="sig-name descname"><span class="pre">add_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">student</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.add_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.add_parent" title="Link to this definition"></a></dt>
+<dd><p>Call POST /v1/users/{student}/parents to assign an existing parent
+to an existing student.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.remove_parent">
+<span class="sig-name descname"><span class="pre">remove_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">student</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.remove_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.remove_parent" title="Link to this definition"></a></dt>
+<dd><p>Call DELETE /v1/users/{student}/parents to unassign a parent from a student.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.patch_printer_members">
+<span class="sig-name descname"><span class="pre">patch_printer_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">printer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">changes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.patch_printer_members"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.patch_printer_members" title="Link to this definition"></a></dt>
+<dd><p>Call PATCH /v1/printers/{printer} to add or remove members and member
+groups in a single LDAP modify, instead of one sophomorix-group call
+per entity.</p>
+<p><cite>changes</cite> maps the API’s list fields (addmembers, removemembers,
+addmembergroups, removemembergroups) to lists of cn. Attributes that
+are not sent are left untouched.</p>
+<p>Reserved to administrators by the API (RoleChecker “GS”). Unlike the
+management group routes, this one takes no <cite>school</cite>: it reads it from
+the caller’s JWT, and printer names already carry their school prefix
+in a multischool setup.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.join_printer">
+<span class="sig-name descname"><span class="pre">join_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">printer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.join_printer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.join_printer" title="Link to this definition"></a></dt>
+<dd><p>Call POST /v1/printers/{printer}/join to add the caller themselves to
+a joinable printer. This is the route a teacher may use: the API
+checks sophomorixJoinable and ignores any member name sent to it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lmn_common.lmnapi_client.LmnapiClient.quit_printer">
+<span class="sig-name descname"><span class="pre">quit_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">printer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/lmn_common/lmnapi_client.html#LmnapiClient.quit_printer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lmn_common.lmnapi_client.LmnapiClient.quit_printer" title="Link to this definition"></a></dt>
+<dd><p>Call POST /v1/printers/{printer}/quit to remove the caller themselves
+from a printer. See join_printer.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api/index.html" class="btn btn-neutral float-left" title="lmn_common.api" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../main/index.html" class="btn btn-neutral float-right" title="lmn_common.main" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

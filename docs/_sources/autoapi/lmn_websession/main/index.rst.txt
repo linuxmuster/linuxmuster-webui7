@@ -1,0 +1,19 @@
+lmn_websession.main
+===================
+
+.. py:module:: lmn_websession.main
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ItemProvider(context)
+
+   Bases: :py:obj:`aj.plugins.core.api.sidebar.SidebarItemProvider`
+
+
+   .. py:method:: provide()
+
+

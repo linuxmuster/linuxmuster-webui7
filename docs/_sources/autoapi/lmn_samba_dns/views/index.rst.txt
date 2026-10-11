@@ -1,0 +1,80 @@
+lmn_samba_dns.views
+===================
+
+.. py:module:: lmn_samba_dns.views
+
+.. autoapi-nested-parse::
+
+   Module to handle the samba dns through samba-tool.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_dns_get(http_context)
+
+      Deliver the current dns entries and dns zone.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: List of dns entries and zone
+      :rtype: list
+
+
+
+   .. py:method:: handle_api_dns_delete(http_context)
+
+      Send entry to delete to samba-tool.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Result of samba-tool
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_dns_add(http_context)
+
+      Send dns entry to add to samba-tool.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Result of samba-tool
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_dns_update(http_context)
+
+      Send dns entry to update to samba-tool.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Result of samba-tool
+      :rtype: string
+
+
+

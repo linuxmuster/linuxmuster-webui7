@@ -1,0 +1,232 @@
+lmn_users.views.sophomorixUsers
+===============================
+
+.. py:module:: lmn_users.views.sophomorixUsers
+
+.. autoapi-nested-parse::
+
+   APIs for the management of the sophomorix's users.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:attribute:: lr
+
+
+   .. py:attribute:: userStatus
+
+
+   .. py:method:: handle_api_sophomorix_teachers(http_context, user=None)
+
+      Get teachers list from LDAP tree.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param user: if provided, user to show (containing / at the beginning)
+      :type user: str
+      :return: List of teachers with details, one teacher per dict.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_sophomorix_parents(http_context, user=None)
+
+      Get parents list from LDAP tree.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param user: if provided, user to show (containing / at the beginning)
+      :type user: str
+      :return: List of parents with details, one parent per dict.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_sophomorix_staff(http_context, user=None)
+
+      Get staff list from LDAP tree.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param user: if provided, user to show (containing / at the beginning)
+      :type user: str
+      :return: List of staff with details, one st per dict.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_sophomorix_students(http_context, user=None)
+
+      Get students list from LDAP tree.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param user: if provided, user to show (containing / at the beginning)
+      :type user: str
+      :return: List of students with details, one student per dict.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_sophomorix_schooladmins(http_context, user=None)
+
+      Get schooladmins list from LDAP tree.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param user: if provided, user to show (containing / at the beginning)
+      :type user: str
+      :return: List of schooladminss with details, one schooladmin per dict.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_sophomorix_globaladmins(http_context, user=None)
+
+      Get globaladmins list from LDAP tree.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param user: if provided, user to show (containing / at the beginning)
+      :type user: str
+      :return: List of globaladminss with details, one globaladmin per dict.
+      :rtype: list of dict
+
+
+
+   .. py:method:: handle_api_users_schooladmins_create(http_context)
+
+      Create school admins.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: State of the command
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_users_add_comment(http_context, user)
+
+      Add user comment.
+
+      :param user: sAMAccountName to update
+      :type user: basestring
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: State of the command
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_users_schooladmins_delete(http_context)
+
+      Delete school admins.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: State of the command
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_users_globaladmins_create(http_context)
+
+      Create global admins.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: State of the command
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_users_globaladmins_delete(http_context)
+
+      Delete global admins.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: State of the command
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_users_binduser_get(http_context, level='')
+
+      List school and global bindusers.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param level: school or global
+      :type level: basestring
+      :return: State of the command
+      :rtype: string or list
+
+
+
+   .. py:method:: handle_api_users_binduser_post(http_context, level='')
+
+      Create school and global bindusers.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param level: school or global
+      :type level: basestring
+      :return: State of the command
+      :rtype: string or list
+
+
+
+   .. py:method:: handle_api_users_add_parent(http_context)
+
+      Assign an existing parent to an existing student.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_users_remove_parent(http_context)
+
+      Unassign a parent of an existing student.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_users_kill(http_context)
+
+      Directly kill a given user with sophomorix-kill, but does not remove the corresponding line in the CSV file.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: State of the command
+      :rtype: string
+
+
+

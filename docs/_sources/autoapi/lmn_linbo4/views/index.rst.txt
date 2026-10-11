@@ -1,0 +1,123 @@
+lmn_linbo4.views
+================
+
+.. py:module:: lmn_linbo4.views
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:data:: name_checker
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: LINBO_PATH
+      :value: '/srv/linbo'
+
+
+
+   .. py:attribute:: GRUB_PATH
+      :value: '/srv/linbo/boot/grub'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_list_groups(http_context)
+
+      List all start.conf to get linbo groups.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: List of linbo4 groups
+      :rtype: list
+
+
+
+   .. py:method:: handle_api_configs(http_context)
+
+
+   .. py:method:: handle_api_examples(http_context, type)
+
+
+   .. py:method:: handle_api_icons(http_context)
+
+
+   .. py:method:: handle_api_icons_read(http_context, name)
+
+
+   .. py:method:: handle_api_get_vdi_image(http_context, name=None)
+
+
+   .. py:method:: handle_api_post_vdi_image(http_context, name=None)
+
+
+   .. py:method:: handle_api_get_config(http_context, name=None)
+
+
+   .. py:method:: handle_api_delete_config(http_context, name=None)
+
+
+   .. py:method:: handle_api_post_config(http_context, name=None)
+
+
+   .. py:method:: handle_linbo_iso(http_context)
+
+
+   .. py:method:: handle_api_images(http_context)
+
+
+   .. py:method:: handle_api_post_image(http_context, image=None)
+
+
+   .. py:method:: handle_api_delete_image(http_context, image=None)
+
+
+   .. py:method:: handle_api_rename_image(http_context, image=None)
+
+
+   .. py:method:: handle_api_duplicate_image(http_context, image=None)
+
+
+   .. py:method:: handle_api_restore_image(http_context, image=None)
+
+
+   .. py:method:: handle_api_delete_backup(http_context, image=None)
+
+
+   .. py:method:: handle_api_save_backup(http_context, image=None)
+
+
+   .. py:method:: handle_api_delete_diff(http_context, image=None)
+
+
+   .. py:method:: handle_api_linbo_restart_services(http_context)
+
+      Restart the torrent and multicast services.
+      Needed if there was some changes on a image.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+

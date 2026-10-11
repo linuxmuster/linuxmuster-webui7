@@ -1,0 +1,43 @@
+lmn_clients.views
+=================
+
+.. py:module:: lmn_clients.views
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_get_clients_scripts(http_context)
+
+
+   .. py:method:: handle_api_write_clients_scripts(http_context)
+
+
+   .. py:method:: handle_api_get_samba_drives(http_context)
+
+
+   .. py:method:: handle_api_post_samba_drives(http_context)
+
+

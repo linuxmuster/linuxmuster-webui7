@@ -1,0 +1,31 @@
+lmn_linbo_sync.api
+==================
+
+.. py:module:: lmn_linbo_sync.api
+
+
+
+
+Module Contents
+---------------
+
+.. py:function:: build_linbo_remote(cmd_parameters)
+
+   Map the webui's cmd_parameters payload (built by the frontend) to a LinboRemote.
+
+   :param cmd_parameters: All parameters to call linbo-remote
+   :type cmd_parameters: dict
+   :return: A LinboRemote ready to run()
+   :rtype: LinboRemote
+
+
+.. py:function:: run(cmd_parameters)
+
+   Build and run a linbo-remote command from the webui's cmd_parameters payload.
+
+   :param cmd_parameters: All parameters to call linbo-remote
+   :type cmd_parameters: dict
+   :return: {'status': 0, 'msg': <output>} on success, {'status': 1, 'msg': <error>} otherwise
+   :rtype: dict
+
+

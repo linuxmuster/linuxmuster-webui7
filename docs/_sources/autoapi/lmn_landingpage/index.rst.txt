@@ -1,0 +1,16 @@
+lmn_landingpage
+===============
+
+.. py:module:: lmn_landingpage
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_landingpage/main/index
+   /autoapi/lmn_landingpage/views/index
+
+

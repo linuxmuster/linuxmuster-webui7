@@ -1,0 +1,58 @@
+lmn_permissions.views
+=====================
+
+.. py:module:: lmn_permissions.views
+
+.. autoapi-nested-parse::
+
+   Generate a matrix of permissions and api for all plugins and sidebar items.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_get_permissions(http_context)
+
+      Get the whole list of plugins, permissions and api.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All plugins details
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_export_permissions(http_context)
+
+      Export api and sidebar permissions to default ui permissions format.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return:
+      :rtype:
+
+
+

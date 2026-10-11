@@ -1,0 +1,71 @@
+lmn_linbo_sync.views
+====================
+
+.. py:module:: lmn_linbo_sync.views
+
+.. autoapi-nested-parse::
+
+   Module to drive some workstations through linbo.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_linbo_sync(http_context)
+
+      Get the last synchronisation date from all workstations.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Workstations dict with all linbo informations
+      :rtype: dict or list
+
+
+
+   .. py:method:: handle_api_workstations_online(http_context, host)
+
+      Connector to test if a host is online.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param host: Hostname
+      :type host: string
+      :return: OS type if online, or off
+      :rtype: string
+
+
+
+   .. py:method:: handle_api_sync_workstation(http_context)
+
+      Connector to launch a linbo command.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Error as string if down, or 0 if successfull
+      :rtype: string or integer 0
+
+
+

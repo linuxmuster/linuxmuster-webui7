@@ -1,0 +1,16 @@
+lmn_settings
+============
+
+.. py:module:: lmn_settings
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_settings/main/index
+   /autoapi/lmn_settings/views/index
+
+

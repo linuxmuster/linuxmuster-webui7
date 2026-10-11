@@ -1,0 +1,16 @@
+lmn_permissions
+===============
+
+.. py:module:: lmn_permissions
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/lmn_permissions/main/index
+   /autoapi/lmn_permissions/views/index
+
+

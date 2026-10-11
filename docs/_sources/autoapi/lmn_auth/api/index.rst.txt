@@ -1,0 +1,202 @@
+lmn_auth.api
+============
+
+.. py:module:: lmn_auth.api
+
+.. autoapi-nested-parse::
+
+   Authentication classes to communicate with LDAP tree and load user's informations.
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:class:: LMAuthenticationProvider(context)
+
+   Bases: :py:obj:`aj.auth.AuthenticationProvider`
+
+
+   LDAP Authentication provider for linuxmuster.net
+
+
+   .. py:attribute:: id
+      :value: 'lm'
+
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: pw_reset
+
+
+   .. py:attribute:: context
+
+
+   .. py:attribute:: lr
+
+
+   .. py:method:: get_ldap_user(username, attributes=[])
+
+      Get the user's informations to initialize his session.
+
+      :param username: Username
+      :type username: string
+      :param context: 'auth' to get permissions and 'userconfig' to get user's personal config, e.g. for Dashboard
+      :type context: string
+      :return: Dict of values
+      :rtype: dict
+
+
+
+   .. py:method:: prepare_environment(username)
+
+      Perform some objects initialization (multischool environment, kerberos
+      ticket) before switching to worker.
+
+      :param username: sAMAccountName
+      :type username: string
+
+
+
+   .. py:method:: authenticate(username, password)
+
+      Test credentials against LDAP and parse permissions for the session.
+
+      :param username: Username
+      :type username: string
+      :param password: Password
+      :type password: string
+      :return: User's permissions
+      :rtype: dict
+
+
+
+   .. py:method:: authorize(username, permission)
+
+      Get permissions from session, default false.
+
+      :param username: Username
+      :type username: string
+      :param permission: Permission as dict
+      :type permission: dict
+      :return: Bool
+      :rtype: bool
+
+
+
+   .. py:method:: change_password(username, password, new_password)
+
+      Change user password through linuxmuster-api.
+
+      :param username: Username
+      :type username: string
+      :param password: Old password
+      :type password: string
+      :param new_password: New password
+      :type new_password: string
+
+
+
+   .. py:method:: get_isolation_gid(username)
+
+      For each session there will be an isolated worker. This function returns
+      the right gid for the worker process.
+
+      :param username: Username
+      :type username: string
+      :return: GID of the user
+      :rtype: integer
+
+
+
+   .. py:method:: get_isolation_uid(username)
+
+      For each session there will be an isolated worker. This function returns
+      the right uid for the worker process.
+
+      :param username: Username
+      :type username: string
+      :return: UID of the user
+      :rtype: integer
+
+
+
+   .. py:method:: get_profile(username)
+
+
+   .. py:method:: check_mail(mail)
+
+      Check if a given mail actually exists in the LDAP tree, in order to send
+      or not a password reset email.
+      The tested field must be given in the config file.
+
+      :param mail: Email of the user
+      :type mail: basestring
+      :return: Existing or not
+      :rtype: bool
+
+
+
+   .. py:method:: check_password_complexity(password)
+
+      Check if a given password for a user for the password reset function
+      respects some standards.
+
+
+
+   .. py:method:: update_password(username, password)
+
+
+   .. py:method:: signout()
+
+      Perform some cleaning while destroying the session (removing the
+      kerberos ticket).
+
+
+
+.. py:class:: UserLdapConfig(context)
+
+   Bases: :py:obj:`aj.config.UserConfigProvider`
+
+
+   User config class compliant with linuxmuster.net LDAP config's scheme
+   TODO : currently not used, must be updated
+
+
+   .. py:attribute:: id
+      :value: 'lm'
+
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: load()
+
+      Load attributes from LDAP.
+
+      :return: User's attributes
+      :rtype: yaml object if root or dict
+
+
+
+   .. py:method:: save()
+
+      Save user's config. If root, this goes in a file, otherwise in LDAP tree.
+
+
+
+   .. py:method:: harden()
+
+      Change mode to "read, write, and execute by owner" only for root,
+      since other data are stored in LDAP.
+
+
+

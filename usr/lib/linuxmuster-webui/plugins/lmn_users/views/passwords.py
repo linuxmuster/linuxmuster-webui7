@@ -11,6 +11,7 @@ from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
 from aj.plugins.lmn_common.tools import sort_schoolclasses
+from linuxmusterTools.print import LatexTemplates
 
 
 @component(HttpPlugin)
@@ -335,6 +336,10 @@ class Handler(HttpPlugin):
             except TypeError:
                 template = config_template_multiple
         if template:
+            allowed = {os.path.realpath(t.fullpath) for t in LatexTemplates().templates.values()}
+            template = os.path.realpath(template)
+            if template not in allowed:
+                return 'Invalid template'
             sophomorixCommand.extend(['--template', template])
         if pdflatex:
             sophomorixCommand.extend(['--command'])

@@ -1,3 +1,32 @@
+linuxmuster-webui7 (7.4.13) lmn74; urgency=medium
+
+  * [security] [lmn_linbo4] Avoid path traversal in the config/ and vdi/
+    routes.
+  * [lmn_linbo4] LINBO group names are validated: the list only shows
+    the start.conf whose group name is valid, and a duplicated group
+    can not be given a name sophomorix-device would refuse (. and +).
+  * [lmn_common] The credentials sent to linuxmuster-api are encoded as
+    UTF-8: requests encoded them as Latin-1, which can not carry a
+    password like €uro123. Needs linuxmuster-api 7.4.14 (#47).
+  * [lmn_common] A linuxmuster-api request that times out says so, and
+    that the operation may have been applied anyway, instead of asking
+    to log in again. Connecting times out after 3 s, answering after
+    10 s, 30 s for the password changes; reading the quotas has no
+    time limit any more.
+  * [lmn_common] The log viewer reads its offset in characters, as the
+    frontend sends it: a log holding non-ASCII characters ended with
+    "Server error occured". Fix #294, reported by @derdennis1012.
+  * [lmn_settings] [lmn_users] A refused request answers 403 instead of
+    failing with a 500.
+  * [lmn_auth] [lmn_users] [lmn_session_new] Password errors stay
+    displayed until closed, so a long password policy message can be
+    read.
+  * Schoolclasses and session members are sorted in natural order by
+    linuxmuster-tools (5a, 10b, then abitur).
+  * [packaging] Depends on linuxmuster-tools7 (>= 7.4.19).
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 11 Oct 2026 10:30:00 +0200
+
 linuxmuster-webui7 (7.4.12) lmn74; urgency=medium
 
   * [lmn_settings] An API key can be restricted to a list of endpoints,

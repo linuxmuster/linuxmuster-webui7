@@ -548,7 +548,7 @@ class Handler(HttpPlugin):
         """
         
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
         
         external_domain = http_context.json_body()['external_domain']
         binduser_name = http_context.json_body()['binduser_name']
@@ -557,7 +557,7 @@ class Handler(HttpPlugin):
         secret_path = os.path.join('/etc/linuxmuster/.secret/', binduser_name)
 
         if not os.path.isfile(secret_path):
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
         else:
             with open(secret_path, 'r') as f:
                 binduser_password = f.read()
@@ -584,7 +584,7 @@ class Handler(HttpPlugin):
 
 
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
 
         with LMNFile(config_path, 'r') as f:
             lmconfig = f.read()
@@ -603,7 +603,7 @@ class Handler(HttpPlugin):
 
 
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
 
         posted_roles = http_context.json_body()['allowed_roles']
         valid_roles = [role for role in posted_roles if role in ALL_ROLES]
@@ -649,7 +649,7 @@ class Handler(HttpPlugin):
 
 
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
 
         apiconfig_path = "/etc/linuxmuster/api/config.yml"
 
@@ -680,7 +680,7 @@ class Handler(HttpPlugin):
 
 
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
 
         apiconfig_path = "/etc/linuxmuster/api/config.yml"
 
@@ -708,7 +708,7 @@ class Handler(HttpPlugin):
 
 
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
 
         apiconfig_path = "/etc/linuxmuster/api/config.yml"
         config = http_context.json_body()['config']
@@ -754,7 +754,7 @@ class Handler(HttpPlugin):
 
 
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
 
         apiconfig_path = "/etc/linuxmuster/api/config.yml"
         key = http_context.json_body()['key']

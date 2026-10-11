@@ -38,7 +38,7 @@ add-crowdin:
 	ajenti-dev-multitool --add-crowdin
 
 doc:
-	sphinx-build -b html -d docs/doctrees  docs_src docs
+	/opt/linuxmuster/bin/python3 /usr/local/bin/sphinx-build -b html -d docs/doctrees  docs_src docs
 
 ##################################################
 ## Will be later activated

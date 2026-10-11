@@ -2,8 +2,9 @@ from jadi import component
 
 from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
-from aj.api.endpoint import endpoint, EndpointError
+from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 
+import os
 import requests
 import json
 
@@ -15,6 +16,9 @@ class Handler(HttpPlugin):
     @post(r'/api/lmn/wireguard')
     @endpoint(api=True)
     def handle_api_lmn_wireguard(self, http_context):
+        if os.getuid() != 0:
+            raise EndpointReturn(403)
+
         url = http_context.json_body()['url']
         method = http_context.json_body()['method']
 

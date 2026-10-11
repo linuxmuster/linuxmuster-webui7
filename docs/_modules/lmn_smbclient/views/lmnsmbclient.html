@@ -1,0 +1,846 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_smbclient.views.lmnsmbclient &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/translations.js?v=8fd896e3"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lmn_smbclient.views.lmnsmbclient</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lmn_smbclient.views.lmnsmbclient</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tools to handle files, directories and uploads.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pexpect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">smbclient</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gevent</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pwd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">zipfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">quote</span><span class="p">,</span> <span class="n">unquote</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">smbprotocol.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">,</span> <span class="n">SMBAuthenticationError</span><span class="p">,</span> <span class="n">InvalidParameter</span><span class="p">,</span> <span class="n">SMBException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spnego.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">BadMechanismError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jadi</span><span class="w"> </span><span class="kn">import</span> <span class="n">component</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.api.endpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span><span class="p">,</span> <span class="n">EndpointReturn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">authorize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aj.plugins.lmn_common.mimetypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">content_mimetypes</span><span class="p">,</span> <span class="n">content_filetypes</span>
+
+
+<span class="c1"># TODO</span>
+<span class="c1"># - Better error management (directory not empty, errors in promise list, ... )</span>
+<span class="c1"># - Test encoding Windows</span>
+<span class="c1"># - download selected resources as zip</span>
+<span class="c1"># - UPLOAD non empty directory</span>
+
+<span class="c1"># Wrapper for smbclient methods in order to avoid empty credits error</span>
+<div class="viewcode-block" id="credit_wrapper">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.credit_wrapper">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">credit_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">new_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">retry</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">retry</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SMBException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;0 credits are available&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="n">retry</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">gevent</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span>
+        <span class="c1"># 5 attempts was not enough ?</span>
+        <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="s2">&quot;Still not enough credits to create working directory after five attempts. Please contact your administrator.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_func</span></div>
+
+
+<span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;copyfile&#39;</span><span class="p">,</span> <span class="s1">&#39;rename&#39;</span><span class="p">,</span> <span class="s1">&#39;makedirs&#39;</span><span class="p">,</span> <span class="s1">&#39;mkdir&#39;</span><span class="p">,</span> <span class="s1">&#39;renames&#39;</span><span class="p">,</span> <span class="s1">&#39;remove&#39;</span><span class="p">,</span> <span class="s1">&#39;removedirs&#39;</span><span class="p">]:</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">smbclient</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">credit_wrapper</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">smbclient</span><span class="p">,</span> <span class="n">method</span><span class="p">)))</span>
+
+
+<span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.context">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.context">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/shares/(?P&lt;user&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_shares">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_shares">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_shares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of hard-coded shares per role.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All items with informations</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+
+        <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span>
+        <span class="n">user_context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;adminclass&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_shares</span><span class="p">(</span><span class="n">user_context</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/list&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_list">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of objects (files, directories, ...) in a specific samba</span>
+<span class="sd">        share.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All items with informations</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_smb_list_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_smb_list_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of objects (files, directories, ...) from a specific path.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All items with informations</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="n">item_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="c1"># TODO</span>
+                <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">item_path</span><span class="p">,</span>
+                    <span class="s1">&#39;download_url&#39;</span><span class="p">:</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">item_path</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">altchars</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;-_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span>
+                    <span class="s1">&#39;isDir&#39;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(),</span>
+                    <span class="s1">&#39;isFile&#39;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">is_file</span><span class="p">(),</span>
+                    <span class="s1">&#39;isLink&#39;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">is_symlink</span><span class="p">(),</span>
+                    <span class="s1">&#39;filetype&#39;</span><span class="p">:</span> <span class="n">content_filetypes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ext</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">),</span>
+                <span class="p">}</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">stat</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                        <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_mode</span><span class="p">,</span>
+                        <span class="s1">&#39;mtime&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">,</span>
+                        <span class="s1">&#39;uid&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_uid</span><span class="p">,</span>
+                        <span class="s1">&#39;gid&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_gid</span><span class="p">,</span>
+                        <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_size</span><span class="p">,</span>
+                    <span class="p">})</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;accessError&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="c1"># if e.errno == errno.ENOENT and os.path.islink(item_path):</span>
+                    <span class="c1">#     data[&#39;brokenLink&#39;] = True</span>
+
+                <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">BadMechanismError</span><span class="p">,</span> <span class="n">SMBAuthenticationError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There&#39;s a problem with the kerberos authentication : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="s2">&quot;This server does not support this feature actually, but it will come soon!&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SMBOSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> does not seem to exist: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;parent&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1"># TODO</span>
+            <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="n">items</span>
+        <span class="p">}</span>
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/directory&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_create_directory">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_create_directory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_create_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create empty directory on specified path.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of directory</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Problem with path </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/file&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_create_file">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_create_file">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_create_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create empty file on specified path.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of directory</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">towrite</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Problem with path </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/move&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_move">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_move">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Move src to dst, work with files and directories.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of directory</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">src</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;src&#39;</span><span class="p">]</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;dst&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/copy&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_copy">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_copy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a copy of file src to dst.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of directory</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">src</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;src&#39;</span><span class="p">]</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;dst&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+                <span class="n">smbclient</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+                <span class="c1"># First pass : create directory tree</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+                    <span class="c1"># item like (SMBPATH, [List of subdir], [List of files])</span>
+                    <span class="n">smbpath</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">smbpath</span><span class="p">):</span>
+                        <span class="n">smbpath</span> <span class="o">=</span> <span class="n">smbpath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                        <span class="n">smbclient</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">smbpath</span><span class="p">)</span>
+
+                <span class="c1"># Second pass : copy all files</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+                    <span class="n">smbpath</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                        <span class="n">smbpathsrc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">smbpath</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="n">smbpathdst</span> <span class="o">=</span> <span class="n">smbpathsrc</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+                        <span class="n">smbclient</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">smbpathsrc</span><span class="p">,</span> <span class="n">smbpathdst</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;STATUS_DISK_FULL&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Your quota is full, please free enough place in order to share these files again.&quot;</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/rmdir&#39;</span><span class="p">)</span> <span class="c1"># TODO : bad method, should be delete</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_rmdir">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_rmdir">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_rmdir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete an empty directory. Throw an SMBOSError if the directory is</span>
+<span class="sd">        not empty.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of directory</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># First pass : delete files</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="c1"># item like (SMBPATH, [List of subdir], [List of files])</span>
+                <span class="n">smbpath</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">smbpath</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Second pass : delete directories from bottom</span>
+            <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="n">smbclient</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">directory</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/unlink&#39;</span><span class="p">)</span> <span class="c1"># TODO : bad method, should be delete</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_unlink">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_unlink">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_unlink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a file.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of directory</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/stat/(?P&lt;path&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_stat">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_stat">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_stat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all informations from a specific path.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :param path: Path of file/directory</span>
+<span class="sd">        :type path: string</span>
+<span class="sd">        :return: POSIX permissions, size, type, ...</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">smb_file</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">_os</span><span class="o">.</span><span class="n">SMBDirEntry</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">smb_file</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span> <span class="c1"># TODO</span>
+                    <span class="s1">&#39;isDir&#39;</span><span class="p">:</span> <span class="n">smb_file</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(),</span>
+                    <span class="s1">&#39;isFile&#39;</span><span class="p">:</span> <span class="n">smb_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">(),</span>
+                    <span class="s1">&#39;isLink&#39;</span><span class="p">:</span> <span class="n">smb_file</span><span class="o">.</span><span class="n">is_symlink</span><span class="p">(),</span>
+                <span class="p">}</span>
+        <span class="c1"># unix permissions ?</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">stat</span> <span class="o">=</span> <span class="n">smb_file</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_mode</span><span class="p">,</span>
+                <span class="s1">&#39;mtime&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">,</span>
+                <span class="s1">&#39;uid&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_uid</span><span class="p">,</span>
+                <span class="s1">&#39;gid&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_gid</span><span class="p">,</span>
+                <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">stat</span><span class="o">.</span><span class="n">st_size</span><span class="p">,</span>
+            <span class="p">})</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;accessError&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/upload&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_get_upload_chunk">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_get_upload_chunk">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_get_upload_chunk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write a chunk part of an upload in HOME/.upload//upload*/&lt;index&gt;.</span>
+<span class="sd">        If method get is called, verify if the chunk part is present.</span>
+<span class="sd">        Method GET.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span>
+        <span class="n">user_context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;adminclass&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">home</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_homepath</span><span class="p">(</span><span class="n">user_context</span><span class="p">)</span>
+        <span class="n">upload_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">home</span><span class="si">}</span><span class="se">\\</span><span class="s1">.upload&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">upload_dir</span><span class="p">):</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">upload_dir</span><span class="p">)</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;flowIdentifier&#39;</span><span class="p">]</span>
+        <span class="n">chunk_index</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;flowChunkNumber&#39;</span><span class="p">]</span>
+        <span class="n">chunk_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">upload_dir</span><span class="si">}</span><span class="se">\\</span><span class="s1">upload-</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">chunk_dir</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">chunk_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">chunk_index</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">if</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">chunk_path</span><span class="p">):</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;204 No Content&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/upload&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_post_upload_chunk">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_post_upload_chunk">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_post_upload_chunk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write a chunk part of an upload in HOME/.upload//upload*/&lt;index&gt;.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span>
+        <span class="n">user_context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;adminclass&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">home</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_homepath</span><span class="p">(</span><span class="n">user_context</span><span class="p">)</span>
+        <span class="n">upload_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">home</span><span class="si">}</span><span class="se">\\</span><span class="s1">.upload&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">upload_dir</span><span class="p">):</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">upload_dir</span><span class="p">)</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;flowIdentifier&#39;</span><span class="p">]</span>
+        <span class="n">chunk_index</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;flowChunkNumber&#39;</span><span class="p">]</span>
+        <span class="n">chunk_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">upload_dir</span><span class="si">}</span><span class="se">\\</span><span class="s1">upload-</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">chunk_dir</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">chunk_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">chunk_index</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">with</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">chunk_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])</span>
+        <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/finish-upload&#39;</span><span class="p">)</span>
+    <span class="c1"># @authorize(&#39;smbclient:write&#39;)</span>
+<div class="viewcode-block" id="Handler.handle_api_smb_finish_upload">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_smb_finish_upload">[docs]</a>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_smb_finish_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build all chunk parts from an uploaded file together and return it.</span>
+<span class="sd">        Clean the tmp directory.</span>
+<span class="sd">        Method POST.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Path of files</span>
+<span class="sd">        :rtype: list of string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># files should be a list of dict</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">profil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">profile</span>
+        <span class="n">user_context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;adminclass&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">home</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_homepath</span><span class="p">(</span><span class="n">user_context</span><span class="p">)</span>
+        <span class="n">upload_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">home</span><span class="si">}</span><span class="s1">/.upload&#39;</span>
+
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="n">chunk_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">upload_dir</span><span class="si">}</span><span class="s1">/upload-</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">&#39;</span>
+
+            <span class="n">target</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Avoid overwriting existing file</span>
+                <span class="k">while</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">last</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)))[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+                    <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+                        <span class="n">last</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                    <span class="c1"># Test if previously numbered</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;.* \((\d+)\)$&#39;</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">ext</span><span class="p">:</span>
+                        <span class="n">ext</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span>
+
+                    <span class="k">if</span> <span class="n">count</span><span class="p">:</span>
+                        <span class="n">new_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; \(\d+\)</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39; (</span><span class="si">{</span><span class="n">new_count</span><span class="si">}</span><span class="s1">)</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39; (1)</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+                    <span class="n">target</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="k">except</span> <span class="n">SMBOSError</span><span class="p">:</span>
+                <span class="c1"># That&#39;s ok we can write a new file</span>
+                <span class="k">pass</span>
+
+            <span class="k">with</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">smbclient</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">chunk_dir</span><span class="p">))):</span>
+                    <span class="n">chunk_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="k">with</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">chunk_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">chunk</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">chunk_file</span><span class="p">)</span>
+            
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">smbclient</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">chunk_dir</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># See https://github.com/jborean93/smbprotocol/issues/269</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Was not able to delete </span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s2">, bug of smbprotocol ?&quot;</span><span class="p">)</span>
+
+            <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">target</span><span class="p">,</span>
+                <span class="s1">&#39;isDir&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s1">&#39;isFile&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;isLink&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">})</span>
+        <span class="k">return</span> <span class="n">targets</span></div>
+
+
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/download&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_smb_download">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_smb_download">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_smb_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">altchars</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;-_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;..&#39;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">isfile</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">isdir</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="c1"># Head request to handle 404 in Angular</span>
+            <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">):</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">isfile</span><span class="p">:</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">content_mimetypes</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="n">content_mimetypes</span><span class="p">[</span><span class="n">ext</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SMBOSError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">):</span>
+                <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+                <span class="k">return</span>
+
+            <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Disposition&#39;</span><span class="p">,</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attachment; filename=&quot;</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">))</span>
+
+            <span class="k">yield</span> <span class="n">http_context</span><span class="o">.</span><span class="n">gzip</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">isdir</span><span class="p">:</span>
+            <span class="n">zip_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s1">.zip&#39;</span>
+            <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="n">zip_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">zip_name</span><span class="si">}</span><span class="s1">&#39;</span>
+
+            <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_obj</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">folders</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                        <span class="c1"># Replace backslashes and removing heading slash</span>
+                        <span class="n">relative_path</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+                        <span class="c1"># Removing domain and school</span>
+                        <span class="n">relative_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">relative_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">:])</span>
+                        <span class="n">relative_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">relative_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="n">smb_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="k">with</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">smb_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_io</span><span class="p">:</span>
+                            <span class="n">content</span> <span class="o">=</span> <span class="n">file_io</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                        <span class="n">zip_obj</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">relative_path</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+            <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/zip&#39;</span><span class="p">)</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Disposition&#39;</span><span class="p">,</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attachment; filename=&quot;</span><span class="si">{</span><span class="n">zip_name</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">))</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_tmp</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">zip_tmp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">http_context</span><span class="o">.</span><span class="n">gzip</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">zip_path</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/refresh_krbcc&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_smb_refresh_krbcc">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_smb_refresh_krbcc">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_smb_refresh_krbcc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="o">.</span><span class="n">pw_uid</span>
+        <span class="n">pw</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;pw&#39;</span><span class="p">]</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;/usr/bin/kdestroy&#39;</span><span class="p">,</span> <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="s1">&#39;/usr/bin/kinit&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;/tmp/krb5cc_</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">username</span><span class="p">])</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="s1">&#39;.*:&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">pw</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="n">pexpect</span><span class="o">.</span><span class="n">EOF</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">exit_code</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">exitstatus</span>
+            <span class="k">if</span> <span class="n">exit_code</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Was not able to initialize Kerberos ticket for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">child</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span><span class="n">msg</span><span class="p">}</span>
+            <span class="c1"># Be sure to reset all cache connection and reload the new ticket</span>
+            <span class="n">smbclient</span><span class="o">.</span><span class="n">reset_connection_cache</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Ticket successfully refreshed&quot;</span><span class="p">)}</span>
+        <span class="k">except</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Was not able to initialize Kerberos ticket for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Timeout while trying to get a kerberos ticket&quot;</span><span class="p">)}</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/createSessionWorkingDirectory&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_create_working_dir">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_create_working_dir">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_create_working_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a working directory for each user in a session with path `user/transfer/TEACHERNAME/_collect`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">users</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;users&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">users</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">users</span> <span class="o">=</span> <span class="p">[</span><span class="n">users</span><span class="p">]</span>
+
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;global&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;-exam&#39;</span><span class="p">):</span>
+                <span class="n">user_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">ldapreader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/users/exam/&#39;</span>
+                                                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorixRole&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">user_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">ldapreader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/users/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorixRole&#39;</span><span class="p">])</span>
+
+            <span class="n">homeDirectory</span><span class="p">,</span> <span class="n">schoolclass</span> <span class="o">=</span> <span class="n">user_data</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">],</span> <span class="n">user_data</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">homeDirectory</span><span class="si">}</span><span class="s1">/transfer/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="si">}</span><span class="s1">/_collect&#39;</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SMBOSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;NtStatus 0xc0000035&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="k">pass</span> <span class="c1"># Should not appear again</span>
+                <span class="k">elif</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="n">errors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="si">}</span><span class="s2"> is not member of the group </span><span class="si">{</span><span class="n">schoolclass</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="k">elif</span> <span class="s1">&#39;STATUS_DISK_FULL&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;global&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Your quota is full, please free some space in order to share files.&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">errors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">errors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">errors</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Problem with path </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">return</span> <span class="n">errors</span></div>
+
+
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/smbclient/listCollectDir&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_list_collect_dir">
+<a class="viewcode-back" href="../../../autoapi/lmn_smbclient/views/lmnsmbclient/index.html#lmn_smbclient.views.lmnsmbclient.Handler.handle_api_list_collect_dir">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_api_list_collect_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List content of `user/transfer/TEACHERNAME/_collect` for each participants.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">participants</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;participants&#39;</span><span class="p">]</span>
+
+        <span class="n">files</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">participant</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
+            <span class="n">cn</span> <span class="o">=</span> <span class="n">participant</span><span class="p">[</span><span class="s1">&#39;cn&#39;</span><span class="p">]</span>
+            <span class="n">collect_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">participant</span><span class="p">[</span><span class="s1">&#39;homeDirectory&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/transfer/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="si">}</span><span class="s2">/_collect&quot;</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">smbclient</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">collect_path</span><span class="p">):</span>
+                    <span class="n">smbclient</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">collect_path</span><span class="p">)</span>
+
+                <span class="n">files</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_smb_list_path</span><span class="p">(</span><span class="n">collect_path</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">SMBOSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;NtStatus 0xc0000035&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="k">pass</span> <span class="c1"># Should not appear again</span>
+                <span class="k">elif</span> <span class="s1">&#39;STATUS_ACCESS_DENIED&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">participant</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;teachers&#39;</span><span class="p">:</span>
+                        <span class="n">files</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="si">}</span><span class="s2"> is not member of the group </span><span class="si">{</span><span class="n">participant</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">files</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">NotFound</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">files</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+            <span class="k">except</span> <span class="n">InvalidParameter</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">files</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Problem with path </span><span class="si">{</span><span class="n">collect_path</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">return</span> <span class="n">files</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

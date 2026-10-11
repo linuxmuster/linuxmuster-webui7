@@ -1,0 +1,194 @@
+lmn_smbclient.views.lmnsmbclient
+================================
+
+.. py:module:: lmn_smbclient.views.lmnsmbclient
+
+.. autoapi-nested-parse::
+
+   Tools to handle files, directories and uploads.
+
+
+
+
+
+
+
+Module Contents
+---------------
+
+.. py:function:: credit_wrapper(func)
+
+.. py:class:: Handler(context)
+
+   Bases: :py:obj:`aj.api.http.HttpPlugin`
+
+
+   A base interface for HTTP request handling::
+
+       @component
+       class HelloHttp(HttpPlugin):
+           @get('/hello/(?P<name>.+)')
+           def get_page(self, http_context, name=None):
+               context.add_header('Content-Type', 'text/plain')
+               context.respond_ok()
+               return 'Hello, f"{name}"!'
+
+
+
+   .. py:attribute:: context
+
+
+   .. py:method:: handle_api_smb_shares(http_context, user=None)
+
+      Return a list of hard-coded shares per role.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All items with informations
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_smb_list(http_context)
+
+      Return a list of objects (files, directories, ...) in a specific samba
+      share.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: All items with informations
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_smb_create_directory(http_context)
+
+      Create empty directory on specified path.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of directory
+      :type path: string
+
+
+
+   .. py:method:: handle_api_smb_create_file(http_context)
+
+      Create empty file on specified path.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of directory
+      :type path: string
+
+
+
+   .. py:method:: handle_api_smb_move(http_context)
+
+      Move src to dst, work with files and directories.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of directory
+      :type path: string
+
+
+
+   .. py:method:: handle_api_smb_copy(http_context)
+
+      Make a copy of file src to dst.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of directory
+      :type path: string
+
+
+
+   .. py:method:: handle_api_smb_rmdir(http_context)
+
+      Delete an empty directory. Throw an SMBOSError if the directory is
+      not empty.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of directory
+      :type path: string
+
+
+
+   .. py:method:: handle_api_smb_unlink(http_context)
+
+      Delete a file.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of directory
+      :type path: string
+
+
+
+   .. py:method:: handle_api_smb_stat(http_context, path=None)
+
+      Get all informations from a specific path.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :param path: Path of file/directory
+      :type path: string
+      :return: POSIX permissions, size, type, ...
+      :rtype: dict
+
+
+
+   .. py:method:: handle_api_smb_get_upload_chunk(http_context)
+
+      Write a chunk part of an upload in HOME/.upload//upload*/<index>.
+      If method get is called, verify if the chunk part is present.
+      Method GET.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_smb_post_upload_chunk(http_context)
+
+      Write a chunk part of an upload in HOME/.upload//upload*/<index>.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+
+
+
+   .. py:method:: handle_api_smb_finish_upload(http_context)
+
+      Build all chunk parts from an uploaded file together and return it.
+      Clean the tmp directory.
+      Method POST.
+
+      :param http_context: HttpContext
+      :type http_context: HttpContext
+      :return: Path of files
+      :rtype: list of string
+
+
+
+   .. py:method:: handle_smb_download(http_context)
+
+
+   .. py:method:: handle_smb_refresh_krbcc(http_context)
+
+
+   .. py:method:: handle_api_create_working_dir(http_context)
+
+      Create a working directory for each user in a session with path `user/transfer/TEACHERNAME/_collect`.
+
+
+
+   .. py:method:: handle_api_list_collect_dir(http_context)
+
+      List content of `user/transfer/TEACHERNAME/_collect` for each participants.
+
+
+

@@ -32,8 +32,8 @@ master_doc = 'index'
 # General information about the project.
 project = 'linuxmuster-webui7'
 year = datetime.now().strftime('%Y')
-copyright = f'Andreas Till & Arnaud Kientz - {year}'
-author = 'Andreas Till & Arnaud Kientz'
+copyright = f'Arnaud Kientz - {year}'
+author = 'Arnaud Kientz'
 
 def setup(app):
     app.add_css_file("theme_overrides.css")
@@ -78,7 +78,7 @@ latex_elements = {
 
 latex_documents = [
     (master_doc, 'linuxmuster-webui7.tex', 'linuxmuster-webui7 Documentation',
-     'Andreas Till \\& Arnaud Kientz', 'manual'),
+     author, 'manual'),
 ]
 
 man_pages = [

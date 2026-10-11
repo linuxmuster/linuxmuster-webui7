@@ -10,7 +10,6 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/lmn_auth/index
    /autoapi/lmn_links/index
    /autoapi/lmn_users/index
-   /autoapi/lmnwebdav/index
    /autoapi/lmn_quotas/index
    /autoapi/lmn_linbo4/index
    /autoapi/lmn_docker/index
@@ -19,7 +18,6 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/lmn_devices/index
    /autoapi/lmn_clients/index
    /autoapi/lmn_settings/index
-   /autoapi/lmnsmbclient/index
    /autoapi/lmn_smbclient/index
    /autoapi/lmn_wireguard/index
    /autoapi/lmn_samba_dns/index

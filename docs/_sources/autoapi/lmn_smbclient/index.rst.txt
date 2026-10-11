@@ -12,5 +12,6 @@ Submodules
 
    /autoapi/lmn_smbclient/davxml/index
    /autoapi/lmn_smbclient/main/index
+   /autoapi/lmn_smbclient/views/index
 
 

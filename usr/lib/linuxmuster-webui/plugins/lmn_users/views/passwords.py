@@ -419,7 +419,7 @@ class Handler(HttpPlugin):
         """
 
         if os.getuid() != 0:
-            return EndpointReturn(403)
+            raise EndpointReturn(403)
 
         secret_path = os.path.join('/etc/linuxmuster/.secret/', binduser)
 

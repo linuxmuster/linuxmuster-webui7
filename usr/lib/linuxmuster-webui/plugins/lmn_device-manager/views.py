@@ -179,19 +179,8 @@ class Handler(HttpPlugin):
             return {"status": True, "exitcode": r.returncode, "message": result}
         return {"status": False, "exitcode": r.returncode, "message": result}
 
-    @post(r'/api/lmn/device-manager/run')
-    @authorize('lm:device-manager:modify')
-    @endpoint(api=True)
-    def handle_api_lmn_devicemanager_run(self, http_context):
-        command = http_context.json_body()['command']
-        command = command.split(" ")
-        r = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
-        result = r.stdout.read().decode("utf-8")
-        (err, out) = r.communicate()
-        if r.returncode == 0:
-            return {"status": True, "exitcode": r.returncode, "message": result}
-        return {"status": False, "exitcode": r.returncode, "message": result}
+    # /api/lmn/device-manager/run was removed: it ran any command sent by the
+    # client as root. This plugin is obsolete, its "run" button no longer works.
 
     @post(r'/api/lmn/device-manager/getlinboconfig')
     @authorize('lm:device-manager:read')

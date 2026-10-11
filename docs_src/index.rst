@@ -45,20 +45,5 @@ This documentation only lists an API reference for the specific plugins in linux
    :caption: Python API
    :hidden:
 
-   python/lmn_auth.rst
-   python/lmn_common.rst
-   python/lmn_crontab.rst
-   python/lmn_devices.rst
-   python/lmn_dhcp.rst
-   python/lmn_docker.rst
-   python/lmn_groupmembership.rst
-   python/lmn_landingpage.rst
-   python/lmn_linbo.rst
-   python/lmn_linbo4.rst
-   python/lmn_linbo_sync.rst
-   python/lmn_quotas.rst
-   python/lmn_session.rst
-   python/lmn_settings.rst
-   python/lmn_setup_wizard.rst
-   python/lmn_users.rst
+   autoapi/index
 

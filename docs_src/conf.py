@@ -3,40 +3,27 @@
 
 import os
 import sys
-
-sys.path.append('../../ajenti/ajenti-core')
-import aj
-import aj.api
-import aj.config
-import aj.core
-import aj.log
-import aj.plugins
-import builtins
 import subprocess
 from datetime import datetime
 
 import sphinx_rtd_theme
 
-# Fix gettext syntax
-builtins._ = lambda x:x
-
-#aj_plugin_path = aj.__path__[0][:-3]
-aj_plugin_path = '../../ajenti/plugins'
-lm_plugin_path = '../usr/lib/linuxmuster-webui/plugins' # Path relative to docs sources
-
-aj.context = aj.api.Context()
-aj.init()
-aj.plugins.PluginManager.get(aj.context).load_all_from([
-        aj.plugins.DirectoryPluginProvider(aj_plugin_path), 
-        aj.plugins.DirectoryPluginProvider(lm_plugin_path)
-])
-
 extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'sphinx.ext.autosummary']
+    'sphinx.ext.autosummary',
+    'autoapi.extension']
 autosummary_generate = True
+
+# The API reference is generated statically from the plugins' source by
+# sphinx-autoapi (no import of aj/the plugins needed, unlike automodule),
+# the same way as linuxmuster-tools. This keeps it in sync automatically
+# as plugins are added or renamed.
+autoapi_dirs = ['../usr/lib/linuxmuster-webui/plugins']
+autoapi_type = 'python'
+autoapi_ignore = ['*/conf.py', '*/resources/*', '*/locale/*', '*/migrations/*', '*/pytests/*', '*/test_*']
+autoapi_options = ['members', 'undoc-members', 'show-inheritance', 'special-members']
 
 templates_path = ['_templates']
 source_suffix = '.rst'
@@ -61,7 +48,6 @@ todo_include_todos = False
 
 html_theme = 'sphinx_rtd_theme'
 html_logo = '_static/logo.png'
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_static_path = ['_static']
 html_sidebars = {
     '**': [
@@ -107,4 +93,4 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}

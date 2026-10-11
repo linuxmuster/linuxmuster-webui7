@@ -4,7 +4,7 @@ import json
 from jadi import component
 from aj.auth import authorize
 from aj.api.http import get, post, delete, HttpPlugin
-from aj.api.endpoint import endpoint, EndpointError
+from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from linuxmusterTools.lmnfile import LMNFile
 from linuxmusterTools.linbo import LinboImageManager, restart_image_services
 from linuxmusterTools.common.checks import NameChecker
@@ -124,7 +124,10 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_get_vdi_image(self, http_context, name=None):
-        path = os.path.join(self.LINBO_PATH, name)
+        path = os.path.abspath(os.path.join(self.LINBO_PATH, name))
+
+        if not path.startswith(self.LINBO_PATH + '/'):
+            raise EndpointReturn(403)
         if os.path.exists(path):
             with LMNFile(path, 'r') as settings:
                 vdiSettings = settings.read()
@@ -136,7 +139,10 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_post_vdi_image(self, http_context, name=None):
-        path = os.path.join(self.LINBO_PATH, name)
+        path = os.path.abspath(os.path.join(self.LINBO_PATH, name))
+
+        if not path.startswith(self.LINBO_PATH + '/'):
+            raise EndpointReturn(403)
         if os.path.exists(path):
             data = http_context.json_body()
             with open(path, 'w') as settings:

@@ -708,7 +708,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             notify.error(gettext("Failed to restart multicast and torrent services. Please see the log files"))
 
     $scope.deleteImage = (image) ->
-        messagebox.show(text: "Delete the full image '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(
+            title: "Delete '#{image.name}' ?",
+            text: "This deletes the whole directory /srv/linbo/images/#{image.name}, with its backups, its differential image and every file in it, including files added by hand.",
+            positive: 'Delete', negative: 'Cancel'
+        ).then () ->
             $http.delete("/api/lmn/linbo4/images/#{image.name}").then () ->
                 $scope.restartServices()
                 $location.hash("images")
@@ -716,7 +720,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 notify.error(gettext("Failed to delete image :") + err.data.message)
 
     $scope.deleteBackupImage = (image, date) ->
-        messagebox.show(text: "Delete the backup '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(
+            title: "Delete the backup of '#{image.name}' ?",
+            text: "This deletes the whole backup directory of #{date} in /srv/linbo/images/#{image.name}/backups, including files added by hand.",
+            positive: 'Delete', negative: 'Cancel'
+        ).then () ->
             $http.post("/api/lmn/linbo4/deleteBackupImage/#{image.name}", {date: date}).then () ->
                 $scope.restartServices()
             .catch (err) ->
@@ -731,7 +739,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
 
     $scope.deleteImages = () ->
         name_list = (image.name for image in $scope.images_selected).toString()
-        messagebox.show(text: "Delete '#{name_list}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(
+            title: "Delete '#{name_list}' ?",
+            text: "This deletes the whole directory of each image in /srv/linbo/images, with its backups, its differential image and every file in it, including files added by hand.",
+            positive: 'Delete', negative: 'Cancel'
+        ).then () ->
             promises = []
             for image in $scope.images_selected
                 promises.push($http.delete("/api/lmn/linbo4/images/#{image.name}"))

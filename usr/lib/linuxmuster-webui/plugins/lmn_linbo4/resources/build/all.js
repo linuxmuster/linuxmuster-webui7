@@ -906,7 +906,8 @@
     };
     $scope.deleteImage = function(image) {
       return messagebox.show({
-        text: `Delete the full image '${image.name}'?`,
+        title: `Delete '${image.name}' ?`,
+        text: `This deletes the whole directory /srv/linbo/images/${image.name}, with its backups, its differential image and every file in it, including files added by hand.`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
@@ -920,7 +921,8 @@
     };
     $scope.deleteBackupImage = function(image, date) {
       return messagebox.show({
-        text: `Delete the backup '${image.name}'?`,
+        title: `Delete the backup of '${image.name}' ?`,
+        text: `This deletes the whole backup directory of ${date} in /srv/linbo/images/${image.name}/backups, including files added by hand.`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
@@ -959,7 +961,8 @@
         return results;
       })()).toString();
       return messagebox.show({
-        text: `Delete '${name_list}'?`,
+        title: `Delete '${name_list}' ?`,
+        text: "This deletes the whole directory of each image in /srv/linbo/images, with its backups, its differential image and every file in it, including files added by hand.",
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {

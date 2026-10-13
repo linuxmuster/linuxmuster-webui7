@@ -59,11 +59,11 @@ Mounted under `/api/lmn/`.
 | `DELETE /linbo4/config/<name>` | `lm:linbo:configs` | Back up then delete a `start.conf` and its grub `.cfg` |
 | `GET /linbo4/images` | `lm:linbo:images` | List all images with their details |
 | `POST /linbo4/images/<image>` | `lm:linbo:images` | Save an image's extras (optionally on the diff) |
-| `DELETE /linbo4/images/<image>` | `lm:linbo:images` | Delete an image |
+| `DELETE /linbo4/images/<image>` | `lm:linbo:images` | Delete the whole image directory, backups, differential image and files added by hand included |
 | `POST /linbo4/renameImage/<image>` | `lm:linbo:images` | Rename an image |
 | `POST /linbo4/duplicateImage/<image>` | `lm:linbo:images` | Duplicate an image |
 | `POST /linbo4/restoreBackupImage/<image>` | `lm:linbo:images` | Restore a backup by date |
-| `POST /linbo4/deleteBackupImage/<image>` | `lm:linbo:images` | Delete a backup by date |
+| `POST /linbo4/deleteBackupImage/<image>` | `lm:linbo:images` | Delete a backup by date, with its whole directory |
 | `POST /linbo4/saveBackupImage/<image>` | `lm:linbo:images` | Save a backup's extras with a timestamp |
 | `DELETE /linbo4/deleteDiffImage/<image>` | `lm:linbo:images` | Delete an image's differential image |
 | `GET /linbo4/restart-services` | `lm:linbo:configs` | Restart the torrent and multicast services |

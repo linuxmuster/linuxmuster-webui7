@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_session_new &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_settings" href="lmn_settings.html" />
+    <link rel="prev" title="lmn_samba_shares" href="lmn_samba_shares.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_session_new</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#session-list-view-lmn-sessionslist">Session list (<code class="docutils literal notranslate"><span class="pre">/view/lmn/sessionsList</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#session-view-lmn-session">Session (<code class="docutils literal notranslate"><span class="pre">/view/lmn/session</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_session_new</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_session_new.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-session-new">
+<h1>lmn_session_new<a class="headerlink" href="#lmn-session-new" title="Link to this heading"></a></h1>
+<p>Teacher session plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It is the classroom console a teacher uses during a lesson: pick a group of students (the current room, a schoolclass, a project, or a saved ad-hoc group), then share and collect files with them, start/stop exam mode, toggle their management groups (wifi, internet, printing…), and reset their passwords.</p>
+<p>It is a front end that drives <code class="docutils literal notranslate"><span class="pre">sophomorix</span></code> (via <code class="docutils literal notranslate"><span class="pre">linuxmuster-common</span></code>’s <code class="docutils literal notranslate"><span class="pre">lmn_getSophomorixValue</span></code>) and <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> (management-group membership through <code class="docutils literal notranslate"><span class="pre">lmnapi_client</span></code>), and reuses other webui plugins for the heavy work: file transfer goes through <a class="reference internal" href="#../lmn_smbclient"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">lmn_smbclient</span></code></span></a>, password actions through <a class="reference internal" href="#../lmn_users"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">lmn_users</span></code></span></a>, and class/project enrolment through <a class="reference internal" href="#../lmn_groupmembership"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">lmn_groupmembership</span></code></span></a>.</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>Opened from the sidebar as <strong>Session</strong> (under <em>Class</em>). The plugin has two pages.</p>
+<section id="session-list-view-lmn-sessionslist">
+<h3>Session list (<code class="docutils literal notranslate"><span class="pre">/view/lmn/sessionsList</span></code>)<a class="headerlink" href="#session-list-view-lmn-sessionslist" title="Link to this heading"></a></h3>
+<p>A dashboard of the groups a teacher can start, with a live <strong>Filter</strong> box and card tiles showing each group’s member count:</p>
+<ul class="simple">
+<li><p><strong>This Room</strong> — the room the teacher is currently logged into (detected via <code class="docutils literal notranslate"><span class="pre">sophomorix-query</span> <span class="pre">--smbstatus</span></code>); clicking it starts an auto-generated session of the users in that room. An info banner is shown when the room cannot be determined.</p></li>
+<li><p><strong>My Classes</strong> — the teacher’s schoolclasses (and extraclasses); clicking one starts a generated session from its members. A banner links to the <em>Enroll</em> page when the teacher belongs to none.</p></li>
+<li><p><strong>My groups</strong> — the teacher’s saved sessions. <strong>New group</strong> creates one; each tile offers <strong>rename</strong>, <strong>duplicate (clone)</strong> and <strong>delete</strong>.</p></li>
+<li><p><strong>My projects</strong> — the teacher’s projects, each startable as a generated session.</p></li>
+</ul>
+</section>
+<section id="session-view-lmn-session">
+<h3>Session (<code class="docutils literal notranslate"><span class="pre">/view/lmn/session</span></code>)<a class="headerlink" href="#session-view-lmn-session" title="Link to this heading"></a></h3>
+<p>The working view for the selected group:</p>
+<ul class="simple">
+<li><p><strong>Add participants</strong> — two typeahead inputs to add a single student or a whole schoolclass, a <strong>sort</strong> dropdown, and an <strong>Edit group</strong> dropdown (rename / duplicate / delete) for saved groups; generated groups instead offer <strong>Save group as</strong>. For the room session, <strong>Start/Stop autorefresh</strong> periodically re-reads who is in the room. A <strong>Websession</strong> dropdown (shown when enabled) starts/stops a web session and shows its running state.</p></li>
+<li><p><strong>Participants table</strong> — one row per student with surname/first name, login, admin class and (when known) the computer they sit at. Teacher members are shown a banner (“not possible to create share directory in other teacher’s home…”). Columns:</p>
+<ul>
+<li><p><strong>Transfer</strong> — <strong>Share</strong> files to the student, and <strong>Collect</strong> (Copy or Move) their <code class="docutils literal notranslate"><span class="pre">_collect</span></code> directory. The working directory is <code class="docutils literal notranslate"><span class="pre">transfer/&lt;teacher&gt;/_collect</span></code>, with a <strong>refresh / auto-refresh</strong> toggle. When a student is not joined to the required class, a <strong>Join … to share</strong> button fixes the membership; otherwise the collected files are listed inline.</p></li>
+<li><p><strong>Exam</strong> — per-student and whole-group <strong>start / stop exam mode</strong> (graduation-cap buttons); a running exam shows the supervising teacher and can be stopped.</p></li>
+<li><p><strong>Management groups</strong> — per-student checkboxes and per-column <em>toggle-all</em> buttons for <strong>wifi</strong>, <strong>internet</strong> and <strong>printing</strong> (buttons colour by how many members have each).</p></li>
+<li><p><strong>Password cog menu</strong> — show / restore the default (initial) password, set a random default password, set a custom default or current password, including the paired <code class="docutils literal notranslate"><span class="pre">-exam</span></code> account when the student is in exam mode.</p></li>
+<li><p><strong>Remove</strong> the participant from the group.</p></li>
+</ul>
+</li>
+<li><p><strong>Floating toolbar</strong> — <strong>Share to all</strong>, <strong>Collect from all</strong> (Copy/Move the <code class="docutils literal notranslate"><span class="pre">_collect</span></code> dir of every member), <strong>Browse collected files</strong>, and <strong>Close</strong>.</p></li>
+<li><p><strong>Modals</strong> — <em>Select file</em> (<code class="docutils literal notranslate"><span class="pre">selectFile.modal.html</span></code>): a mini file browser used to pick files to share/collect, with upload, new folder, rename and delete; <em>Room details</em> (<code class="docutils literal notranslate"><span class="pre">roomDetails.modal.html</span></code>): the users currently logged into the room with their computer/IP.</p></li>
+</ul>
+</section>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> exposes the session endpoints below. Session lifecycle, participants and exam mode are run through <code class="docutils literal notranslate"><span class="pre">sophomorix-session</span></code> / <code class="docutils literal notranslate"><span class="pre">sophomorix-exam-mode</span></code> / <code class="docutils literal notranslate"><span class="pre">sophomorix-query</span></code> / <code class="docutils literal notranslate"><span class="pre">sophomorix-transfer</span></code> (via <code class="docutils literal notranslate"><span class="pre">lmn_getSophomorixValue</span></code>); management-group changes go to <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> through <code class="docutils literal notranslate"><span class="pre">self.context.lmnapi_client</span></code>; class/project/session membership and user details are read from LDAP (<code class="docutils literal notranslate"><span class="pre">self.context.ldapreader</span></code>). File share/collect, password actions and class enrolment are delegated to the <code class="docutils literal notranslate"><span class="pre">lmn_smbclient</span></code>, <code class="docutils literal notranslate"><span class="pre">lmn_users</span></code> and <code class="docutils literal notranslate"><span class="pre">lmn_groupmembership</span></code> endpoints respectively.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<p>Declared in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, all <code class="docutils literal notranslate"><span class="pre">default:</span> <span class="pre">False</span></code>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Permission</p></th>
+<th class="head"><p>Grants</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:teachers:write</span></code></p></td>
+<td><p><em>Write students</em> (declared by this plugin)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lmn:session:trans</span></code></p></td>
+<td><p><em>Transfer Files in Session</em> (declared by this plugin)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note: the endpoints below are actually guarded by <code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code> (declared by <code class="docutils literal notranslate"><span class="pre">lmn_users</span></code>); the two permissions above are declared here but not used as route guards in <code class="docutils literal notranslate"><span class="pre">views.py</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>. All routes are guarded by <code class="docutils literal notranslate"><span class="pre">&#64;authorize('lm:users:students:read')</span></code> except <code class="docutils literal notranslate"><span class="pre">moveFileToHome</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/session/sessions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>The teacher’s saved sessions (from their profile)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/session/schoolclasses</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>The teacher’s schoolclasses/extraclasses with members</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/session/projects</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>The teacher’s projects with members</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/session/userinfo</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>LDAP details for a list of users (exam account resolved)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/session/exam/userinfo</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>LDAP details for exam users</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PUT</span> <span class="pre">/session/sessions/&lt;session&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Create a session (<code class="docutils literal notranslate"><span class="pre">sophomorix-session</span> <span class="pre">--create</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/session/sessions/&lt;session&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Kill a session (<code class="docutils literal notranslate"><span class="pre">--kill</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/session/sessions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Rename / set the comment of a session</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/session/participants</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Add participants (<code class="docutils literal notranslate"><span class="pre">--add-participants</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PATCH</span> <span class="pre">/session/participants</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Remove participants (<code class="docutils literal notranslate"><span class="pre">--remove-participants</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PATCH</span> <span class="pre">/session/exam/start</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Start exam mode (<code class="docutils literal notranslate"><span class="pre">sophomorix-exam-mode</span> <span class="pre">--set</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PATCH</span> <span class="pre">/session/exam/stop</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Stop exam mode and collect to <code class="docutils literal notranslate"><span class="pre">transfer/collected/...</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/managementgroup</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Add/remove members of a management group (wifi, internet, intranet, webfilter, printing) via lmnapi</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/session/userInRoom</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Users logged into the teacher’s room (<code class="docutils literal notranslate"><span class="pre">sophomorix-query</span> <span class="pre">--smbstatus</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/session/user-search/&lt;query&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>LDAP student search</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/session/schoolClass-search/&lt;query&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>LDAP schoolclass search</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/session/moveFileToHome</span></code></p></td>
+<td><p><strong>none</strong></p></td>
+<td><p>Transfer a unix path into a user’s home (<code class="docutils literal notranslate"><span class="pre">sophomorix-transfer</span></code>); flagged deprecated, has a <code class="docutils literal notranslate"><span class="pre">TODO</span> <span class="pre">authorize</span></code> and no guard</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code> and the <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> plugin (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sophomorix</span></code> on the server (<code class="docutils literal notranslate"><span class="pre">sophomorix-session</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-exam-mode</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-query</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-transfer</span></code>).</p></li>
+<li><p>A reachable <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> (<code class="docutils literal notranslate"><span class="pre">lmnapi_client</span></code>) for management-group membership; an unavailable API surfaces <code class="docutils literal notranslate"><span class="pre">LMNAPI_UNAVAILABLE_MESSAGE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmuster-tools</span></code> (<code class="docutils literal notranslate"><span class="pre">linuxmusterTools.common.natural_key</span></code>, <code class="docutils literal notranslate"><span class="pre">ldapreader</span></code>).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">lmn_smbclient</span></code>, <code class="docutils literal notranslate"><span class="pre">lmn_users</span></code> and <code class="docutils literal notranslate"><span class="pre">lmn_groupmembership</span></code> plugins for file transfer, password actions and class/project enrolment.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_samba_shares.html" class="btn btn-neutral float-left" title="lmn_samba_shares" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_settings.html" class="btn btn-neutral float-right" title="lmn_settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

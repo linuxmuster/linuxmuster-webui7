@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_common &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_crontab" href="lmn_crontab.html" />
+    <link rel="prev" title="lmn_clients" href="lmn_clients.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_common</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_common</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_common.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-common">
+<h1>lmn_common<a class="headerlink" href="#lmn-common" title="Link to this heading"></a></h1>
+<p>Shared foundation plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It is not a feature page of its own but the common layer every other <code class="docutils literal notranslate"><span class="pre">lmn_*</span></code> plugin depends on: the webui/Samba configuration, the multischool school context, the <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> HTTP client, the sophomorix connector, the sidebar categories, and a set of shared Angular directives, services and the school switcher.</p>
+<p>Most of it is backend/library code consumed via <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">aj.plugins.lmn_common.api</span> <span class="pre">import</span> <span class="pre">…</span></code>; the few HTTP endpoints it mounts are generic file/version/school helpers used across the webui.</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> has no sidebar entry of its own. What it contributes to the UI:</p>
+<ul class="simple">
+<li><p><strong>Application skeleton</strong> (<code class="docutils literal notranslate"><span class="pre">resources/content/main_view.html</span></code>) — the “School Console” page template: top navbar (logo, page title, quick search, session timer, profile menu with TFA / logout, machine name) and the current-school badge with a <strong>(change)</strong> link when the setup is multischool.</p></li>
+<li><p><strong>School switcher</strong> (route <code class="docutils literal notranslate"><span class="pre">/view/lmn/change-school</span></code>) — a panel showing the <strong>Current</strong> school, a <strong>Filter</strong> search box and a list of all schools; clicking one switches the active school. Shown only when <code class="docutils literal notranslate"><span class="pre">school_show</span></code> is set (multischool and allowed); otherwise an info banner explains it is not a multischool setup.</p></li>
+<li><p><strong>Sidebar categories</strong> — <code class="docutils literal notranslate"><span class="pre">main.py</span></code> registers the top-level sidebar groups other plugins attach to: <em>User Management</em>, <em>List Management</em>, <em>Quota</em>, <em>Device Management</em>, <em>Classroom</em>, <em>Settings</em>, <em>Global Settings</em>.</p></li>
+<li><p><strong>Shared Angular directives</strong> used as access guards and widgets throughout the webui:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin-access</span></code>, <code class="docutils literal notranslate"><span class="pre">global-admin-access</span></code>, <code class="docutils literal notranslate"><span class="pre">teacher-access</span></code>, <code class="docutils literal notranslate"><span class="pre">samba-access</span></code> — replace a restricted page with a warning banner depending on <code class="docutils literal notranslate"><span class="pre">sophomorixRole</span></code> (the <code class="docutils literal notranslate"><span class="pre">samba-access</span></code> one also points a root user to the setup wizard).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lm-log</span></code> — live tail of a server log file (polls <code class="docutils literal notranslate"><span class="pre">/api/lmn/log</span></code>), with an autoscroll toggle.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lm-drag-upload</span></code> — drag-and-drop file upload widget.</p></li>
+</ul>
+</li>
+<li><p><strong>Shared services / modals</strong> — <code class="docutils literal notranslate"><span class="pre">lmFileEditor</span></code> (ace-based config editor with the <code class="docutils literal notranslate"><span class="pre">lmFileEditor.modal</span></code>), <code class="docutils literal notranslate"><span class="pre">lmFileBackups</span></code> (backup list and diff modals), <code class="docutils literal notranslate"><span class="pre">lmnNotify</span></code> (persistent notifications), <code class="docutils literal notranslate"><span class="pre">validation</span></code>, <code class="docutils literal notranslate"><span class="pre">wait</span></code>.</p></li>
+</ul>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">api.py</span></code> loads <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/webui/config.yml</span></code> once (LDAP config, password-reset config, samba override, display options, <code class="docutils literal notranslate"><span class="pre">allowed_roles</span></code>), reads <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code>’s host/port from <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/api/config.yml</span></code>, reads the realm/workgroup/netbios from <code class="docutils literal notranslate"><span class="pre">/etc/samba/smb.conf</span></code>, and exposes the sophomorix connector <code class="docutils literal notranslate"><span class="pre">lmn_getSophomorixValue</span></code> (runs <code class="docutils literal notranslate"><span class="pre">sophomorix-*</span> <span class="pre">-j</span></code>, prefixed with <code class="docutils literal notranslate"><span class="pre">sudo</span></code> when not root, and parses the JSON output).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multischool.py</span></code> (<code class="docutils literal notranslate"><span class="pre">SchoolManager</span></code>) holds the active-school context: list of schools, config paths, custom fields, holidays, DFS shares, share prefix, <code class="docutils literal notranslate"><span class="pre">Drives.xml</span></code> (<code class="docutils literal notranslate"><span class="pre">DriveManager</span></code>/<code class="docutils literal notranslate"><span class="pre">GPOManager</span></code>), school long name, and the per-role share list / home path. <code class="docutils literal notranslate"><span class="pre">switch()</span></code> reloads everything for another school.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lmnapi_client.py</span></code> (<code class="docutils literal notranslate"><span class="pre">LmnapiClient</span></code>, instantiated per session in <code class="docutils literal notranslate"><span class="pre">lmn_auth</span></code>) is the authenticated HTTP client to <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> (JWT from <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/v1/auth/</span></code>), with helpers for passwords, quotas, management-group members, parents and printers, plus the <code class="docutils literal notranslate"><span class="pre">LmnapiUnavailable</span></code> / <code class="docutils literal notranslate"><span class="pre">LmnapiError</span></code> / <code class="docutils literal notranslate"><span class="pre">LmnapiTimeout</span></code> exceptions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tools.py</span></code> provides <code class="docutils literal notranslate"><span class="pre">sort_schoolclasses</span></code> and <code class="docutils literal notranslate"><span class="pre">testSSH</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> mounts the generic HTTP endpoints below. The file/diff/log/setup endpoints are restricted to root at runtime (<code class="docutils literal notranslate"><span class="pre">os.getuid()</span> <span class="pre">!=</span> <span class="pre">0</span></code> → forbidden), which in Ajenti means admins only. The school and version endpoints carry no guard.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>. None of these use an <code class="docutils literal notranslate"><span class="pre">&#64;authorize</span></code> guard; the file-related ones enforce a root-only check in the handler.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Guard</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/log&lt;path&gt;</span></code></p></td>
+<td><p>root only</p></td>
+<td><p>Return a log file from a given offset (for <code class="docutils literal notranslate"><span class="pre">lm-log</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/remove-file</span></code></p></td>
+<td><p>root only</p></td>
+<td><p>Delete a file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/read-config-setup</span></code></p></td>
+<td><p>root only</p></td>
+<td><p>Read <code class="docutils literal notranslate"><span class="pre">/var/lib/linuxmuster/setup.ini</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/diff</span></code></p></td>
+<td><p>root only</p></td>
+<td><p>Unified diff between two files</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/version</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Installed <code class="docutils literal notranslate"><span class="pre">linuxmuster-*</span></code> / <code class="docutils literal notranslate"><span class="pre">sophomorix</span></code> package versions (<code class="docutils literal notranslate"><span class="pre">dpkg</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/activeschool</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Current active school</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/list-schools</span></code></p></td>
+<td><p>—</p></td>
+<td><p>All schools with their long name</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/change-school</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Switch the active school</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/get-schoolname</span></code></p></td>
+<td><p>—</p></td>
+<td><p>School long name for a given school</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/display_options</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Display options from the webui config</p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p>Note: <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/change-school</span></code> currently has no permission guard or target-school membership check (known open item).</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code>, <code class="docutils literal notranslate"><span class="pre">ace</span></code> and <code class="docutils literal notranslate"><span class="pre">filesystem</span></code> plugins (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmusterTools</span></code> (<code class="docutils literal notranslate"><span class="pre">lmnfile</span></code>, <code class="docutils literal notranslate"><span class="pre">ldapconnector</span></code>, <code class="docutils literal notranslate"><span class="pre">samba_util</span></code>, <code class="docutils literal notranslate"><span class="pre">common</span></code>) and <code class="docutils literal notranslate"><span class="pre">paramiko</span></code>, <code class="docutils literal notranslate"><span class="pre">dpath</span></code>, <code class="docutils literal notranslate"><span class="pre">configobj</span></code>.</p></li>
+<li><p>Config files read at import time: <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/webui/config.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/api/config.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">/etc/samba/smb.conf</span></code>, <code class="docutils literal notranslate"><span class="pre">/var/lib/linuxmuster/setup.ini</span></code>, and the per-school configs under <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/sophomorix/&lt;school&gt;/</span></code>.</p></li>
+<li><p>A reachable <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> for the <code class="docutils literal notranslate"><span class="pre">LmnapiClient</span></code> helpers, and <code class="docutils literal notranslate"><span class="pre">sophomorix</span></code> on the server for <code class="docutils literal notranslate"><span class="pre">lmn_getSophomorixValue</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">permissions.yml</span></code> here only sets role defaults for core/sidebar permissions; the plugin declares no permission of its own.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_clients.html" class="btn btn-neutral float-left" title="lmn_clients" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_crontab.html" class="btn btn-neutral float-right" title="lmn_crontab" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

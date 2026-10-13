@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_smbclient &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_users" href="lmn_users.html" />
+    <link rel="prev" title="lmn_setup_wizard" href="lmn_setup_wizard.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_smbclient</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#webdav">WebDAV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#smb-rest-api-lmn-smbclient">SMB REST (<code class="docutils literal notranslate"><span class="pre">/api/lmn/smbclient/</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#webdav-webdav-and-api-webdav">WebDAV (<code class="docutils literal notranslate"><span class="pre">/webdav/</span></code> and <code class="docutils literal notranslate"><span class="pre">/api/webdav/</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_smbclient</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_smbclient.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-smbclient">
+<h1>lmn_smbclient<a class="headerlink" href="#lmn-smbclient" title="Link to this heading"></a></h1>
+<p>Samba share access plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It gives the webui read/write access to the user’s Samba shares (home, class, project, global shares) over SMB, and additionally exposes those shares through a WebDAV server.</p>
+<p>Unlike most lmn plugins, <code class="docutils literal notranslate"><span class="pre">lmn_smbclient</span></code> does not call <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code>: it talks to Samba directly with the Python <code class="docutils literal notranslate"><span class="pre">smbclient</span></code> library, under the identity (Kerberos ticket) of the logged-in user. It is mostly a <strong>service/library plugin</strong> — it ships no view of its own, but provides the backend endpoints and the Angular <code class="docutils literal notranslate"><span class="pre">smbclient</span></code> service used by the file manager and other plugins (e.g. the session/exam views).</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>The plugin registers no sidebar entry and no standalone page (its <code class="docutils literal notranslate"><span class="pre">main.py</span></code> only imports the provider base classes and declares nothing). What it provides to the rest of the webui is:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">smbclient</span></code> Angular service</strong> (<code class="docutils literal notranslate"><span class="pre">resources/js/services/smbclient.service.es</span></code>) — the client-side file API consumed by other plugins: <code class="docutils literal notranslate"><span class="pre">shares(user)</span></code>, <code class="docutils literal notranslate"><span class="pre">list(path)</span></code>, <code class="docutils literal notranslate"><span class="pre">stat(path)</span></code>, <code class="docutils literal notranslate"><span class="pre">createFile</span></code>, <code class="docutils literal notranslate"><span class="pre">createDirectory</span></code>, <code class="docutils literal notranslate"><span class="pre">move(src,</span> <span class="pre">dst)</span></code>, <code class="docutils literal notranslate"><span class="pre">copy(src,</span> <span class="pre">dst)</span></code>, <code class="docutils literal notranslate"><span class="pre">delete_file</span></code>, <code class="docutils literal notranslate"><span class="pre">delete_dir</span></code>, chunked upload (<code class="docutils literal notranslate"><span class="pre">startFlowUpload</span></code>), and <code class="docutils literal notranslate"><span class="pre">refresh_krbcc()</span></code> (prompts the user for their password to renew the Kerberos ticket).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">&lt;smb-upload&gt;</span></code> directive</strong> (<code class="docutils literal notranslate"><span class="pre">resources/js/directives/smbupload.directive.coffee</span></code>) — a drag-and-drop / “Upload file” widget built on ng-flow that uploads files in 1 MiB chunks to a share, shows a per-file progress bar, and can append the new files to the parent view’s listing without a full reload.</p></li>
+</ul>
+<p>Through these, the user can browse a share, create files and folders, rename/move, copy, delete, upload (chunked) and download. A single file downloads directly; a directory is streamed as a generated ZIP. Overwrite is avoided on upload by auto-numbering <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">(1).ext</span></code>, <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">(2).ext</span></code>, etc. A <code class="docutils literal notranslate"><span class="pre">STATUS_DISK_FULL</span></code> from Samba is surfaced to the user as a quota-full message.</p>
+<p>Two helpers support the classroom “collect/handout” workflow of other plugins: <code class="docutils literal notranslate"><span class="pre">createSessionWorkingDirectory</span></code> creates <code class="docutils literal notranslate"><span class="pre">HOME/transfer/&lt;teacher&gt;/_collect</span></code> for each participant, and <code class="docutils literal notranslate"><span class="pre">listCollectDir</span></code> lists what each participant dropped there.</p>
+<section id="webdav">
+<h3>WebDAV<a class="headerlink" href="#webdav" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">views/lmnwebdav.py</span></code> implements a full WebDAV server under <code class="docutils literal notranslate"><span class="pre">/webdav/</span></code> (OPTIONS, PROPFIND, GET, PUT, DELETE, MKCOL, MOVE, COPY), backed by the same Samba shares and the custom <code class="docutils literal notranslate"><span class="pre">davxml.py</span></code> PROPFIND response builder. GET supports HTTP range requests and zips directories on the fly. The root PROPFIND lists the user’s shares; paths are mapped to the school / global Samba share according to the caller’s <code class="docutils literal notranslate"><span class="pre">sophomorixRole</span></code>. <code class="docutils literal notranslate"><span class="pre">/api/webdav/qrcode</span></code> returns a QR code (server name, WebDAV URL, username) to configure an external WebDAV client.</p>
+</section>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p>Two view files, both wrapping <code class="docutils literal notranslate"><span class="pre">smbclient</span></code> calls in a <code class="docutils literal notranslate"><span class="pre">credit_wrapper</span></code> retry (handles the SMB “0 credits are available” error):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">views/lmnsmbclient.py</span></code> — the <code class="docutils literal notranslate"><span class="pre">/api/lmn/smbclient/*</span></code> REST endpoints (listing, file ops, chunked upload, download, Kerberos ticket refresh, collect dirs).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">views/lmnwebdav.py</span></code> — the <code class="docutils literal notranslate"><span class="pre">/webdav/*</span></code> WebDAV methods plus <code class="docutils literal notranslate"><span class="pre">/api/webdav/list</span></code> and <code class="docutils literal notranslate"><span class="pre">/api/webdav/qrcode</span></code>; uses <code class="docutils literal notranslate"><span class="pre">linuxmusterTools.quotas.samba_root_tree</span></code> for the full file tree.</p></li>
+</ul>
+<p>Shares, home paths and school/global share roots are resolved through <code class="docutils literal notranslate"><span class="pre">self.context.schoolmgr</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted on the Ajenti worker of the authenticated user. None of these endpoints carry an <code class="docutils literal notranslate"><span class="pre">&#64;authorize(...)</span></code> guard (the only one present, <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">&#64;authorize('smbclient:write')</span></code> on <code class="docutils literal notranslate"><span class="pre">finish-upload</span></code>, is commented out); access control relies on the per-user Samba/Kerberos identity and the WebDAV OPTIONS being <code class="docutils literal notranslate"><span class="pre">auth=False</span></code>.</p>
+<section id="smb-rest-api-lmn-smbclient">
+<h3>SMB REST (<code class="docutils literal notranslate"><span class="pre">/api/lmn/smbclient/</span></code>)<a class="headerlink" href="#smb-rest-api-lmn-smbclient" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/shares/&lt;user&gt;</span></code></p></td>
+<td><p>Hard-coded list of shares for the user’s role</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/list</span></code></p></td>
+<td><p>List files/directories of a posted <code class="docutils literal notranslate"><span class="pre">path</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/directory</span></code></p></td>
+<td><p>Create a directory</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/file</span></code></p></td>
+<td><p>Create an empty file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/move</span></code></p></td>
+<td><p>Rename/move <code class="docutils literal notranslate"><span class="pre">src</span></code> to <code class="docutils literal notranslate"><span class="pre">dst</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/copy</span></code></p></td>
+<td><p>Copy a file or (recursively) a directory</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/rmdir</span></code></p></td>
+<td><p>Delete a directory recursively (TODO: should be DELETE)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/unlink</span></code></p></td>
+<td><p>Delete a file (TODO: should be DELETE)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/stat/&lt;path&gt;</span></code></p></td>
+<td><p>POSIX stat of a path</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/upload</span></code></p></td>
+<td><p>Check whether an upload chunk is already present</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/upload</span></code></p></td>
+<td><p>Write one upload chunk to <code class="docutils literal notranslate"><span class="pre">HOME/.upload/</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/finish-upload</span></code></p></td>
+<td><p>Reassemble chunks into the final file(s)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/download</span></code></p></td>
+<td><p>Download a file, or a directory as ZIP (base64 path)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/refresh_krbcc</span></code></p></td>
+<td><p>Renew the user’s Kerberos ticket (kdestroy + kinit via pexpect)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/createSessionWorkingDirectory</span></code></p></td>
+<td><p>Create <code class="docutils literal notranslate"><span class="pre">transfer/&lt;teacher&gt;/_collect</span></code> for users</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/listCollectDir</span></code></p></td>
+<td><p>List the collect dir of each participant</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="webdav-webdav-and-api-webdav">
+<h3>WebDAV (<code class="docutils literal notranslate"><span class="pre">/webdav/</span></code> and <code class="docutils literal notranslate"><span class="pre">/api/webdav/</span></code>)<a class="headerlink" href="#webdav-webdav-and-api-webdav" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/webdav/list</span></code></p></td>
+<td><p>Full Samba file tree for the user (<code class="docutils literal notranslate"><span class="pre">samba_root_tree</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/webdav/qrcode</span></code></p></td>
+<td><p>QR code + metadata to set up an external WebDAV client</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OPTIONS</span> <span class="pre">/webdav</span></code>, <code class="docutils literal notranslate"><span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>DAV capabilities (<code class="docutils literal notranslate"><span class="pre">auth=False</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PROPFIND</span> <span class="pre">/webdav</span></code>, <code class="docutils literal notranslate"><span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>List shares (root) or a directory/file’s properties</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>Download a file or zipped directory (range support)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PUT</span> <span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>Upload/overwrite a file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>Delete a file or directory recursively</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MKCOL</span> <span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>Create a directory</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MOVE</span> <span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>Move (with <code class="docutils literal notranslate"><span class="pre">Destination</span></code> header, overwrite aware)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">COPY</span> <span class="pre">/webdav/&lt;path&gt;</span></code></p></td>
+<td><p>Copy (with <code class="docutils literal notranslate"><span class="pre">Destination</span></code> header, overwrite aware)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code> and the <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> plugin (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>).</p></li>
+<li><p>Python <code class="docutils literal notranslate"><span class="pre">smbclient</span></code>/<code class="docutils literal notranslate"><span class="pre">smbprotocol</span></code>, <code class="docutils literal notranslate"><span class="pre">pexpect</span></code>, <code class="docutils literal notranslate"><span class="pre">qrcode</span></code>, <code class="docutils literal notranslate"><span class="pre">lxml</span></code>, and <code class="docutils literal notranslate"><span class="pre">linuxmusterTools</span></code> (<code class="docutils literal notranslate"><span class="pre">linuxmusterTools.quotas</span></code>).</p></li>
+<li><p>A valid per-user Kerberos ticket for Samba access; the <code class="docutils literal notranslate"><span class="pre">/srv/.webdav</span></code> temp directory for zipped WebDAV directory downloads.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aj.plugins.lmn_common.mimetypes</span></code> and <code class="docutils literal notranslate"><span class="pre">aj.plugins.lmn_common.api</span></code> (<code class="docutils literal notranslate"><span class="pre">samba_realm</span></code>, <code class="docutils literal notranslate"><span class="pre">samba_netbios</span></code>) for MIME handling and realm info.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_setup_wizard.html" class="btn btn-neutral float-left" title="lmn_setup_wizard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_users.html" class="btn btn-neutral float-right" title="lmn_users" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

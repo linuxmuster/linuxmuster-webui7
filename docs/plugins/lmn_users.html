@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_users &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_vdi_administration" href="lmn_vdi_administration.html" />
+    <link rel="prev" title="lmn_smbclient" href="lmn_smbclient.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_users</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#role-list-views-teachers-students-parents-staff-school-admins-global-admins">Role list views (teachers / students / parents / staff / school-admins / global-admins)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#listmanagement">Listmanagement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#print-passwords">Print Passwords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#users-admins-views-sophomorixusers-py">Users &amp; admins (<code class="docutils literal notranslate"><span class="pre">views/sophomorixUsers.py</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#passwords-views-passwords-py">Passwords (<code class="docutils literal notranslate"><span class="pre">views/passwords.py</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-fields-views-customfields-py">Custom fields (<code class="docutils literal notranslate"><span class="pre">views/customFields.py</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list-management-views-listmanagement-py">List management (<code class="docutils literal notranslate"><span class="pre">views/listmanagement.py</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_users</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_users.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-users">
+<h1>lmn_users<a class="headerlink" href="#lmn-users" title="Link to this heading"></a></h1>
+<p>User management plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It is the central place to browse and manage all account types (teachers, students, parents, staff, school-admins, global-admins), import/update user lists from CSV, manage passwords (including printing), edit per-user custom fields, and link parents to students.</p>
+<p>It is a front end that reads accounts from LDAP via <code class="docutils literal notranslate"><span class="pre">linuxmusterTools</span></code> and performs privileged operations through <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> (the <code class="docutils literal notranslate"><span class="pre">lmnapi_client</span></code> password calls) and <code class="docutils literal notranslate"><span class="pre">sophomorix-*</span></code> commands; it also reads/writes the sophomorix CSV import lists and <code class="docutils literal notranslate"><span class="pre">school.conf</span></code> directly.</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>The plugin adds several entries under the <strong>user management</strong> sidebar category (plus one under <strong>class</strong>):</p>
+<ul class="simple">
+<li><p><strong>Teachers</strong>, <strong>Students</strong>, <strong>Parents</strong>, <strong>Staff</strong>, <strong>School-Admins</strong>, <strong>Global-Admins</strong> — one list view per role.</p></li>
+<li><p><strong>Listmanagement</strong> — CSV import/edit of users.</p></li>
+<li><p><strong>Print Passwords</strong> (under <strong>class</strong>) — class-wide password printing.</p></li>
+</ul>
+<section id="role-list-views-teachers-students-parents-staff-school-admins-global-admins">
+<h3>Role list views (teachers / students / parents / staff / school-admins / global-admins)<a class="headerlink" href="#role-list-views-teachers-students-parents-staff-school-admins-global-admins" title="Link to this heading"></a></h3>
+<p>Each role view shows a filterable, sortable, paginated table of accounts (sort menu, rows-per-page menu of 10/50/100/500/1000, search/filter box). Columns include the login, name / DN / comment, and a colored <strong>Status</strong> badge derived from the sophomorix lifecycle letter (Activated, Usable, Permanent, Locked, Deactivated, Frozen, Removable, Killable, Exam, Managed, …). Per row and in batch (on the selection) the user can:</p>
+<ul class="simple">
+<li><p><strong>Show / print passwords</strong> — show the first password, <strong>Set initial password</strong>, <strong>Set random password</strong>, <strong>Set custom password</strong> (first or current), <strong>Reset first password</strong>, and <strong>Print passwords</strong> for the selected rows. Batch variants exist (<code class="docutils literal notranslate"><span class="pre">batchResetFirstPassword</span></code>, <code class="docutils literal notranslate"><span class="pre">batchSetRandomFirstPassword</span></code>, <code class="docutils literal notranslate"><span class="pre">batchSetCustomFirstPassword</span></code>, <code class="docutils literal notranslate"><span class="pre">printSelectedPasswords</span></code>).</p></li>
+<li><p><strong>User details</strong> (<code class="docutils literal notranslate"><span class="pre">userInfo</span></code>) — opens the <strong>User Details</strong> modal: properties (Loginname, Role, Class, Schoolname, Birthday, Sophomorix Status, Creation/Deactivation/Toleration dates), group membership, quota (Cloudquota / Mailquota in MiB), the user’s <strong>custom fields</strong> (Custom 1–5 and Custom-Multi, editable when configured) and <strong>proxy addresses</strong> (e-mail aliases, add/remove), and the student’s <strong>parents</strong> list (search &amp; add, remove).</p></li>
+<li><p>The <strong>Teachers</strong> view additionally has a <strong>Quota</strong> column with a <strong>Show quota</strong> action (<code class="docutils literal notranslate"><span class="pre">getQuotas</span></code>, via the <code class="docutils literal notranslate"><span class="pre">lmn_quotas</span></code> plugin).</p></li>
+<li><p>The <strong>Students</strong> view has a second <strong>Attic</strong> tab (archived/old students) with its own password/print batch actions (<code class="docutils literal notranslate"><span class="pre">batchAttic…</span></code>, <code class="docutils literal notranslate"><span class="pre">printAtticSelectedPasswords</span></code>).</p></li>
+<li><p>The <strong>School-Admins</strong> and <strong>Global-Admins</strong> views also manage <strong>bind users</strong>: add/delete school/global binduser, edit a binduser comment, and show the bind password (<code class="docutils literal notranslate"><span class="pre">showBindPW</span></code>). Admins are created with <code class="docutils literal notranslate"><span class="pre">addSchoolAdmin</span></code> / <code class="docutils literal notranslate"><span class="pre">addGlobalAdmin</span></code> and deleted with <code class="docutils literal notranslate"><span class="pre">deleteSchoolAdmin</span></code> / <code class="docutils literal notranslate"><span class="pre">deleteGlobalAdmin</span></code>.</p></li>
+</ul>
+<p>Supporting modals: <code class="docutils literal notranslate"><span class="pre">addUser</span></code>, <code class="docutils literal notranslate"><span class="pre">addAdmin</span></code>, <code class="docutils literal notranslate"><span class="pre">customPassword</span></code> (“Change Password”, with the minimal-length / complexity note), <code class="docutils literal notranslate"><span class="pre">showPassword</span></code>, <code class="docutils literal notranslate"><span class="pre">showBindPassword</span></code> (with copy), <code class="docutils literal notranslate"><span class="pre">check</span></code>, <code class="docutils literal notranslate"><span class="pre">apply</span></code>, <code class="docutils literal notranslate"><span class="pre">result</span></code>.</p>
+</section>
+<section id="listmanagement">
+<h3>Listmanagement<a class="headerlink" href="#listmanagement" title="Link to this heading"></a></h3>
+<p>A tabbed view (<strong>Students</strong>, <strong>Parents</strong>, <strong>Teachers</strong>, <strong>Extra-Students</strong>, <strong>Extra-Courses</strong>, <strong>Staff</strong>) to edit the sophomorix CSV import lists directly as editable tables: per tab the user can <strong>add</strong> a row, <strong>remove</strong> a row, <strong>save</strong> the list, <strong>save and check</strong> (runs <code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code>), view <strong>backups</strong> of the CSV, and <strong>edit CSV</strong> / <strong>upload</strong> a CSV. The <strong>Upload CSV</strong> modal warns that it replaces the current CSV and offers “Check columns” (open the <strong>Sort List</strong> modal to map which CSV column is lastname/firstname/class/birthday/login/id/password) or “Save directly”. After saving changes, the <strong>Report</strong> modal (tabs: Summary, Report, Added users, Moved users, Killed users, Errors) shows what <code class="docutils literal notranslate"><span class="pre">sophomorix-add</span></code> / <code class="docutils literal notranslate"><span class="pre">sophomorix-update</span></code> / <code class="docutils literal notranslate"><span class="pre">sophomorix-kill</span></code> will do, and <strong>Apply</strong> commits them.</p>
+</section>
+<section id="print-passwords">
+<h3>Print Passwords<a class="headerlink" href="#print-passwords" title="Link to this heading"></a></h3>
+<p>Lists the classes the user may print for (teachers see their own classes; admins see all classes plus teachers/parents and an “all users” entry). A class can be printed directly via its icon, or several classes selected and printed at once. The <strong>options</strong> modal lets the user choose format (PDF / CSV), one-per-page vs. passwords-per-page, whether to run <code class="docutils literal notranslate"><span class="pre">pdflatex</span></code>, language, and a LaTeX template (individual / multiple).</p>
+</section>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p>Four view files under <code class="docutils literal notranslate"><span class="pre">views/</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sophomorixUsers.py</span></code> — LDAP reads of each role (with lifecycle-status decoration), create/delete school &amp; global admins and bindusers, add user comment, add/remove parent (via <code class="docutils literal notranslate"><span class="pre">lmnapi_client</span></code>), and direct <code class="docutils literal notranslate"><span class="pre">sophomorix-kill</span></code> of a user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">passwords.py</span></code> — get/set first &amp; current passwords, random passwords and reset (via <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> <code class="docutils literal notranslate"><span class="pre">lmnapi_client</span></code>, with a server-side password-policy validation and a role-rank permission check <code class="docutils literal notranslate"><span class="pre">_checkPasswordPermissions</span></code>), the class list, PDF/CSV printing via <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">sophomorix-print</span></code>, PDF download, first-password-still-set check, and binduser password readout (guarded by <code class="docutils literal notranslate"><span class="pre">os.getuid()</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">customFields.py</span></code> — read/write sophomorix custom fields, custom-multi fields and proxy addresses via <code class="docutils literal notranslate"><span class="pre">sophomorix-user</span></code> (each write also checks <code class="docutils literal notranslate"><span class="pre">user</span> <span class="pre">==</span> <span class="pre">self.context.identity</span></code> unless root).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">listmanagement.py</span></code> — read/write the role CSV lists (<code class="docutils literal notranslate"><span class="pre">LMNFile</span></code>), import a CSV (<code class="docutils literal notranslate"><span class="pre">sophomorix-newfile</span></code>), read <code class="docutils literal notranslate"><span class="pre">school.conf</span></code>, run <code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code> and apply add/update/kill.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<p>Declared in <code class="docutils literal notranslate"><span class="pre">main.py</span></code> (all <code class="docutils literal notranslate"><span class="pre">default:</span> <span class="pre">False</span></code>); <code class="docutils literal notranslate"><span class="pre">permissions.yml</span></code> ships role defaults (globaladministrator, schooladministrator, teacher, student, parent, staff).</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Permission</p></th>
+<th class="head"><p>Grants</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:write</span></code></p></td>
+<td><p>read / write students</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:teachers:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:list</span></code> / <code class="docutils literal notranslate"><span class="pre">:write</span></code></p></td>
+<td><p>read / list / write teachers</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:parents:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:write</span></code></p></td>
+<td><p>read / write parents</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:staff:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:write</span></code></p></td>
+<td><p>read / write staff</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:schooladmins:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:create</span></code> / <code class="docutils literal notranslate"><span class="pre">:delete</span></code></p></td>
+<td><p>read / add / delete school admins</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:globaladmins:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:create</span></code> / <code class="docutils literal notranslate"><span class="pre">:delete</span></code></p></td>
+<td><p>read / add / delete global admins</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:extrastudents:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:write</span></code></p></td>
+<td><p>read / write extra students</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:extraclasses:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:write</span></code></p></td>
+<td><p>read / write extra courses</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:users:delete</span></code></p></td>
+<td><p>delete (kill) non-admin users</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:check</span></code></p></td>
+<td><p>run <code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:apply</span></code></p></td>
+<td><p>apply user changes (add/update/kill), read <code class="docutils literal notranslate"><span class="pre">school.conf</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>read/write passwords, print, list classes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:users:customfields:read</span></code> / <code class="docutils literal notranslate"><span class="pre">:write</span></code></p></td>
+<td><p>read / change custom field values</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>. <code class="docutils literal notranslate"><span class="pre">(/&lt;user&gt;)?</span></code> means the route optionally takes a single user to return just that account.</p>
+<section id="users-admins-views-sophomorixusers-py">
+<h3>Users &amp; admins (<code class="docutils literal notranslate"><span class="pre">views/sophomorixUsers.py</span></code>)<a class="headerlink" href="#users-admins-views-sophomorixusers-py" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/sophomorixUsers/teachers(/&lt;user&gt;)?</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:teachers:read</span></code></p></td>
+<td><p>Teachers list / one teacher</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/sophomorixUsers/students(/&lt;user&gt;)?</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:students:read</span></code></p></td>
+<td><p>Students list / one student (+ parents)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/sophomorixUsers/parents(/&lt;user&gt;)?</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:parents:read</span></code></p></td>
+<td><p>Parents list / one parent</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/sophomorixUsers/staff(/&lt;user&gt;)?</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:staff:read</span></code></p></td>
+<td><p>Staff list / one staff</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/sophomorixUsers/schooladmins(/&lt;user&gt;)?</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:schooladmins:read</span></code></p></td>
+<td><p>School admins list / one</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/sophomorixUsers/globaladmins(/&lt;user&gt;)?</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:globaladmins:read</span></code></p></td>
+<td><p>Global admins list / one</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/sophomorixUsers/schooladmins</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:schooladmins:create</span></code></p></td>
+<td><p>Create school admin(s)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PATCH</span> <span class="pre">/sophomorixUsers/schooladmins</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:schooladmins:delete</span></code></p></td>
+<td><p>Delete (kill) school admin(s)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/sophomorixUsers/globaladmins</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:globaladmins:create</span></code></p></td>
+<td><p>Create global admin(s)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PATCH</span> <span class="pre">/sophomorixUsers/globaladmins</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:globaladmins:delete</span></code></p></td>
+<td><p>Delete (kill) global admin(s)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/sophomorixUsers/&lt;user&gt;/comment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:schooladmins:create</span></code></p></td>
+<td><p>Set a user’s comment</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/sophomorixUsers/bindusers/&lt;level&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:globaladmins:create</span></code></p></td>
+<td><p>List school/global bindusers</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/sophomorixUsers/bindusers/&lt;level&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:globaladmins:create</span></code></p></td>
+<td><p>Create a school/global binduser</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/sophomorixUsers/add-parent</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:parents:write</span></code></p></td>
+<td><p>Link a parent to a student (lmnapi)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/sophomorixUsers/remove-parent</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:parents:write</span></code></p></td>
+<td><p>Unlink a parent (lmnapi)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/sophomorixUsers/killuser</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:users:delete</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sophomorix-kill</span></code> a user</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="passwords-views-passwords-py">
+<h3>Passwords (<code class="docutils literal notranslate"><span class="pre">views/passwords.py</span></code>)<a class="headerlink" href="#passwords-views-passwords-py" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/passwords/&lt;user&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Get the user’s first password</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/passwords/reset-first</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Reset current back to first password</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/passwords/set-random</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Set a random (policy-valid) password</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/passwords/set-first</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Set initial password (also current)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/passwords/set-current</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Set the current password</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/classes</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Classes available for printing</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/passwords/print</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:teachers:read</span></code> (TODO)</p></td>
+<td><p>Print selected users’ passwords, one per page</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/print</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Print passwords as PDF (template/class)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/print_csv</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Print passwords as CSV</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/passwords/download/&lt;name&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Download a generated print file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/&lt;user&gt;/first-password-set</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Whether the first password is still set</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/&lt;binduser&gt;/bindpassword</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:globaladmins:create</span></code></p></td>
+<td><p>Read a binduser’s password (root only)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="custom-fields-views-customfields-py">
+<h3>Custom fields (<code class="docutils literal notranslate"><span class="pre">views/customFields.py</span></code>)<a class="headerlink" href="#custom-fields-views-customfields-py" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/&lt;user&gt;/customfields</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:customfields:read</span></code></p></td>
+<td><p>Displayable custom fields of a user</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/&lt;user&gt;/custom/&lt;index&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:customfields:write</span></code></p></td>
+<td><p>Set custom field 1–5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/&lt;user&gt;/custommulti/&lt;index&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:customfields:write</span></code></p></td>
+<td><p>Add a custom-multi value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PATCH</span> <span class="pre">/users/&lt;user&gt;/custommulti/&lt;index&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:customfields:write</span></code></p></td>
+<td><p>Remove a custom-multi value</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/&lt;user&gt;/proxyaddresses</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:customfields:write</span></code></p></td>
+<td><p>Add a proxy address (e-mail)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PATCH</span> <span class="pre">/users/&lt;user&gt;/proxyaddresses</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:customfields:write</span></code></p></td>
+<td><p>Remove a proxy address</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="list-management-views-listmanagement-py">
+<h3>List management (<code class="docutils literal notranslate"><span class="pre">views/listmanagement.py</span></code>)<a class="headerlink" href="#list-management-views-listmanagement-py" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/lists/&lt;role&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:&lt;role&gt;:read</span></code> (inner <code class="docutils literal notranslate"><span class="pre">authorize</span></code>)</p></td>
+<td><p>Read a role’s CSV list</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/lists/&lt;role&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:&lt;role&gt;:write</span></code> (inner <code class="docutils literal notranslate"><span class="pre">authorize</span></code>)</p></td>
+<td><p>Write a role’s CSV list</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/lists/import</span></code></p></td>
+<td><p>inner <code class="docutils literal notranslate"><span class="pre">authorize</span></code> per role</p></td>
+<td><p>Parse / save an imported CSV</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/lists/csv</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:passwords</span></code></p></td>
+<td><p>Apply a custom uploaded CSV (<code class="docutils literal notranslate"><span class="pre">sophomorix-newfile</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/schoolconf</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:apply</span></code></p></td>
+<td><p>Read <code class="docutils literal notranslate"><span class="pre">school.conf</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/users/lists/check</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:check</span></code></p></td>
+<td><p>Run <code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/users/lists/apply</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:users:apply</span></code></p></td>
+<td><p>Apply add / update / kill</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code>, <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> and <code class="docutils literal notranslate"><span class="pre">lmn_quotas</span></code> (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>; <code class="docutils literal notranslate"><span class="pre">lmn_quotas</span></code> powers the teacher quota column).</p></li>
+<li><p>A reachable <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> (via <code class="docutils literal notranslate"><span class="pre">lmnapi_client</span></code>) for all password operations and parent linking.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmusterTools</span></code> (<code class="docutils literal notranslate"><span class="pre">ldapconnector</span></code> for reads, <code class="docutils literal notranslate"><span class="pre">lmnfile</span></code> for the CSV lists, <code class="docutils literal notranslate"><span class="pre">print.LatexTemplates</span></code> for print templates).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sophomorix-*</span></code> tools on the server (<code class="docutils literal notranslate"><span class="pre">sophomorix-admin</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-user</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-kill</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-add</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-update</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-newfile</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-print</span></code> via <code class="docutils literal notranslate"><span class="pre">sudo</span></code>, <code class="docutils literal notranslate"><span class="pre">sophomorix-query</span></code>).</p></li>
+<li><p>The sophomorix CSV import lists and <code class="docutils literal notranslate"><span class="pre">school.conf</span></code> under the school config path, and <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/.secret/</span></code> for binduser passwords.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_smbclient.html" class="btn btn-neutral float-left" title="lmn_smbclient" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_vdi_administration.html" class="btn btn-neutral float-right" title="lmn_vdi_administration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

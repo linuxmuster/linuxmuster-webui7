@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_vdi_dashboard &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_w_datetime" href="lmn_w_datetime.html" />
+    <link rel="prev" title="lmn_vdi_administration" href="lmn_vdi_administration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_vdi_dashboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_vdi_dashboard</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_vdi_dashboard.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-vdi-dashboard">
+<h1>lmn_vdi_dashboard<a class="headerlink" href="#lmn-vdi-dashboard" title="Link to this heading"></a></h1>
+<p>VDI classroom dashboard plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It lets a user (teacher/student) pick an available VDI group and start a virtual desktop session, downloading the connection file to open it.</p>
+<p>It is a front end over the <code class="docutils literal notranslate"><span class="pre">linuxmuster-linbo-vdi</span></code> tools on the server: the backend shells out to <code class="docutils literal notranslate"><span class="pre">/usr/lib/linuxmuster-linbo-vdi/getConnection.py</span></code> via <code class="docutils literal notranslate"><span class="pre">sudo</span></code> to create the session and hands back the generated connection file.</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>Opened from the sidebar (<strong>class</strong> category) as <strong>VDI Classroom</strong>, the view (<strong>VDI Desktops</strong>) lists the <strong>VDI Groups</strong> as cards. Each card shows the group name and its number of <strong>Available VMs</strong>. If a group has at least one VM available, the card is clickable (play icon) and starting it creates a session and triggers the download of the VDI connection file (<code class="docutils literal notranslate"><span class="pre">vdi-session.vv</span></code>); if none is available, the card is disabled with a “No VMs available!” indicator.</p>
+<p>The list of groups is loaded from the <code class="docutils literal notranslate"><span class="pre">lmn_vdi_administration</span></code> clones endpoint (<code class="docutils literal notranslate"><span class="pre">/api/lmn/vdi/administration/clones</span></code>); on error it shows a notification and an empty list.</p>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> exposes two endpoints:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/lmn/vdi/dashboard/vdiSession/&lt;group&gt;</span></code> runs <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">/usr/lib/linuxmuster-linbo-vdi/getConnection.py</span> <span class="pre">&lt;group&gt;</span> <span class="pre">&lt;username&gt;</span></code> (username taken from <code class="docutils literal notranslate"><span class="pre">self.context.identity</span></code>), parses the returned JSON and returns the config file name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/lmn/vdi/dashboard/download/&lt;name&gt;</span></code> serves the generated <code class="docutils literal notranslate"><span class="pre">/tmp/vdi/&lt;name&gt;</span></code> file as a download (<code class="docutils literal notranslate"><span class="pre">vdi-session.vv</span></code>), or responds forbidden if it does not exist.</p></li>
+</ul>
+<p>Factually, neither endpoint carries an <code class="docutils literal notranslate"><span class="pre">&#64;authorize(...)</span></code> guard, although the permission <code class="docutils literal notranslate"><span class="pre">lmn_vdi_dashboard:show</span></code> is declared in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>; it is never enforced and the plugin ships no <code class="docutils literal notranslate"><span class="pre">permissions.yml</span></code>. The <code class="docutils literal notranslate"><span class="pre">&lt;group&gt;</span></code> segment uses the regex <code class="docutils literal notranslate"><span class="pre">.+</span></code> and is passed straight into the <code class="docutils literal notranslate"><span class="pre">sudo</span></code> command argv.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<p>Declared in <code class="docutils literal notranslate"><span class="pre">main.py</span></code> but <strong>not enforced</strong> anywhere (no <code class="docutils literal notranslate"><span class="pre">&#64;authorize</span></code> on the endpoints):</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Permission</p></th>
+<th class="head"><p>Grants</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lmn_vdi_dashboard:show</span></code></p></td>
+<td><p>intended: access to the VDI dashboard (currently unused)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/vdi/dashboard/vdiSession/&lt;group&gt;</span></code></p></td>
+<td><p>none</p></td>
+<td><p>Create a VDI session for the current user and return the config file name (<code class="docutils literal notranslate"><span class="pre">getConnection.py</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/vdi/dashboard/download/&lt;name&gt;</span></code></p></td>
+<td><p>none</p></td>
+<td><p>Download the generated connection file from <code class="docutils literal notranslate"><span class="pre">/tmp/vdi/&lt;name&gt;</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>The group listing it displays comes from <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/lmn/vdi/administration/clones</span></code>, provided by the <code class="docutils literal notranslate"><span class="pre">lmn_vdi_administration</span></code> plugin.</p>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code> and the <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> plugin (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmuster-linbo-vdi</span></code> installed on the server (<code class="docutils literal notranslate"><span class="pre">/usr/lib/linuxmuster-linbo-vdi/getConnection.py</span></code>), callable via <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">lmn_vdi_administration</span></code> plugin for the clones listing endpoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is present but empty.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_vdi_administration.html" class="btn btn-neutral float-left" title="lmn_vdi_administration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_w_datetime.html" class="btn btn-neutral float-right" title="lmn_w_datetime" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

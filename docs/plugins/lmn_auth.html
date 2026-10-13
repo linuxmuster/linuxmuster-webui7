@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plugin lmn_auth &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+  <title>lmn_auth &mdash; linuxmuster-webui7 7.4.13 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
@@ -22,7 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API Reference" href="../autoapi/index.html" />
+    <link rel="next" title="lmn_clients" href="lmn_clients.html" />
     <link rel="prev" title="Linuxmuster-webui7’s developer documentation" href="../index.html" /> 
 </head>
 
@@ -48,7 +48,41 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Plugin lmn_auth</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_auth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python API</span></p>
 <ul>
@@ -69,7 +103,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Plugin lmn_auth</li>
+      <li class="breadcrumb-item active">lmn_auth</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/plugins/lmn_auth.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -79,12 +113,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="plugin-lmn-auth">
-<h1>Plugin lmn_auth<a class="headerlink" href="#plugin-lmn-auth" title="Link to this heading"></a></h1>
-<a class="reference internal image-reference" href="../_images/login.png"><img alt="Screenshot from login page" class="align-center" src="../_images/login.png" style="width: 800px;" />
+  <a class="reference internal image-reference" href="../_images/login.png"><img alt="Screenshot of the login page" class="align-center" src="../_images/login.png" style="width: 800px;" />
 </a>
-<p>This plugin doesn’t have any view at all. It only provides a class in order to allow authentification and profile management against the LDAP server used in Samba 4.</p>
-<p>Once an user is authenticated, a new worker is created with restricted permissions ( same uid and gid as the user ). This means that an user can only perform limited tasks on the server.</p>
+<section id="lmn-auth">
+<h1>lmn_auth<a class="headerlink" href="#lmn-auth" title="Link to this heading"></a></h1>
+<p>Authentication and identity provider for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It logs users in against the Samba 4 Active Directory (LDAP), builds their session and exposes the “Change password” page.</p>
+<p>Unlike most webui plugins, <code class="docutils literal notranslate"><span class="pre">lmn_auth</span></code> is not a view over <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code>: it is the Ajenti <code class="docutils literal notranslate"><span class="pre">AuthenticationProvider</span></code> itself. It reads the directory through <code class="docutils literal notranslate"><span class="pre">linuxmusterTools</span></code> (<code class="docutils literal notranslate"><span class="pre">LMNLdapReader</span></code>) and only delegates the actual password write to <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> (through the per-session <code class="docutils literal notranslate"><span class="pre">LmnapiClient</span></code> set up in <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code>).</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>The plugin has almost no page of its own. Its only view is the <strong>Change password</strong> form (route <code class="docutils literal notranslate"><span class="pre">/view/lmn/change-password</span></code>, also reachable from the user profile menu):</p>
+<ul class="simple">
+<li><p><strong>Current password</strong>, <strong>New password</strong> (with a show/hide eye toggle) and <strong>Repeat password</strong> fields.</p></li>
+<li><p>Inline help listing the password rules (minimal length 7, upper/lower/special characters or numbers, allowed character set) and a reminder that all fields are required.</p></li>
+<li><p>Live check that the two new passwords match; the <strong>Change password</strong> button stays disabled until all fields are filled and the two new entries are identical.</p></li>
+<li><p>On success the user is redirected to the landing page; on failure a permanent error with the message returned by the backend is shown.</p></li>
+</ul>
+<p>Everything else the plugin does is invisible to the user: it is the login backend behind Ajenti’s login screen.</p>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">api.py</span></code> implements the heavy part:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">LMAuthenticationProvider</span></code></strong> (id <code class="docutils literal notranslate"><span class="pre">lm</span></code>, “Linux Muster LDAP”): checks credentials by binding to the LDAP server, refuses users whose <code class="docutils literal notranslate"><span class="pre">sophomorixRole</span></code> is not in the configured <code class="docutils literal notranslate"><span class="pre">allowed_roles</span></code>, and loads <code class="docutils literal notranslate"><span class="pre">sophomorixWebuiPermissionsCalculated</span></code> into the session for <code class="docutils literal notranslate"><span class="pre">authorize()</span></code>. <code class="docutils literal notranslate"><span class="pre">root</span></code> falls back to the OS authentication provider.</p></li>
+<li><p><strong>Per-user isolation</strong>: <code class="docutils literal notranslate"><span class="pre">get_isolation_uid</span></code> / <code class="docutils literal notranslate"><span class="pre">get_isolation_gid</span></code> return the uid/gid for the forked worker, so each authenticated session runs a worker with the user’s own uid/gid (admins run as uid 0). <code class="docutils literal notranslate"><span class="pre">prepare_environment</span></code> initialises the multischool <code class="docutils literal notranslate"><span class="pre">SchoolManager</span></code>, the <code class="docutils literal notranslate"><span class="pre">LMNLdapReader</span></code>, the identity profile, the <code class="docutils literal notranslate"><span class="pre">PasswordPolicyProvider</span></code> and the session’s <code class="docutils literal notranslate"><span class="pre">LmnapiClient</span></code>, and renames the Kerberos ticket to <code class="docutils literal notranslate"><span class="pre">/tmp/krb5cc_&lt;uid&gt;</span></code>.</p></li>
+<li><p><strong>Kerberos</strong>: <code class="docutils literal notranslate"><span class="pre">_get_krb_ticket</span></code> runs <code class="docutils literal notranslate"><span class="pre">kinit</span></code> via <code class="docutils literal notranslate"><span class="pre">pexpect</span></code> at login, <code class="docutils literal notranslate"><span class="pre">signout</span></code> runs <code class="docutils literal notranslate"><span class="pre">kdestroy</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">change_password</span></code></strong>: re-authenticates, validates the new password against the password policy, then writes it through <code class="docutils literal notranslate"><span class="pre">LmnapiClient.set_current_password</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">check_mail</span></code> / <code class="docutils literal notranslate"><span class="pre">check_password_complexity</span></code> / <code class="docutils literal notranslate"><span class="pre">update_password</span></code></strong>: helpers used by the password-reset flow when it is activated in the config.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">UserLdapConfig</span></code></strong> (<code class="docutils literal notranslate"><span class="pre">UserConfigProvider</span></code>): stores the per-user dashboard config in <code class="docutils literal notranslate"><span class="pre">sophomorixWebuiDashboard</span></code> in LDAP (in <code class="docutils literal notranslate"><span class="pre">/root/.config/ajenti.yml</span></code> for root). Marked as currently unused/to be updated.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> exposes a single HTTP endpoint, <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/change-password</span></code>, which just calls <code class="docutils literal notranslate"><span class="pre">change_password</span></code> on the active authentication provider.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code> and the <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> plugin (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmusterTools</span></code> (<code class="docutils literal notranslate"><span class="pre">ldapconnector</span></code>, <code class="docutils literal notranslate"><span class="pre">common</span></code>, <code class="docutils literal notranslate"><span class="pre">passwords</span></code>) for LDAP access and the password policy.</p></li>
+<li><p>A reachable Samba 4 AD / LDAP server, Kerberos (<code class="docutils literal notranslate"><span class="pre">kinit</span></code>/<code class="docutils literal notranslate"><span class="pre">kdestroy</span></code>), and the webui config <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/webui/config.yml</span></code> (LDAP connection, <code class="docutils literal notranslate"><span class="pre">allowed_roles</span></code>, optional <code class="docutils literal notranslate"><span class="pre">pw_reset</span></code>) read through <code class="docutils literal notranslate"><span class="pre">lmn_common.api</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> for the actual password change (via the session <code class="docutils literal notranslate"><span class="pre">LmnapiClient</span></code>).</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -92,7 +161,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Linuxmuster-webui7’s developer documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../autoapi/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lmn_clients.html" class="btn btn-neutral float-right" title="lmn_clients" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

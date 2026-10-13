@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_crontab &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_device-manager" href="lmn_device-manager.html" />
+    <link rel="prev" title="lmn_common" href="lmn_common.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_crontab</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_crontab</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_crontab.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-crontab">
+<h1>lmn_crontab<a class="headerlink" href="#lmn-crontab" title="Link to this heading"></a></h1>
+<p>Crontab editor for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It lets a global administrator read and edit the <code class="docutils literal notranslate"><span class="pre">global-admin</span></code> and <code class="docutils literal notranslate"><span class="pre">root</span></code> crontabs of the server from the browser, with a per-job “disable during holidays” helper.</p>
+<p>It is a thin front end: <code class="docutils literal notranslate"><span class="pre">views.py</span></code> parses and writes the crontab through its <code class="docutils literal notranslate"><span class="pre">CronManager</span></code>, which simply shells out to the system <code class="docutils literal notranslate"><span class="pre">crontab</span></code> command.</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>Opened from the sidebar as <strong>Cron</strong> (category <em>System</em>), the whole view is wrapped in a <code class="docutils literal notranslate"><span class="pre">global-admin-access</span></code> guard. At the top a selector chooses <strong>which crontab to edit</strong>: <em>As globaladministrator</em> or <em>As root</em>. Below, three tabs:</p>
+<ul class="simple">
+<li><p><strong>Jobs</strong> (normal tasks) — a table with <strong>Disable holidays</strong> (a checkbox plus the school the holiday guard targets), <strong>Minute</strong>, <strong>Hour</strong>, <strong>Day (month)</strong>, <strong>Month</strong>, <strong>Day (week)</strong> and <strong>Command</strong>, with per-row <strong>Modify</strong> (cog) and <strong>Remove</strong> (trash) buttons, and an <strong>Add</strong> button. “There is no cronjob.” is shown when empty.</p></li>
+<li><p><strong>Special</strong> — special tasks (<code class="docutils literal notranslate"><span class="pre">&#64;reboot</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;yearly</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;annually</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;monthly</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;weekly</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;daily</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;hourly</span></code>): table with <strong>Disable holidays</strong>, <strong>Special</strong> and <strong>Command</strong>, same Modify/Remove/Add actions.</p></li>
+<li><p><strong>Environment variables</strong> — table with <strong>Name</strong> and <strong>Value</strong>, same Modify/Remove/Add actions.</p></li>
+</ul>
+<p><strong>Modify</strong> opens a dialog with the full fields for the chosen type (including a free-text <strong>Comment</strong> and, for tasks, the <strong>Disable holidays</strong> checkbox). A floating <strong>Save</strong> toolbar commits the whole crontab.</p>
+<p>When “Disable holidays” is set, the backend prefixes the command with <code class="docutils literal notranslate"><span class="pre">/usr/sbin/linuxmuster-holiday</span> <span class="pre">-s</span> <span class="pre">&lt;school&gt;</span> <span class="pre">&amp;&amp;</span> <span class="pre">…</span></code> so the job is skipped on holidays; the frontend decodes that prefix back into the checkbox and the displayed school.</p>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> (guarded by <code class="docutils literal notranslate"><span class="pre">lm:crontab:read</span></code> / <code class="docutils literal notranslate"><span class="pre">lm:crontab:write</span></code>) loads the <code class="docutils literal notranslate"><span class="pre">global-admin</span></code> and <code class="docutils literal notranslate"><span class="pre">root</span></code> tabs for global administrators, parses the holiday prefix, and on save rebuilds the crontab from the posted <code class="docutils literal notranslate"><span class="pre">normal_tasks</span></code> / <code class="docutils literal notranslate"><span class="pre">special_tasks</span></code> / <code class="docutils literal notranslate"><span class="pre">env_settings</span></code>. <code class="docutils literal notranslate"><span class="pre">manager.py</span></code> (<code class="docutils literal notranslate"><span class="pre">CronManager</span></code>) reads with <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-l</span> <span class="pre">-u</span> <span class="pre">&lt;user&gt;</span></code> and writes with <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-</span> <span class="pre">-u</span> <span class="pre">&lt;user&gt;</span></code>, using <code class="docutils literal notranslate"><span class="pre">reconfigure</span></code>’s <code class="docutils literal notranslate"><span class="pre">CrontabConfig</span></code> to parse the file.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<p>Declared in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, all <code class="docutils literal notranslate"><span class="pre">default:</span> <span class="pre">False</span></code> (role defaults in <code class="docutils literal notranslate"><span class="pre">permissions.yml</span></code>, granted only to the global administrator):</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Permission</p></th>
+<th class="head"><p>Grants</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:crontab:read</span></code></p></td>
+<td><p>read the user’s crontab</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:crontab:write</span></code></p></td>
+<td><p>modify the user’s crontab</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/crontab</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:crontab:read</span></code></p></td>
+<td><p>Parsed <code class="docutils literal notranslate"><span class="pre">global-admin</span></code> and <code class="docutils literal notranslate"><span class="pre">root</span></code> crontabs plus the active school</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/crontab</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:crontab:write</span></code></p></td>
+<td><p>Rebuild and save both crontabs</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code> and the <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> plugin (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>), which provides the school context and <code class="docutils literal notranslate"><span class="pre">sophomorixRole</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">reconfigure</span></code> library (<code class="docutils literal notranslate"><span class="pre">CrontabConfig</span></code>, crontab item classes).</p></li>
+<li><p>The system <code class="docutils literal notranslate"><span class="pre">crontab</span></code> command and <code class="docutils literal notranslate"><span class="pre">/usr/sbin/linuxmuster-holiday</span></code> on the server.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_common.html" class="btn btn-neutral float-left" title="lmn_common" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_device-manager.html" class="btn btn-neutral float-right" title="lmn_device-manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

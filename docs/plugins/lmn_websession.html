@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_websession &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_wireguard" href="lmn_wireguard.html" />
+    <link rel="prev" title="lmn_w_datetime" href="lmn_w_datetime.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_websession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-new-session-modal">Create new session modal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#public-join-page">Public join page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-configuration">Requirements / Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_websession</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_websession.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-websession">
+<h1>lmn_websession<a class="headerlink" href="#lmn-websession" title="Link to this heading"></a></h1>
+<p>Web-session (BigBlueButton) plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It lets teachers create, start, join and stop BBB web conferences for selected users and school classes, and gives external attendees a public join page.</p>
+<p>The plugin talks directly to a BigBlueButton instance over its HTTP API (checksum-signed calls built in <code class="docutils literal notranslate"><span class="pre">api.py</span></code>); it does not go through <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> for the conference calls. The session list is persisted as a local JSON file on the server.</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>Opened from the sidebar as <strong>Websession</strong> (category <em>class</em>), the view is reserved to the teacher workflow:</p>
+<ul class="simple">
+<li><p>If the module is not configured, an info banner <strong>Websession-Module not enabled! Please check Config-File!</strong> is shown instead of the list.</p></li>
+<li><p><strong>Running Websession</strong> panel — a table of the conferences the current user moderates or participates in, with columns <strong>Sessionname</strong>, <strong>Moderator</strong>, <strong>Password</strong>, <strong>Participants</strong> (count, click to open a participants modal), <strong>Status</strong> (<code class="docutils literal notranslate"><span class="pre">started</span></code> / <code class="docutils literal notranslate"><span class="pre">stopped</span></code>). A lock / open-lock icon marks whether the current user owns the session.</p></li>
+<li><p>Per row the owner (moderator) can <strong>Start</strong> (play), <strong>Join as moderator / attendee</strong> (play, when running), <strong>Stop</strong>, <strong>Delete</strong> (trash), <strong>Show URL</strong> and <strong>Copy URL</strong> (clipboard). Non-owners see these actions disabled. Joining opens the BBB meeting in a new browser tab.</p></li>
+<li><p>A <strong>＋</strong> button (visible only to users whose <code class="docutils literal notranslate"><span class="pre">sophomorixRole</span> <span class="pre">==</span> <span class="pre">'teacher'</span></code>) opens the <strong>Create new session</strong> modal, and a <strong>sync</strong> button refreshes the list.</p></li>
+</ul>
+<section id="create-new-session-modal">
+<h3>Create new session modal<a class="headerlink" href="#create-new-session-modal" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Name</strong>, <strong>Type</strong> (<strong>Public</strong> or <strong>Password</strong>, with a password field shown for the password type).</p></li>
+<li><p><strong>Add User</strong> and <strong>Add Class</strong> typeahead fields (search users / school classes), feeding a selectable <strong>Users</strong> participant list that can be built up and trimmed before creating the session.</p></li>
+</ul>
+</section>
+<section id="public-join-page">
+<h3>Public join page<a class="headerlink" href="#public-join-page" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/websession/&lt;name&gt;</span></code> serves a standalone HTML page (<code class="docutils literal notranslate"><span class="pre">public.html</span></code>, German UI) for external attendees. It polls the backend for the session name, whether a password is required, and whether the meeting is running; once the conference is started it enables the <strong>Start</strong> button, checks the entered password, and redirects the visitor into the BBB meeting.</p>
+</section>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> exposes the endpoints below. Conference lifecycle calls (create/start/join/end/isMeetingRunning) are delegated to the BBB API through <code class="docutils literal notranslate"><span class="pre">api.py</span></code> (<code class="docutils literal notranslate"><span class="pre">bbbApiCall</span></code>, <code class="docutils literal notranslate"><span class="pre">getURL</span></code>, <code class="docutils literal notranslate"><span class="pre">bbbGenerateChecksum</span></code>). On create, the handler generates the meeting id, the attendee password and the moderator password with <code class="docutils literal notranslate"><span class="pre">secrets.choice(string.ascii_lowercase</span> <span class="pre">+</span> <span class="pre">string.digits)</span></code> (20-char attendee/moderator passwords, a 10-char random suffix for the id), runs the names through <code class="docutils literal notranslate"><span class="pre">replaceSpecialChars</span></code> (German umlaut transliteration), sets the moderator to the calling identity, and appends the entry to the session list JSON. Several read endpoints and the join/public endpoints are declared <code class="docutils literal notranslate"><span class="pre">auth=False</span></code> so the public page can reach them.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<p>No <code class="docutils literal notranslate"><span class="pre">PermissionProvider</span></code> is declared. Access is controlled only through the sidebar entry in <code class="docutils literal notranslate"><span class="pre">permissions.yml</span></code> (<code class="docutils literal notranslate"><span class="pre">sidebar:view:/view/lmn/websession</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code> by default for every role). Within the view, creating sessions is further limited client-side to the <code class="docutils literal notranslate"><span class="pre">teacher</span></code> role.</p>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>. Endpoints marked <em>public</em> use <code class="docutils literal notranslate"><span class="pre">auth=False</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Auth</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/lmn/websession/webConferenceEnabled</span></code></p></td>
+<td><p>authenticated</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if the config/list files load successfully</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/lmn/websession/webConferences</span></code></p></td>
+<td><p>authenticated</p></td>
+<td><p>Sessions the current user moderates or joins, with live <code class="docutils literal notranslate"><span class="pre">started</span></code>/<code class="docutils literal notranslate"><span class="pre">stopped</span></code> status</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/lmn/websession/webConferences/&lt;sessionname&gt;</span></code></p></td>
+<td><p>authenticated</p></td>
+<td><p>A single session by name, with live status</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/webConferences</span></code></p></td>
+<td><p>authenticated</p></td>
+<td><p>Create a session (generates ids/passwords, appends to the list file)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/startWebConference</span></code></p></td>
+<td><p>authenticated</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">create</span></code> the meeting on the BBB instance</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/joinWebConference</span></code></p></td>
+<td><p>public</p></td>
+<td><p>Return the BBB <code class="docutils literal notranslate"><span class="pre">join</span></code> URL for the given id/password/name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/endWebConference</span></code></p></td>
+<td><p>authenticated</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">end</span></code> the meeting on the BBB instance</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/api/lmn/websession/webConference/&lt;id&gt;</span></code></p></td>
+<td><p>authenticated</p></td>
+<td><p>Remove a session from the list file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/session/hasPassword</span></code></p></td>
+<td><p>public</p></td>
+<td><p>Session type (<code class="docutils literal notranslate"><span class="pre">public</span></code>/<code class="docutils literal notranslate"><span class="pre">password</span></code>) for an id</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/session/name</span></code></p></td>
+<td><p>public</p></td>
+<td><p>Session display name for an id</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/session/checkPassword</span></code></p></td>
+<td><p>public</p></td>
+<td><p>Return the attendee password if the submitted password matches, else <code class="docutils literal notranslate"><span class="pre">error</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/lmn/websession/session/isRunning</span></code></p></td>
+<td><p>public</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> from BBB <code class="docutils literal notranslate"><span class="pre">isMeetingRunning</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/websession/&lt;name&gt;</span></code></p></td>
+<td><p>public (page)</p></td>
+<td><p>Serve the public join page (<code class="docutils literal notranslate"><span class="pre">public.html</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="requirements-configuration">
+<h2>Requirements / Configuration<a class="headerlink" href="#requirements-configuration" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code> and the <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> plugin (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>).</p></li>
+<li><p>A reachable <strong>BigBlueButton</strong> instance; <code class="docutils literal notranslate"><span class="pre">api.py</span></code> requires <code class="docutils literal notranslate"><span class="pre">requests</span></code> and <code class="docutils literal notranslate"><span class="pre">xmltodict</span></code>.</p></li>
+<li><p>Settings file <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/webui/websession/websession_config.json</span></code>:</p></li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;bbbInstance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://bbb.example.com/bigbluebutton/api/&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;bbbSecret&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;herecomesthesecretkey&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Session store <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/webui/websession/websession_list.json</span></code>, initialised empty:</p></li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_w_datetime.html" class="btn btn-neutral float-left" title="lmn_w_datetime" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_wireguard.html" class="btn btn-neutral float-right" title="lmn_wireguard" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

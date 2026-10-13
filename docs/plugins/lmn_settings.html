@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_settings &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_setup_wizard" href="lmn_setup_wizard.html" />
+    <link rel="prev" title="lmn_session_new" href="lmn_session_new.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#school-settings-view-lmn-schoolsettings">School Settings (<code class="docutils literal notranslate"><span class="pre">/view/lmn/schoolsettings</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#global-settings-view-lmn-globalsettings">Global Settings (<code class="docutils literal notranslate"><span class="pre">/view/lmn/globalsettings</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_settings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_settings.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-settings">
+<h1>lmn_settings<a class="headerlink" href="#lmn-settings" title="Link to this heading"></a></h1>
+<p>Settings plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It holds the two configuration hubs of the server: the per-school <strong>School Settings</strong> (mostly <code class="docutils literal notranslate"><span class="pre">sophomorix</span></code>’s <code class="docutils literal notranslate"><span class="pre">school.conf</span></code> and related files) and the server-wide <strong>Global Settings</strong> (webui/API config, subnets, SMTP relay, allowed roles, API keys, external services).</p>
+<p>It is a front end that reads and writes config files through <code class="docutils literal notranslate"><span class="pre">linuxmusterTools.lmnfile</span></code> (<code class="docutils literal notranslate"><span class="pre">school.conf</span></code>, <code class="docutils literal notranslate"><span class="pre">subnets.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">holidays.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">custom_fields.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">password_constraints.yml</span></code>, the webui and <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> <code class="docutils literal notranslate"><span class="pre">config.yml</span></code>), and shells out to <code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code>, <code class="docutils literal notranslate"><span class="pre">linuxmuster-import-subnets</span></code> and <code class="docutils literal notranslate"><span class="pre">systemctl</span></code> where needed.</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>Two sidebar entries (under <em>School settings / defaults</em>).</p>
+<section id="school-settings-view-lmn-schoolsettings">
+<h3>School Settings (<code class="docutils literal notranslate"><span class="pre">/view/lmn/schoolsettings</span></code>)<a class="headerlink" href="#school-settings-view-lmn-schoolsettings" title="Link to this heading"></a></h3>
+<p>Reads/writes the active school’s <code class="docutils literal notranslate"><span class="pre">school.conf</span></code> (and related files) in tabs:</p>
+<ul class="simple">
+<li><p><strong>General</strong> — school long name, per-role mail domains (students, teachers, adminclass, teacherclass, project) and the print server.</p></li>
+<li><p><strong>Listimport</strong> — username/password generation per user file (students / teachers / extrastudents): reverse surname/firstname, surname/firstname chars, password length, random password, tolerance &amp; deactivation days, slash-to-hyphen in class names; CSV <strong>encoding</strong> (with detected encoding via <code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code>); and a custom <strong>filter script</strong> path per file.</p></li>
+<li><p><strong>Quota</strong> — default global/school quota, cloud-quota percentage and mail-quota default, per role (student / teacher / schooladministrator).</p></li>
+<li><p><strong>Printing data</strong> — password-sheet header (school name, admin description), landing-page / webui / Moodle / webmail URLs and comments printed on the sheets, and the choice of <strong>LaTeX templates</strong> (one-per-page and multiple-per-page) discovered under the school’s and the global sophomorix template directories.</p></li>
+<li><p><strong>Custom fields</strong> — per role (students/teachers/school- and global-administrators): configure the sophomorix <em>custom</em>, <em>customMulti</em> and <em>proxyAddresses</em> fields (title, show in user details, user-editable) and which custom values appear in user lists.</p></li>
+<li><p><strong>Holidays</strong> — table of holiday ranges (name, start, end) with date validation, add/remove.</p></li>
+<li><p><strong>Password constraints</strong> — per-role password rules: a <strong>default</strong> block (all schools, editable only by global administrators) and an optional <strong>per-school override</strong> (minimum length, required character classes, required count).</p></li>
+</ul>
+<p>A floating toolbar offers context-sensitive actions per tab: <strong>Save</strong>, <strong>Save &amp; check</strong> (General), <strong>Save &amp; Apply Quota</strong> (Quota), <strong>Save</strong> for holidays/custom fields/password constraints, plus a <strong>backups</strong> button.</p>
+</section>
+<section id="global-settings-view-lmn-globalsettings">
+<h3>Global Settings (<code class="docutils literal notranslate"><span class="pre">/view/lmn/globalsettings</span></code>)<a class="headerlink" href="#global-settings-view-lmn-globalsettings" title="Link to this heading"></a></h3>
+<p>Server-wide configuration in tabs:</p>
+<ul class="simple">
+<li><p><strong>General</strong> — language, max session time, SSL certificate / FQDN certificate paths, force SSL, trusted domains and proxies. Buttons: <strong>Save</strong>, <strong>Restart WebUI</strong>.</p></li>
+<li><p><strong>Subnets</strong> — editable table of <code class="docutils literal notranslate"><span class="pre">subnets.csv</span></code> (network/prefix, router IP, lease range, nameserver, tftp server, setup flag) with a danger warning; <strong>Save &amp; Apply Subnets</strong> runs <code class="docutils literal notranslate"><span class="pre">linuxmuster-import-subnets</span></code>.</p></li>
+<li><p><strong>Smtp relay</strong> — enable the mail relay and set SMTP host/port (TLS 587 / SSL 465), user, password (show/hide), and the reset-email template.</p></li>
+<li><p><strong>Allowed roles</strong> — which roles may log into the webui (globaladministrator is forced on).</p></li>
+<li><p><strong>Api Keys</strong> — manage <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> host keys: enable host-key auth, add/edit/delete keys with IPs, scope (method+path globs, <code class="docutils literal notranslate"><span class="pre">*</span></code> / <code class="docutils literal notranslate"><span class="pre">**</span></code>), associated user context, and reveal the generated secret once. Shows a notice when <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> is not installed.</p></li>
+<li><p><strong>2FA</strong> — list and delete registered second-factor tokens.</p></li>
+<li><p><strong>Edulution UI</strong> — status checks (API installed, API running, bind-user exists), create the edulution bind user, set the external domain, and generate/copy the edulution setup token.</p></li>
+<li><p><strong>About Linuxmuster.net</strong> — table of installed package versions.</p></li>
+</ul>
+</section>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> exposes the endpoints below. School-settings reads/writes <code class="docutils literal notranslate"><span class="pre">school.conf</span></code>, <code class="docutils literal notranslate"><span class="pre">custom_fields.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">password_constraints.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">holidays.yml</span></code> via <code class="docutils literal notranslate"><span class="pre">LMNFile</span></code> (and <code class="docutils literal notranslate"><span class="pre">setup.ini</span></code> on school rename); password-constraint rules are validated with <code class="docutils literal notranslate"><span class="pre">linuxmusterTools.passwords.PasswordRules</span></code> and scoped by the caller’s real <code class="docutils literal notranslate"><span class="pre">sophomorixRole</span></code>. Subnet save shells out to <code class="docutils literal notranslate"><span class="pre">linuxmuster-import-subnets</span></code>. The edulution, allowed-roles and API-key endpoints are guarded by an <code class="docutils literal notranslate"><span class="pre">os.getuid()</span> <span class="pre">!=</span> <span class="pre">0</span></code> check (valid in Ajenti, where workers are forked per role) rather than <code class="docutils literal notranslate"><span class="pre">&#64;authorize</span></code>; API-key changes restart <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> via <code class="docutils literal notranslate"><span class="pre">systemctl</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<p>Declared in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, all <code class="docutils literal notranslate"><span class="pre">default:</span> <span class="pre">False</span></code>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Permission</p></th>
+<th class="head"><p>Grants</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>configure the per-school settings</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:globalsettings</span></code></p></td>
+<td><p>configure the server-wide (global) settings</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>. Endpoints without an <code class="docutils literal notranslate"><span class="pre">&#64;authorize</span></code> guard are restricted by an <code class="docutils literal notranslate"><span class="pre">os.getuid()</span> <span class="pre">!=</span> <span class="pre">0</span></code> check instead (403 for non-root/non-admin workers).</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/schoolsettings</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Read <code class="docutils literal notranslate"><span class="pre">school.conf</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/schoolsettings</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Write <code class="docutils literal notranslate"><span class="pre">school.conf</span></code> (and <code class="docutils literal notranslate"><span class="pre">setup.ini</span></code> schoolname)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/schoolsettings/determine-encoding</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Detect a CSV file’s encoding</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/schoolsettings/latex-templates</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>List the LaTeX password templates</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/config/customfields/&lt;role&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Read the custom-fields config</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/config/customfields</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Save the custom-fields config</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/config/passwordconstraints</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Read password constraints (scoped by role)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/config/passwordconstraints</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Validate &amp; save password constraints</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/holidays</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Read <code class="docutils literal notranslate"><span class="pre">holidays.yml</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/holidays</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:schoolsettings</span></code></p></td>
+<td><p>Write <code class="docutils literal notranslate"><span class="pre">holidays.yml</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/subnets</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:globalsettings</span></code></p></td>
+<td><p>Read <code class="docutils literal notranslate"><span class="pre">subnets.csv</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/subnets</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:globalsettings</span></code></p></td>
+<td><p>Write <code class="docutils literal notranslate"><span class="pre">subnets.csv</span></code> and run <code class="docutils literal notranslate"><span class="pre">linuxmuster-import-subnets</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/edulution/api-status</span></code></p></td>
+<td><p><em>(getuid n/a — no secret)</em></p></td>
+<td><p>Edulution API install/run status</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/edulution/generate</span></code></p></td>
+<td><p><em>(getuid root-only)</em></p></td>
+<td><p>Generate the edulution setup hash</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/webuisettings/allowed_roles</span></code></p></td>
+<td><p><em>(getuid root-only)</em></p></td>
+<td><p>Read the webui allowed roles</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/webuisettings/allowed_roles</span></code></p></td>
+<td><p><em>(getuid root-only)</em></p></td>
+<td><p>Save the webui allowed roles</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/apisettings</span></code></p></td>
+<td><p><em>(getuid root-only)</em></p></td>
+<td><p>Read <code class="docutils literal notranslate"><span class="pre">linuxmuster-api</span></code> host keys</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/apikeys</span></code></p></td>
+<td><p><em>(getuid root-only)</em></p></td>
+<td><p>Save host keys (restarts the API)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PUT</span> <span class="pre">/apikeys</span></code></p></td>
+<td><p><em>(getuid root-only)</em></p></td>
+<td><p>Generate a secret for a new key (restarts the API)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/apikeys/&lt;keyname&gt;</span></code></p></td>
+<td><p><em>(getuid root-only)</em></p></td>
+<td><p>Delete a host key (restarts the API)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Several tabs of the Global Settings page also call endpoints owned by other plugins (ajenti config, 2FA, SMTP config, package versions, <code class="docutils literal notranslate"><span class="pre">/api/lmn/read-config-setup</span></code>), which are not part of this plugin.</p>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code> and the <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> plugin (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>); <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> provides <code class="docutils literal notranslate"><span class="pre">allowed_roles</span></code>, <code class="docutils literal notranslate"><span class="pre">ALL_ROLES</span></code>, <code class="docutils literal notranslate"><span class="pre">config_path</span></code> and the school manager context.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmuster-tools</span></code> (<code class="docutils literal notranslate"><span class="pre">linuxmusterTools.lmnfile</span></code>, <code class="docutils literal notranslate"><span class="pre">linuxmusterTools.passwords</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sophomorix</span></code> (<code class="docutils literal notranslate"><span class="pre">sophomorix-check</span></code>, LaTeX template dirs) and <code class="docutils literal notranslate"><span class="pre">linuxmuster-import-subnets</span></code> on the server.</p></li>
+<li><p>Config files: <code class="docutils literal notranslate"><span class="pre">school.conf</span></code>, <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/subnets.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/sophomorix/&lt;school&gt;/{holidays.yml,custom_fields.yml,latex-templates/}</span></code>, <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/tools/password_constraints.yml</span></code>, the webui <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> and (optionally) <code class="docutils literal notranslate"><span class="pre">/etc/linuxmuster/api/config.yml</span></code>.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_session_new.html" class="btn btn-neutral float-left" title="lmn_session_new" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_setup_wizard.html" class="btn btn-neutral float-right" title="lmn_setup_wizard" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

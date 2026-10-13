@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lmn_linbo4 &mdash; linuxmuster-webui7 7.4.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=472cca7c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=58d62d9a"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=8fd896e3"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lmn_linbo_sync" href="lmn_linbo_sync.html" />
+    <link rel="prev" title="lmn_landingpage" href="lmn_landingpage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            linuxmuster-webui7
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_clients.html">lmn_clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_device-manager.html">lmn_device-manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">lmn_landingpage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lmn_linbo4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features-web-interface">Features (web interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend">Backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#http-api">HTTP API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_links.html">lmn_links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_nextcloud.html">lmn_nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_permissions.html">lmn_permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_dns.html">lmn_samba_dns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_samba_shares.html">lmn_samba_shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session_new.html">lmn_session_new</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_smbclient.html">lmn_smbclient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">lmn_users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_administration.html">lmn_vdi_administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_vdi_dashboard.html">lmn_vdi_dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_w_datetime.html">lmn_w_datetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_websession.html">lmn_websession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_wireguard.html">lmn_wireguard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">lmn_linbo4</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/plugins/lmn_linbo4.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lmn-linbo4">
+<h1>lmn_linbo4<a class="headerlink" href="#lmn-linbo4" title="Link to this heading"></a></h1>
+<p>LINBO 4 management plugin for the <a class="reference external" href="https://www.linuxmuster.net">linuxmuster.net</a> web interface (Ajenti). It lets administrators edit the LINBO boot configurations (<code class="docutils literal notranslate"><span class="pre">start.conf.*</span></code>), their partitions and OS entries, and manage the LINBO images stored on the server (<code class="docutils literal notranslate"><span class="pre">/srv/linbo</span></code>).</p>
+<p>The plugin reads and writes the LINBO files directly on the server through <code class="docutils literal notranslate"><span class="pre">linuxmusterTools</span></code> (<code class="docutils literal notranslate"><span class="pre">LMNFile</span></code>, <code class="docutils literal notranslate"><span class="pre">LinboImageManager</span></code>); the privileged image work runs only in the root worker (<code class="docutils literal notranslate"><span class="pre">os.getuid()</span> <span class="pre">==</span> <span class="pre">0</span></code>).</p>
+<hr class="docutils" />
+<section id="features-web-interface">
+<h2>Features (web interface)<a class="headerlink" href="#features-web-interface" title="Link to this heading"></a></h2>
+<p>Opened from the sidebar as <strong>LINBO 4</strong> (under <em>Device management</em>), the view has two tabs:</p>
+<ul class="simple">
+<li><p><strong>Groups</strong> — a table of every hardware group (one <code class="docutils literal notranslate"><span class="pre">start.conf.&lt;group&gt;</span></code>) with <strong>Group name</strong>, <strong>Used images</strong> (shown as labels, <code class="docutils literal notranslate"><span class="pre">.qcow2</span></code> highlighted) and <strong>Actions</strong> (edit, duplicate, delete). A floating toolbar offers <strong>Download Linbo Boot</strong> (the LINBO ISO), <strong>Import devices</strong> (shown after a config change) and a <strong>Create</strong> dropdown to start an empty config or one copied from an example.</p></li>
+<li><p><strong>Images</strong> — a table of the images found on the server with <strong>Name</strong> / size, <strong>Differential image</strong> (with edit and delete), <strong>Used in group …</strong> labels and per-row actions: edit extras, show <strong>backups</strong> (history), duplicate, delete. Rows can be checkbox-selected to <strong>Delete selected images</strong>. An info banner is shown when no image exists yet.</p></li>
+</ul>
+<p>Editing happens through several modals:</p>
+<ul class="simple">
+<li><p><strong>Config editor</strong> (<code class="docutils literal notranslate"><span class="pre">config.modal.html</span></code>) — tabs <strong>General</strong> (root logout timeout, system/download type, start options, LINBO GUI language, background color via colorpicker, kernel options), <strong>Partitions</strong> (add/remove/edit partitions and disks: EFI, MSR, Windows, Linux, Swap, Data, Extended, Cache) and <strong>Virtual Desktop (VDI)</strong> (VM template settings, VM name, BIOS type).</p></li>
+<li><p><strong>Partition editor</strong> (<code class="docutils literal notranslate"><span class="pre">partition.modal.html</span></code>) — label, size, flags, partition type, filesystem, and the attached <strong>OS</strong> (name, version, default, icon, base/differential image, boot buttons, autostart timeout, kernel/initrd and parameters, OPSI options, advanced settings).</p></li>
+<li><p><strong>Image editor</strong> (<code class="docutils literal notranslate"><span class="pre">image.modal.html</span></code>) — tabs <strong>General</strong> (description, info, size), <strong>Registry patch</strong>, <strong>Postsync Script</strong> and <strong>Prestart Script</strong>, each with an insert-example helper.</p></li>
+<li><p><strong>Backups</strong> (<code class="docutils literal notranslate"><span class="pre">image.backups.modal.html</span></code>) — list of backups per image (status, name/size, comment) to restore or delete.</p></li>
+<li><p><strong>Import devices</strong> (<code class="docutils literal notranslate"><span class="pre">apply.modal.html</span></code>) — progress/log view while importing devices.</p></li>
+<li><p><strong>Remove partition</strong> confirmation (<code class="docutils literal notranslate"><span class="pre">accept.modal.html</span></code>).</p></li>
+</ul>
+<section id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">views.py</span></code> exposes the endpoints below, guarded by the plugin permissions. Config files are read/written with <code class="docutils literal notranslate"><span class="pre">LMNFile</span></code>; images are handled by <code class="docutils literal notranslate"><span class="pre">linuxmusterTools.linbo.LinboImageManager</span></code> (list, save extras, delete, rename, duplicate, restore/delete/save backups, delete diff). Config/image names are validated with <code class="docutils literal notranslate"><span class="pre">NameChecker.check_linbo_conf_name</span></code>, and file-serving endpoints guard the path against directory traversal.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<p>Declared in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, all <code class="docutils literal notranslate"><span class="pre">default:</span> <span class="pre">False</span></code>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Permission</p></th>
+<th class="head"><p>Grants</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:configs</span></code></p></td>
+<td><p>read/write <code class="docutils literal notranslate"><span class="pre">start.conf</span></code> files and restart image services</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>read/write images, backups, diff and VDI settings</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:examples</span></code></p></td>
+<td><p>read the example files under <code class="docutils literal notranslate"><span class="pre">/srv/linbo/examples</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:icons</span></code></p></td>
+<td><p>read/write the LINBO icons</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="http-api">
+<h2>HTTP API<a class="headerlink" href="#http-api" title="Link to this heading"></a></h2>
+<p>Mounted under <code class="docutils literal notranslate"><span class="pre">/api/lmn/</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method &amp; path</p></th>
+<th class="head"><p>Permission</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/groups</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:configs</span></code></p></td>
+<td><p>List the LINBO groups (valid <code class="docutils literal notranslate"><span class="pre">start.conf.*</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/configs</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:configs</span></code></p></td>
+<td><p>All configs with their images and LINBO settings</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/examples/&lt;type&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:examples</span></code></p></td>
+<td><p>List example files (<code class="docutils literal notranslate"><span class="pre">config</span></code>, <code class="docutils literal notranslate"><span class="pre">reg</span></code>, <code class="docutils literal notranslate"><span class="pre">postsync</span></code>, <code class="docutils literal notranslate"><span class="pre">prestart</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/icons</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:icons</span></code></p></td>
+<td><p>List the <code class="docutils literal notranslate"><span class="pre">.svg</span></code> icons</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/icons/&lt;name&gt;</span></code></p></td>
+<td><p>— (page)</p></td>
+<td><p>Serve an icon file (path-guarded)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/vdi/&lt;name&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Read VDI settings for an image</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/vdi/&lt;name&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Write VDI settings for an image</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/config/&lt;name&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:configs</span></code></p></td>
+<td><p>Read a <code class="docutils literal notranslate"><span class="pre">start.conf</span></code> (also from <code class="docutils literal notranslate"><span class="pre">examples/</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/config/&lt;name&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:configs</span></code></p></td>
+<td><p>Write a <code class="docutils literal notranslate"><span class="pre">start.conf</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/linbo4/config/&lt;name&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:configs</span></code></p></td>
+<td><p>Back up then delete a <code class="docutils literal notranslate"><span class="pre">start.conf</span></code> and its grub <code class="docutils literal notranslate"><span class="pre">.cfg</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/images</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>List all images with their details</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/images/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Save an image’s extras (optionally on the diff)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/linbo4/images/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Delete an image</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/renameImage/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Rename an image</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/duplicateImage/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Duplicate an image</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/restoreBackupImage/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Restore a backup by date</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/deleteBackupImage/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Delete a backup by date</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/linbo4/saveBackupImage/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Save a backup’s extras with a timestamp</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/linbo4/deleteDiffImage/&lt;image&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:images</span></code></p></td>
+<td><p>Delete an image’s differential image</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/linbo4/restart-services</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lm:linbo:configs</span></code></p></td>
+<td><p>Restart the torrent and multicast services</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/lmn/download/linbo.iso</span></code></p></td>
+<td><p>— (page)</p></td>
+<td><p>Download <code class="docutils literal notranslate"><span class="pre">/srv/linbo/linbo.iso</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ajenti <code class="docutils literal notranslate"><span class="pre">core</span></code>, <code class="docutils literal notranslate"><span class="pre">filesystem</span></code>, <code class="docutils literal notranslate"><span class="pre">lmn_common</span></code> and <code class="docutils literal notranslate"><span class="pre">lmn_devices</span></code> (dependencies in <code class="docutils literal notranslate"><span class="pre">plugin.yml</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linuxmuster-tools</span></code> (<code class="docutils literal notranslate"><span class="pre">linuxmusterTools.lmnfile</span></code>, <code class="docutils literal notranslate"><span class="pre">linuxmusterTools.linbo</span></code>, <code class="docutils literal notranslate"><span class="pre">linuxmusterTools.common.checks</span></code>).</p></li>
+<li><p>The LINBO tree under <code class="docutils literal notranslate"><span class="pre">/srv/linbo</span></code> (configs, <code class="docutils literal notranslate"><span class="pre">examples/</span></code>, <code class="docutils literal notranslate"><span class="pre">icons/</span></code>, <code class="docutils literal notranslate"><span class="pre">boot/grub</span></code>, <code class="docutils literal notranslate"><span class="pre">linbo.iso</span></code>).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">angular-bootstrap-colorpicker</span></code> vendor library (bundled under <code class="docutils literal notranslate"><span class="pre">resources/vendor</span></code>).</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmn_landingpage.html" class="btn btn-neutral float-left" title="lmn_landingpage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_linbo_sync.html" class="btn btn-neutral float-right" title="lmn_linbo_sync" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Arnaud Kientz - 2026.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

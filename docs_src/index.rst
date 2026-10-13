@@ -38,7 +38,34 @@ This documentation only lists an API reference for the specific plugins in linux
    :caption: Plugins
    :hidden:
 
-   plugins/lmn_auth.rst
+   plugins/lmn_auth
+   plugins/lmn_clients
+   plugins/lmn_common
+   plugins/lmn_crontab
+   plugins/lmn_device-manager
+   plugins/lmn_devices
+   plugins/lmn_dhcp
+   plugins/lmn_docker
+   plugins/lmn_groupmembership
+   plugins/lmn_landingpage
+   plugins/lmn_linbo4
+   plugins/lmn_linbo_sync
+   plugins/lmn_links
+   plugins/lmn_nextcloud
+   plugins/lmn_permissions
+   plugins/lmn_quotas
+   plugins/lmn_samba_dns
+   plugins/lmn_samba_shares
+   plugins/lmn_session_new
+   plugins/lmn_settings
+   plugins/lmn_setup_wizard
+   plugins/lmn_smbclient
+   plugins/lmn_users
+   plugins/lmn_vdi_administration
+   plugins/lmn_vdi_dashboard
+   plugins/lmn_w_datetime
+   plugins/lmn_websession
+   plugins/lmn_wireguard
 
 .. toctree::
    :maxdepth: 1

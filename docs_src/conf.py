@@ -13,7 +13,8 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
-    'autoapi.extension']
+    'autoapi.extension',
+    'myst_parser']
 autosummary_generate = True
 
 # The API reference is generated statically from the plugins' source by
@@ -24,6 +25,13 @@ autoapi_dirs = ['../usr/lib/linuxmuster-webui/plugins']
 autoapi_type = 'python'
 autoapi_ignore = ['*/conf.py', '*/resources/*', '*/locale/*', '*/migrations/*', '*/pytests/*', '*/test_*']
 autoapi_options = ['members', 'undoc-members', 'show-inheritance', 'special-members']
+
+# The per-plugin pages under plugins/ include each plugin's README.md
+# (Markdown) as narrative, rendered by myst-parser. The READMEs keep
+# GitHub-relative links to each other (../lmn_x/README.md); those don't
+# resolve as Sphinx cross-references but must stay valid on GitHub.
+myst_heading_anchors = 3
+suppress_warnings = ['myst.xref_missing']
 
 templates_path = ['_templates']
 source_suffix = '.rst'

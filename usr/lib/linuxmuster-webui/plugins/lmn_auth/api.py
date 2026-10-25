@@ -279,8 +279,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if not username:
             return False
 
-        ## When 2FA is activated, auth_info is missing in prepare_session
-        ## Must be fixed in Ajenti
         auth_info = getattr(self.context.session, 'auth_info', None)
         if auth_info is None:
             permissions = {}

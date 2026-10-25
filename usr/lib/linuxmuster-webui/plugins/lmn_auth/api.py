@@ -96,7 +96,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
             auth_info = getattr(self.context.session, 'auth_info', None) or {}
             self.context.lmnapi_client = LmnapiClient()
-            self.context.lmnapi_client.token = auth_info.get('token')
+            self.context.lmnapi_client.token = auth_info.pop('token', None)
 
             def schoolget(*args, **kwargs):
                 """

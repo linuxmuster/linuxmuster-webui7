@@ -1,3 +1,27 @@
+linuxmuster-webui7 (7.4.14) lmn74; urgency=medium
+
+  * [security] [lmn_auth] The password is no longer kept after the
+    login: only the linuxmuster-api token is retrieved, and it stays in
+    the session worker. With two-factor authentication, the token was
+    lost at the TOTP step and every request to linuxmuster-api failed
+    with "api not available". Needs Ajenti 2.2.18.
+  * [security] [lmn_auth] The sudo elevation is disabled.
+  * [security] [lmn_users] Only the installed LaTeX templates can be
+    used to print passwords, no arbitrary path.
+  * [security] [lmn_wireguard] The wireguard endpoint is restricted to
+    administrators.
+  * [security] [lmn_device-manager] The route running arbitrary commands
+    is removed, and the plugin is marked as deprecated.
+  * [security] [lmn_websession] Session ids and BigBlueButton passwords
+    are generated with secrets instead of random.
+  * [lmn_linbo4] Deleting an image warns that its whole directory is
+    removed, backups and files added by hand included.
+  * [packaging] Requires Ajenti 2.2.18, core plugin 0.117 and settings
+    plugin 0.36.
+  * [packaging] Depends on linuxmuster-tools7 (>= 7.4.20).
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 25 Oct 2026 22:45:00 +0100
+
 linuxmuster-webui7 (7.4.13) lmn74; urgency=medium
 
   * [security] [lmn_linbo4] Avoid path traversal in the config/ and vdi/

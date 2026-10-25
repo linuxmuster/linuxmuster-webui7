@@ -22,6 +22,10 @@ config.setdefault('view', {})
 config['view'].setdefault('plugin', 'lmn_common')
 config['view'].setdefault('filepath', 'resources/content/main_view.html')
 
+# Sudo elevation is refused to everyone
+config.setdefault('auth', {})
+config['auth']['allow_sudo'] = False
+
 # Write new config file
 with open('/etc/ajenti/config.yml', 'w') as config_file:
     config_file.write(

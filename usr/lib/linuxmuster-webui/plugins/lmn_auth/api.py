@@ -26,6 +26,16 @@ from aj.api.endpoint import EndpointError
 from linuxmusterTools.ldapconnector import LMNLdapReader
 
 
+# Sudo elevation is refused to everyone. This monkey patch overrides the config.
+if hasattr(AuthenticationService, 'check_sudo_password'):
+    AuthenticationService.check_sudo_password = lambda self, username, password: False
+else:
+    logging.critical(
+        'AuthenticationService.check_sudo_password not found: the sudo elevation '
+        'to root may be allowed again for every user with sudo rights, check lmn_auth.'
+    )
+
+
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
     """

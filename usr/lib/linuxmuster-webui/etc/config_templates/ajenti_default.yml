@@ -1,5 +1,5 @@
 auth:
-  allow_sudo: true
+  allow_sudo: false
   emails: {}
   provider: lm
   user_config: lm

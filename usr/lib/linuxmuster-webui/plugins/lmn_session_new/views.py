@@ -266,27 +266,13 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_user_in_room(self, http_context):
-        schoolname = self.context.schoolmgr.school
         username = self.context.identity
         try:
-            sophomorixCommand = ['sophomorix-query', '-jj', '--smbstatus', '--schoolbase', schoolname, '--query-user', username]
-            response = lmn_getSophomorixValue(sophomorixCommand, '')
-            # remove our own
-            room = response[username]['ROOM']
-            response.pop(username, None)
-            return {
-                "usersList": list(response.keys()) if response else [],
-                "name": room,
-                "objects": response,
-            }
-        except IndexError as e:
-            # response is an empty dict, not able to detect the room
-            # or the other users in room
-            return {
-                "usersList": [],
-                "name": '',
-                "objects": {},
-            }
+            return self.context.lmnapi_client.get_user_in_room(username)
+        except (AttributeError, lmnapi_client.LmnapiUnavailable):
+            raise EndpointError(None, message=LMNAPI_UNAVAILABLE_MESSAGE)
+        except lmnapi_client.LmnapiError as e:
+            raise EndpointError(None, message=str(e))
 
     @get(r'/api/lmn/session/user-search/(?P<query>.*)')
     @authorize('lm:users:students:read')

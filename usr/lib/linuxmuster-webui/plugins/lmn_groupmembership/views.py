@@ -9,7 +9,7 @@ from jadi import component
 from urllib.parse import quote, unquote
 
 from aj.api.http import get, post, delete, HttpPlugin
-from aj.api.endpoint import endpoint, EndpointError
+from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, LMNAPI_UNAVAILABLE_MESSAGE
 from aj.plugins.lmn_common import lmnapi_client
@@ -322,8 +322,12 @@ class Handler(HttpPlugin):
                 # whole list, instead of one sophomorix-group call per entity.
                 return self.set_printer_members(action, groupname, entities)
 
+            if objtype not in ('class', 'project'):
+                raise EndpointReturn(403, 'Wrong type')
+
             # Projects and schoolclasses stay on sophomorix, which carries real
             # business logic there (home directories, quotas, exam mode).
+
             if action == 'removeproject':
                 option = ["--removemembers", entity, "--removeadmins", entity]
             else:
@@ -375,6 +379,10 @@ class Handler(HttpPlugin):
 
         type = http_context.json_body()['type']
         all_groups = http_context.json_body()['all_groups']
+
+        if type not in ('class', 'project'):
+            raise EndpointReturn(403, 'Wrong type')
+
         select = f'-{type[0]}'  # -c for class and -p for project
 
         sophomorixCommand = [f'sophomorix-{type}',  select, all_groups, '--admins', '""', '-jj']

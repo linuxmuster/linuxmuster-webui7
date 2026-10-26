@@ -1,3 +1,25 @@
+linuxmuster-webui7 (7.3.47) lmn73; urgency=medium
+
+  * Update to Ajenti 2.2.18 (security fixes).
+  * [security] [lmn_auth] The sudo elevation is disabled.
+  * [security] [lmn_linbo4] Avoid path traversal in the config/ and vdi/
+    routes.
+  * [security] [lmn_users] Only the installed LaTeX templates can be
+    used to print passwords, no arbitrary path.
+  * [security] [lmn_wireguard] The wireguard endpoint is restricted to
+    administrators.
+  * [security] [lmn_device-manager] The route running arbitrary commands
+    is removed, and the plugin is marked as deprecated.
+  * [security] [lmn_websession] Session ids and BigBlueButton passwords
+    are generated with secrets instead of random.
+  * [lmn_settings] [lmn_users] A refused request answers 403 instead of
+    failing with a 500.
+  * [packaging] Requires Ajenti 2.2.18, core plugin 0.117 and settings
+    plugin 0.36.
+  * [packaging] Depends on linuxmuster-tools7 (>= 7.3.29).
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 26 Oct 2026 09:40:31 +0100
+
 linuxmuster-webui7 (7.3.46) lmn73; urgency=medium
 
   * [lmnfile] Do not parse comment lines as CSV. 

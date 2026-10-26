@@ -128,6 +128,18 @@ class LmnapiClient:
 
         return self._request('GET', f'/v1/users/{user}/quotas', timeout=None)
 
+    def get_user_in_room(self, user):
+        """
+        Call GET /v1/samba/userInRoom/{user} to get the room of the client
+        where the user is connected, and the other users connected in this
+        room. smbstatus only works as root, so it can not run in the worker
+        of the session.
+
+        :return: {'usersList': [...], 'name': <room>, 'objects': {<user>: {'COMPUTER', ...}}}
+        """
+
+        return self._request('GET', f'/v1/samba/userInRoom/{user}')
+
     def add_management_group_members(self, group, users, school):
         """
         Call POST /v1/managementgroups/{group}/members to add users

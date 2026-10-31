@@ -124,14 +124,18 @@
         "url": "/api/wireguard/peers/" + peer + "/config",
         "method": "GET"
       }).then(function(resp) {
+        var modalScope;
         if (!resp.data) {
           return $uibModal.open({
             template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><div class='alert alert-warning' role='alert'>No configuration is available for this user. Please contact an administrator.</div></div>",
             size: 'mg'
           });
         } else {
+          modalScope = $scope.$new();
+          modalScope.config = resp.data.data;
           return $uibModal.open({
-            template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre>" + resp.data.data + "</pre></div>",
+            template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre ng-bind='config'></pre></div>",
+            scope: modalScope,
             size: 'mg'
           });
         }

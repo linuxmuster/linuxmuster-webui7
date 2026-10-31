@@ -37,8 +37,11 @@ angular.module('lmn.wireguard').controller('Lmn_wireguardIndexController', funct
 
     $scope.showConfig = function (peer) {
         $http.post('/api/lmn/wireguard', { "url": "/api/wireguard/peers/" + peer + "/config", "method": "GET" }).then(function (resp) {
+            var modalScope = $scope.$new();
+            modalScope.config = resp.data.data;
             $uibModal.open({
-                template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre>" + resp.data.data + "</pre></div>",
+                template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre ng-bind='config'></pre></div>",
+                scope: modalScope,
                 size: 'mg'
             });
         });

@@ -78,8 +78,11 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                     size: 'mg'
                 )
             else
+                modalScope = $scope.$new()
+                modalScope.config = resp.data.data
                 $uibModal.open(
-                    template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre>" + resp.data.data + "</pre></div>",
+                    template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre ng-bind='config'></pre></div>",
+                    scope: modalScope,
                     size: 'mg'
                 )
 

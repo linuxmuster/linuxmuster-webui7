@@ -135,7 +135,7 @@
             <br/>
 
             <progress-spinner ng:show="parents == null"></progress-spinner>
-            <div ng:show="parents != null"~
+            <div ng:show="parents != null"
                  flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
                  flow-files-submitted="onUploadBegin($flow)"
                  ng-style="style">
@@ -582,7 +582,7 @@
             <br/>
 
             <progress-spinner ng:show="staff == null"></progress-spinner>
-            <div ng:show="staff != null"~
+            <div ng:show="staff != null"
                  flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
                  flow-files-submitted="onUploadBegin($flow)"
                  ng-style="style">

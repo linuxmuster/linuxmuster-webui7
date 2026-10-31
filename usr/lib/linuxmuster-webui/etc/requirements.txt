@@ -5,7 +5,7 @@ ajenti.plugin.core==0.117
 ajenti.plugin.dashboard==0.42
 ajenti.plugin.filesystem==0.51
 ajenti.plugin.plugins==0.55
-ajenti.plugin.settings==0.36
+ajenti.plugin.settings==0.37
 ajenti.plugin.session-list==0.7
 configobj
 configparser==3.5.0

@@ -262,8 +262,14 @@ class Handler(HttpPlugin):
         :rtype: boolean 
         """
 
+        if not self.context.profile.get('school_show', False):
+            http_context.respond_forbidden()
+            return ''
+
         school = http_context.json_body()['school']
         try:
+            if school not in self.context.schoolmgr.schools:
+                return False
             self.context.schoolmgr.switch(school)
             return True
         except:

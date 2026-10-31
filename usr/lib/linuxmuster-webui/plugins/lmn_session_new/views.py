@@ -297,20 +297,24 @@ class Handler(HttpPlugin):
                 return
         return self.context.ldapreader.schoolget(f'/schoolclasses/search/{query}', sortkey='cn')
 
-    @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
-    @endpoint(api=True)
-    def handle_api_create_dir(self, http_context):
-        """
-        Create directory with given path, ignoring errors
-        Only used in upload service. Deprecated ?
-        """
+    ## DEPRECATED
+    ## Only called by the directives of lmn_common/resources/js/directives/upload.coffee,
+    ## which no template uses. Commented out before removal: unguarded, and it passes
+    ## a client path to sophomorix-transfer.
+    # @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
+    # @endpoint(api=True)
+    # def handle_api_create_dir(self, http_context):
+    #     """
+    #     Create directory with given path, ignoring errors
+    #     Only used in upload service. Deprecated ?
+    #     """
 
-        user = http_context.json_body()['user']
-        filepath = http_context.json_body()['filepath']
-        subdir = http_context.json_body()['subdir']
-        try:
-            sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', filepath, '--to-user', user, '--subdir', subdir, '-jj']
-            return lmn_getSophomorixValue(sophomorixCommand, '', True)
-        except Exception:
-            return 0
+    #     user = http_context.json_body()['user']
+    #     filepath = http_context.json_body()['filepath']
+    #     subdir = http_context.json_body()['subdir']
+    #     try:
+    #         sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', filepath, '--to-user', user, '--subdir', subdir, '-jj']
+    #         return lmn_getSophomorixValue(sophomorixCommand, '', True)
+    #     except Exception:
+    #         return 0
 

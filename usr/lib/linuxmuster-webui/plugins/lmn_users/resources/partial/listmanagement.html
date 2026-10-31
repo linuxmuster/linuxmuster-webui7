@@ -13,7 +13,7 @@
             <br/>
 
             <progress-spinner ng:show="students == null"></progress-spinner>
-            <div ng:show="students != null"~
+            <div ng:show="students != null"
                      flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
                      flow-files-submitted="onUploadBegin($flow)"
                      ng-style="style">

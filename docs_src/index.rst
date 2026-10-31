@@ -56,7 +56,7 @@ This documentation only lists an API reference for the specific plugins in linux
    plugins/lmn_quotas
    plugins/lmn_samba_dns
    plugins/lmn_samba_shares
-   plugins/lmn_session_new
+   plugins/lmn_session
    plugins/lmn_settings
    plugins/lmn_setup_wizard
    plugins/lmn_smbclient

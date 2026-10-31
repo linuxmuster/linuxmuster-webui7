@@ -1,5 +1,5 @@
 # DEPRECATED: no template uses smbUpload, uploads to SMB are built in the
-# templates of lmn_samba_shares and lmn_session_new. Commented out before removal.
+# templates of lmn_samba_shares and lmn_session. Commented out before removal.
 
 # angular.module('lmn.smbclient').directive 'smbUpload', ($http, $route, notify, messagebox, smbclient, gettext) ->
 #     return {

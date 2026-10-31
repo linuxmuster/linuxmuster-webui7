@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 13:01+0100\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -50,15 +50,15 @@ msgstr "입력하신 두 비밀번호가 다릅니다."
 msgid "Valid characters are: a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ }"
 msgstr "유효한 문자는 : a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ } 입니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:49
 msgid "Linux Muster LDAP"
 msgstr "리눅스 머스터 LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:454
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
-msgstr "최소 길이는 7글자입니다. 대문자, 소문자와 특수문자 또는 숫자를 사용하시오.(예시. Muster!)."
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:497
+msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!).Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
+msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:484
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:526
 msgid "Linuxmuster LDAP user config"
 msgstr "리눅스 머스터 LDAP 사용자 구성"
 
@@ -66,11 +66,15 @@ msgstr "리눅스 머스터 LDAP 사용자 구성"
 msgid "Change Password"
 msgstr "비밀번호 변경"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:15
+msgid "You have to enter a password"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:19
 msgid "Password changed"
 msgstr "비밀번호가 변경되었습니다"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:22
 msgid "Password change failed: "
 msgstr "비밀번호 변경에 실패했습니다: "
 

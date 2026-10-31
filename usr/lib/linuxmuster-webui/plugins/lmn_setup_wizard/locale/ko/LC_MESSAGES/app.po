@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 11:32+0200\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -226,23 +226,27 @@ msgstr "예시: 서버"
 msgid "Setup Wizard"
 msgstr "설치 마법사"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:237
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:229
+msgid "Setup failed"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:238
 msgid "Setup Done"
 msgstr "설정 완료"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:254
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:255
 msgid "Restarting"
 msgstr "재시작중"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:258
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:259
 msgid "Restarted"
 msgstr "재시작됨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:258
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:259
 msgid "Please wait"
 msgstr "잠시만 기다려 주세요"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:268
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:269
 msgid "Could not restart"
 msgstr "재시작 실패"
 

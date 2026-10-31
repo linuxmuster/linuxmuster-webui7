@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-02 13:01+0100\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -141,7 +141,7 @@ msgstr "Keine Ergebnisse gefunden ..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:119
 msgid "No teacher"
-msgstr ""
+msgstr "Keine Lehrkraft"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:27
 msgid "Objectsfilter"
@@ -162,11 +162,11 @@ msgstr "Eigenschaften"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:133
 msgid "Schoolclass Members:"
-msgstr ""
+msgstr "Mitglieder der Klasse:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:107
 msgid "Schoolclass teacher(s):"
-msgstr ""
+msgstr "Lehrkräfte der Klasse:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:70
 msgid "Schoolclasses"
@@ -194,7 +194,7 @@ msgstr "Sophomorix-Status:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:113
 msgid "Teachers"
-msgstr ""
+msgstr "Lehrkräfte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:118
 msgid "There are no printers configured yet. Ask your administrator to configure one."
@@ -232,12 +232,12 @@ msgstr "Benutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:177
 msgid "adm."
-msgstr ""
+msgstr "Adm."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:179
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:195
 msgid "gr."
-msgstr ""
+msgstr "Gr."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:130
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:66
@@ -246,35 +246,35 @@ msgstr "Gruppe(n)."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:193
 msgid "mem."
-msgstr ""
+msgstr "Mitgl."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:6
 msgid "printer"
-msgstr ""
+msgstr "Drucker"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:5
 msgid "project"
-msgstr ""
+msgstr "Projekt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:4
 msgid "schoolclass"
-msgstr ""
+msgstr "Klasse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:101
 msgid "stud."
-msgstr ""
+msgstr "Sch."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:134
 msgid "student(s)"
-msgstr ""
+msgstr "Schüler"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:103
 msgid "tea."
-msgstr ""
+msgstr "Lehrk."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:108
 msgid "teacher(s)"
-msgstr ""
+msgstr "Lehrkraft/Lehrkräfte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:129
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:65

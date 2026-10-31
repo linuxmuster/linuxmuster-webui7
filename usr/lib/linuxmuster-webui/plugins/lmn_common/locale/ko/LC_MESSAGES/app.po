@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 13:01+0100\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -108,10 +108,6 @@ msgstr "이것이 복수 학교 설정이 아니거나, 당신이 다른 학교�
 msgid "change"
 msgstr "변경"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:180
-msgid "Access refused."
-msgstr "접근이 제한되었습니다."
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
 msgid "User Management"
 msgstr "사용자 관리"
@@ -140,12 +136,12 @@ msgstr "설정"
 msgid "Global Settings"
 msgstr "전역 설정"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:46
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:49
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:52
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:95
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:98
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:146
 msgid "Uploaded"
 msgstr "업로드됨"
 
@@ -220,44 +216,48 @@ msgstr " 은(는) 소문자 또는 숫자만 포함할 수 있습니다."
 msgid " can only contain alphanumeric chars or _+-"
 msgstr " 은(는) 글자와 숫자 또는 _+-만 포함할 수 있습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:62
+msgid " can only contain alphanumeric chars or _-"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:71
 msgid " can only contain alphanumeric chars or -"
 msgstr " 은(는) 글자와 숫자 또는 -만 포함할 수 있습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:70
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:80
 msgid " can only contain alphanumeric chars or -, space and _"
 msgstr " 은(는) 글자와 숫자 또는 -, 스페이스 그리고 _만 포함할 수 있습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:89
 msgid " can only contain alphanumeric chars"
 msgstr " 은(는) 글자와 숫자만 포함할 수 있습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:98
 msgid " is not a valid number"
 msgstr " 은(는) 유효한 숫자가 아닙니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:109
 msgid " is not a valid date"
 msgstr " 은(는) 유효한 날짜가 아닙니다"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:109
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:137
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:147
 msgid " is not valid or duplicated"
 msgstr " 은(는) 유효하지 않거나 중복되었습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:146
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:156
 msgid " does not contain valid chars, is duplicated or too long (>15 chars)"
 msgstr " 유효한 문자를 포함하지 않았고, 중복되었거나 또는 너무 길다.(>15문자)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:167
 msgid " does not contain valid chars or is duplicated"
 msgstr " 은(는) 유효한 문자를 포함하지 않았거나 또는 중복되었다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:170
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:180
 msgid " is not a valid role"
 msgstr " 은(는) 유효한 역할이 아닙니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:193
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:203
 msgid " is not a valid domain"
 msgstr " 은(는) 유효한 도메인이 아닙니다."
 

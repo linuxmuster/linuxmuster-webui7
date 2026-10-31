@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 11:32+0200\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -71,7 +71,7 @@ msgstr "자동시작 시간초과"
 msgid "Background color"
 msgstr "배경 색상"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:36
 msgid "Backup"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/apply.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:477
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:70
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:86
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:179
 msgid "Close"
@@ -431,7 +431,7 @@ msgid "Storage"
 msgstr "저장소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:195
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:314
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:318
 msgid "Swap"
 msgstr "전환"
 
@@ -504,7 +504,7 @@ msgid "Virtual Desktop (VDI)"
 msgstr "가상 데스크톱 (VDI)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:545
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:549
 msgid "LINBO 4"
 msgstr "LINBO 4"
 
@@ -532,62 +532,62 @@ msgstr "불러오기 완료"
 msgid "Import failed"
 msgstr "불러오기 실패"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:316
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:320
 msgid "LINBO Cache"
 msgstr "LINBO 캐시"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:559
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:563
 msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
 msgstr "새로운 변경 사항들을 적용하려면 장치 불러오기 프로세스를 불러와야 하는데, 페이지를 그래도 종료하시겠습니까?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:605
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:609
 msgid "A config file with this name already exists!"
 msgstr "중복 config 파일 이름입니다!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:686
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:694
 msgid "saved"
 msgstr "저장 완료"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:689
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:697
 msgid "VDI config saved"
 msgstr "VDI config 저장 완료"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:694
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:702
 msgid "Restarting multicast and torrent services, please wait ..."
 msgstr "멀티캐스트와 토렌트 서비스를 다시 시작하는중, 잠시만 기다려주세요..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:696
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:704
 msgid "Multicast and torrent services restarted"
 msgstr "멀티캐스트 와 토렌트 서비스 재시작됨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:700
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:708
 msgid "Failed to restart multicast and torrent services. Please see the log files"
 msgstr "멀티캐스트와 토렌트 서비스 재시작 실패. 로그 파일을 보십시오."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:708
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:734
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:720
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:754
 msgid "Failed to delete image :"
 msgstr "이미지 삭제를 실패 :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:715
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:722
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:731
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:738
 msgid "Failed to delete backup :"
 msgstr "백업 삭제 실패 :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:751
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:761
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:771
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:781
 msgid " is not a valid name for a linbo image."
 msgstr " 는 림보 이미지를 위한 유효한 이미지가 아닙니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:768
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:788
 msgid "Failed to restore backup! "
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:782
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:802
 msgid "Backup saved"
 msgstr "백업 저장됨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:786
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:806
 msgid "Saved"
 msgstr "저장 완료"
 

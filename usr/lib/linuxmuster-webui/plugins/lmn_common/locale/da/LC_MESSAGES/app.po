@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 13:01+0100\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -108,10 +108,6 @@ msgstr ""
 msgid "change"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:180
-msgid "Access refused."
-msgstr ""
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
 msgid "User Management"
 msgstr ""
@@ -140,12 +136,12 @@ msgstr ""
 msgid "Global Settings"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:46
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:49
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:52
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:95
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:98
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:146
 msgid "Uploaded"
 msgstr ""
 
@@ -220,44 +216,48 @@ msgstr ""
 msgid " can only contain alphanumeric chars or _+-"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:62
+msgid " can only contain alphanumeric chars or _-"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:71
 msgid " can only contain alphanumeric chars or -"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:70
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:80
 msgid " can only contain alphanumeric chars or -, space and _"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:89
 msgid " can only contain alphanumeric chars"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:98
 msgid " is not a valid number"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:109
 msgid " is not a valid date"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:109
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:137
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:147
 msgid " is not valid or duplicated"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:146
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:156
 msgid " does not contain valid chars, is duplicated or too long (>15 chars)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:167
 msgid " does not contain valid chars or is duplicated"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:170
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:180
 msgid " is not a valid role"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:193
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:203
 msgid " is not a valid domain"
 msgstr ""
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 13:01+0100\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -43,6 +43,11 @@ msgid "<i class=\"fa fa-key\"></i> For selected\n"
 "            <span class=\"caret\"></span>"
 msgstr "<i class=\"fa fa-key\"></i> Pour la sélection\n"
 "            <span class=\"caret\"></span>"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:160
+msgid "<i class=\"fa fa-trash\"></i>\n"
+"            Remove account"
+msgstr "<i class=\"fa fa-trash\"></i> Supprimer le compte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:105
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:35
@@ -104,7 +109,7 @@ msgstr "Ajouter un Bind User global"
 msgid "Add new users"
 msgstr "Ajouter de nouveaux utilisateurs"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:166
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:171
 msgid "Add parent"
 msgstr "Ajouter un parent"
 
@@ -141,6 +146,7 @@ msgstr "Nom"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:112
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:131
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:149
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:191
@@ -229,16 +235,21 @@ msgstr "Classe:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/apply.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showBindPassword.modal.html:18
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showPassword.modal.html:29
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:23
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:160
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:172
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:165
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:177
 msgid "Close"
 msgstr "Fermer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:155
 msgid "Cloudquota Calculated in MiB:"
 msgstr "Quota cloud calculé en MiB:"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showBindPassword.modal.html:16
+msgid "Copy"
+msgstr "Copier"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:29
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:153
@@ -396,7 +407,6 @@ msgstr "Linuxmuster a besoin de connaître les correspondances de colonnes afin 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:180
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:180
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:100
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:112
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:135
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:28
@@ -422,6 +432,7 @@ msgstr "Login / Classe"
 msgid "Login / Old role"
 msgstr "Connexion / Ancien rôle"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showBindPassword.modal.html:9
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showPassword.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:16
 msgid "Loginname:"
@@ -680,6 +691,11 @@ msgstr "Mettre un mot de passe aléatoire"
 msgid "Set random password"
 msgstr "Mettre un mot de passe aléatoire"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showBindPassword.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:60
+msgid "Show bind user password"
+msgstr "Afficher le mot de passe du bind user"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:124
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/parents.html:110
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:123
@@ -910,70 +926,74 @@ msgid "Write teachers"
 msgstr "Écrire des enseignants"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:123
+msgid "Delete users (non admins)"
+msgstr "Supprimer des utilisateurs (hors administrateurs)"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:128
 msgid "Read schooladmins"
 msgstr "Lire les administrateurs école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:133
 msgid "Write schooladmins"
 msgstr "Ecrire les administrateurs école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:138
 msgid "Read globaladmins"
 msgstr "Lire les administrateurs globaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:143
 msgid "Write globaladmins"
 msgstr "Ecrire les administrateurs globaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:148
 msgid "Read extra students"
 msgstr "Lire les élèves supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:148
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:153
 msgid "Write extra students"
 msgstr "Écrire des élèves supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:158
 msgid "Read extra courses"
 msgstr "Lire cours supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:158
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:163
 msgid "Write extra courses"
 msgstr "Écrire des cours supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:168
 msgid "Check user changes"
 msgstr "Vérifier les modifications de l’utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:168
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:173
 msgid "Apply user changes"
 msgstr "Appliquer les modifications des utilisateurs"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:178
 msgid "Read/write passwords"
 msgstr "Lire/écrire les mots de passe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:178
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:183
 msgid "Add school admins"
 msgstr "Ajouter administrateur école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:183
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:188
 msgid "Add global admins"
 msgstr "Ajouter administrateur global"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:188
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:193
 msgid "Delete school admins"
 msgstr "Supprimer administrateur école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:193
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:198
 msgid "Delete global admins"
 msgstr "Supprimer les administrateurs globaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:198
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:203
 msgid "Change own custom fields values"
 msgstr "Modifier ses propres données"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:208
 msgid "Read custom fields values"
 msgstr "Lire les valeurs des champs personnalisés"
 
@@ -1033,24 +1053,25 @@ msgstr "Adresse ajoutée !"
 msgid "Initial password set"
 msgstr "Mot de passe initial configuré"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:54
+msgid "Password change failed: "
+msgstr "Échec du changement de mot de passe : "
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:25
 msgid "Random password set"
 msgstr "Mettre un mot de passe aléatoire"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:56
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:61
-msgid "Show bind user password"
-msgstr "Afficher le mot de passe du bind user"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:57
 msgid "Do you really want to see this password ? It could be a security issue!"
 msgstr "Voulez-vous vraiment voir ce mot de passe ? Cela pourrait être un problème de sécurité!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:79
 msgid "PDF with passwords successfully created"
 msgstr "PDF avec les mots de passe créé avec succès"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:82
 msgid "Could not create password pdf"
 msgstr "N'a pas pu générer de mot de passe au format pdf"
 
@@ -1119,8 +1140,8 @@ msgstr "Merci de corriger les erreurs."
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:495
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:507
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:519
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:301
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:310
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:339
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:348
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:85
 msgid "Saved"
 msgstr "Enregistré"
@@ -1145,83 +1166,112 @@ msgstr "Encore actif"
 msgid "Changed from user"
 msgstr "Changé par l'utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:31
+msgid "Copied to clipboard!"
+msgstr "Copié dans le presse-papiers !"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:46
 msgid "You have to enter a password"
 msgstr "Vous devez saisir un mot de passe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:51
 msgid "New password set"
 msgstr "Nouveau mot de passe enregistré"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:50
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:320
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:358
 msgid "You have to enter a username"
 msgstr "Vous devez entrer un nom d'utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:65
 msgid "Never"
 msgstr "Jamais"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:74
 msgid "Search user by login, firstname or lastname (min. 3 chars)"
 msgstr "Rechercher un utilisateur par connexion, prénom ou nom de famille (min. 3 caractères)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:104
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:119
 msgid "Hide"
 msgstr "Masquer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:105
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:120
 msgid "Show"
 msgstr "Afficher"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:136
+msgid "Error"
+msgstr "Erreur"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:145
 msgid "NO LIMIT"
 msgstr "AUCUNE LIMITE"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:167
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:187
 msgid "Parent #{parent.displayname} removed from #{$scope.id}"
 msgstr "Parent #{parent.displayname} retiré de #{$scope.id}"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:187
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:207
 msgid "Parent #{parent.label} assigned to #{$scope.id}"
 msgstr "Parent #{parent.label} assigné à #{$scope.id}"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:199
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:213
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/parents.controller.coffee:74
+msgid "Kill user "
+msgstr "Supprimer définitivement l'utilisateur "
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:214
+msgid "Do you really want to definitively remove the user #{user.cn}? This action is uncoverable."
+msgstr "Voulez-vous vraiment supprimer définitivement l'utilisateur #{user.cn} ? Cette action est irréversible."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:219
+msgid "User #{user.cn} successfully deleted!"
+msgstr "Utilisateur #{user.cn} supprimé avec succès !"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:221
+msgid "Clean up #{user.sophomorixAdminFile}"
+msgstr "Nettoyer #{user.sophomorixAdminFile}"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:222
+msgid "The user account was deleted but you will have to manually remove the corresponding line in the file #{user.sophomorixAdminFile}."
+msgstr "Le compte a été supprimé, mais vous devrez retirer vous-même la ligne correspondante dans le fichier #{user.sophomorixAdminFile}."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:237
 msgid " added with default values in the list."
 msgstr " ajouté avec les valeurs par défaut dans la liste."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:214
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:252
 msgid "not used"
 msgstr "non utilisé"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:247
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:285
 msgid "class"
 msgstr "classe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:248
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:255
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:286
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:293
 msgid "lastname"
 msgstr "nom de famille"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:249
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:256
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:287
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:294
 msgid "firstname"
 msgstr "prénom"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:250
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:257
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:288
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:295
 msgid "birthday"
 msgstr "date de naissance"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:258
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:296
 msgid "login"
 msgstr "identifiant"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:273
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:311
 msgid "Uploaded"
 msgstr "Transfert réussi"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:323
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:361
 msgid "Adding administrator..."
 msgstr "Ajout de l'administrateur..."
 
@@ -1345,4 +1395,20 @@ msgstr "Impossible de créer un fichier CSV de mots de passe "
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:119
 msgid "Could not create password csv"
 msgstr "Impossible de créer un fichier CSV de mots de passe "
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/parents.controller.coffee:75
+msgid "Do you really want to definitively remove the user #{user_cn}? This action is uncoverable."
+msgstr "Voulez-vous vraiment supprimer définitivement l'utilisateur #{user_cn} ? Cette action est irréversible."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/parents.controller.coffee:81
+msgid "User #{user_cn} successfully deleted!"
+msgstr "Utilisateur #{user_cn} supprimé avec succès !"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/parents.controller.coffee:83
+msgid "Clean up parents.csv"
+msgstr "Nettoyer parents.csv"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/parents.controller.coffee:84
+msgid "The user account was deleted but you will have to manually remove the corresponding line in the file parents.csv."
+msgstr "Le compte a été supprimé, mais vous devrez retirer vous-même la ligne correspondante dans le fichier parents.csv."
 

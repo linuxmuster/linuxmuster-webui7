@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 13:01+0100\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:111
 msgid ""
 "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least "
@@ -68,15 +68,19 @@ msgstr ""
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:104
+msgid "<i class=\"fas fa-terminal\"></i>  Broadcast"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:92
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:121
 msgid "Apply"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:120
 msgid "Check online"
 msgstr ""
 
@@ -112,7 +116,7 @@ msgstr ""
 msgid "Power management"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
 msgid "Result command"
 msgstr ""
 
@@ -137,6 +141,6 @@ msgstr ""
 msgid "Synchronize first OS from workstation"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:247
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:256
 msgid "Command successfully sent: "
 msgstr ""

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 13:01+0100\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -50,15 +50,15 @@ msgstr "Les deux mots de passe saisis diffèrent"
 msgid "Valid characters are: a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ }"
 msgstr "Les caractères valables sont: a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ }"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:49
 msgid "Linux Muster LDAP"
 msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:454
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
-msgstr "Minimum 7 caractères. Utiliser des majuscules, minuscules, caractères spéciaux et chiffres (par exemple Muster!)."
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:497
+msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!).Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
+msgstr "Minimum 7 caractères. Utilisez des majuscules, des minuscules et des caractères spéciaux ou des chiffres (par exemple Muster!). Caractères autorisés : a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:484
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:526
 msgid "Linuxmuster LDAP user config"
 msgstr "Configuration utilisateur Linuxmuster LDAP"
 
@@ -66,11 +66,15 @@ msgstr "Configuration utilisateur Linuxmuster LDAP"
 msgid "Change Password"
 msgstr "Changer le mot de passe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:15
+msgid "You have to enter a password"
+msgstr "Vous devez saisir un mot de passe"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:19
 msgid "Password changed"
 msgstr "Mot de passe modifié"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:22
 msgid "Password change failed: "
 msgstr "La modification du mot de passe a échoué: "
 

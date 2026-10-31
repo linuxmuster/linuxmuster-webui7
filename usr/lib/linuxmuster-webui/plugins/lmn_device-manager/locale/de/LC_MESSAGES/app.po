@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "#"
 msgstr "#"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:99
 msgid "Auto-Refresh"
 msgstr "Auto-Aktualisierung"
 
@@ -44,11 +44,11 @@ msgstr "Schließen"
 msgid "Command"
 msgstr "Befehl"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:90
 msgid "Commands to use when device starts in linbo"
 msgstr "Auszuführende Befehle, wenn Gerät in Linbo startet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:105
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:108
 msgid "Current school:"
 msgstr "Aktuelle Schule:"
 
@@ -64,28 +64,28 @@ msgstr "Derzeit laufen keine linbo-remote Prozesse!"
 msgid "Finished!"
 msgstr "Beendet!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:63
 msgid "Group"
 msgstr "Gruppe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:60
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:11
 msgid "Hostname"
 msgstr "Hostname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:61
 msgid "IP"
 msgstr "IP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:55
 msgid "Infos"
 msgstr "Informationen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:91
 msgid "LR-Prestart's"
 msgstr "LR-Prestarts"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:86
 msgid "LR-Processes"
 msgstr "LR-Prozesse"
 
@@ -101,11 +101,11 @@ msgstr "Linbo-Pre-Start-Befehl(e)"
 msgid "Linbo-Remote"
 msgstr "Linbo-Remote"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:85
 msgid "Linbo-Remote Processes currently running"
 msgstr "Derzeit laufende Linbo-Remote-Prozesse"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:62
 msgid "MAC"
 msgstr "MAC"
 
@@ -113,7 +113,7 @@ msgstr "MAC"
 msgid "Name"
 msgstr "Name"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:101
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:104
 msgid "Next refresh in"
 msgstr "Nächste Aktualisierung in"
 
@@ -121,39 +121,39 @@ msgstr "Nächste Aktualisierung in"
 msgid "Now processing"
 msgstr "Wird bearbeitet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:65
 msgid "OS"
 msgstr "Betriebssystem"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:66
 msgid "Online"
 msgstr "Online"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:18
 msgid "Options"
 msgstr "Optionen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:5
 msgid "Please select a room to display devices!"
 msgstr "Bitte wählen Sie einen Raum, um Geräte anzuzeigen!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:119
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:29
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:122
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:38
 msgid "Reboot"
 msgstr "Neustart"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:96
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:33
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:59
 msgid "Room"
 msgstr "Raum"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:109
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:112
 msgid "Rooms:"
 msgstr "Räume:"
 
@@ -162,15 +162,15 @@ msgstr "Räume:"
 msgid "Run"
 msgstr "Ausführen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:118
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:26
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:121
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:35
 msgid "Shutdown"
 msgstr "Herunterfahren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:117
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:120
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:26
 msgid "Start"
 msgstr "Start"
 
@@ -178,11 +178,15 @@ msgstr "Start"
 msgid "Starting..."
 msgstr "Starte..."
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:2
+msgid "This plugin is deprecated and will be removed in a future release. Running LINBO commands is no longer possible here: please use the plugin \"Linbo synchronization\" instead."
+msgstr "Dieses Plugin ist veraltet und wird in einer zukünftigen Version entfernt. LINBO-Befehle können hier nicht mehr ausgeführt werden: Verwenden Sie stattdessen das Plugin \"Linbo-Synchronisation\"."
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:12
 msgid "Timestamp"
 msgstr "Zeitstempel"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:64
 msgid "Type"
 msgstr "Typ"
 
@@ -190,7 +194,7 @@ msgstr "Typ"
 msgid "all devices"
 msgstr "alle Geräte"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:126
 msgid "devices selected"
 msgstr "ausgewählte Geräte"
 
@@ -202,7 +206,7 @@ msgstr "Fehler aufgetreten!"
 msgid "running processes"
 msgstr "laufende Prozesse"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:101
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:104
 msgid "seconds!"
 msgstr "Sekunden!"
 

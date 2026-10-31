@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-15 12:34+0200\n"
-"PO-Revision-Date: 2026-01-02 12:17\n"
+"POT-Creation-Date: 2026-10-31 14:47+0100\n"
+"PO-Revision-Date: 2026-10-31 14:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -37,7 +37,7 @@ msgstr "<i class=\"fas fa-eraser\"></i>파티션"
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr "<i class=\"fas fa-exclamation-triangle\"></i>새로운 것"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:111
 msgid "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least one client and one command."
 msgstr "<i class=\"fas fa-info-circle\"></i>                원격 linbo 명령어를 적용하려면, 최소 하나의 클라이언트와 명령어를 선택해야 합니다."
@@ -66,15 +66,19 @@ msgstr "<i class=\"fas fa-sync\"></i>리부팅"
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
 msgstr "<i class=\"fas fa-sync-alt\"></i>동기화"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:104
+msgid "<i class=\"fas fa-terminal\"></i>  Broadcast"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:92
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
 msgstr "<i class=\"fas fa-terminal\"></i>GUI 비활성화"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:121
 msgid "Apply"
 msgstr "적용하기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:120
 msgid "Check online"
 msgstr "온라인으로 확인"
 
@@ -110,7 +114,7 @@ msgstr "온라인?"
 msgid "Power management"
 msgstr "전력 관리"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
 msgid "Result command"
 msgstr "명령어로 인한 결과 발생"
 
@@ -135,7 +139,7 @@ msgstr "작업소가 아직 실행되고 있는지 테스트"
 msgid "Synchronize first OS from workstation"
 msgstr "저장소로부터 첫번째 운영체제 동기화"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:247
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:256
 msgid "Command successfully sent: "
 msgstr ""
 

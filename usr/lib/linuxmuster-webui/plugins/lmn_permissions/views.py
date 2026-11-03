@@ -62,7 +62,7 @@ class Handler(HttpPlugin):
                         # perm['default'] always True in Ajenti,
                         # but not with lm authenticator
                         'default': False,
-                        'plugin': sidebarItems[url]['plugin']
+                        'plugin': sidebarItems.get(url, {}).get('plugin', 'NOT IMPLEMENTED')
                     }
                 else:
                     apiPermissionDict[perm['id']] = {
@@ -82,7 +82,7 @@ class Handler(HttpPlugin):
             :rtype: string
             """
 
-            return url.replace('(?P', '').replace('.+)', '').replace('\w+)', '')
+            return url.replace('(?P', '').replace('.+)', '').replace(r'\w+)', '')
 
         def get_provider(url):
             """
@@ -236,8 +236,9 @@ class Handler(HttpPlugin):
             'staff',
         ]
 
+        plugins = os.listdir(plugins_path)
         for plugin, details in pluginDict.items():
-            if len(details['lmn']) > 0:
+            if plugin in plugins and len(details['lmn']) > 0:
                 permissions = {}
 
                 for role in roles:

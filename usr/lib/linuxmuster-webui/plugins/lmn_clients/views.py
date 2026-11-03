@@ -14,6 +14,11 @@ from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
+    scripts = {
+        'linux': ['sessionstart.sh', 'logon.sh', 'sysstart.sh', 'sysstop.sh'],
+        'windows': ['logoff.bat', 'logon.bat', 'sysstart.bat', 'sysstop.bat'],
+    }
+
     def __init__(self, context):
         self.context = context
 
@@ -37,8 +42,6 @@ class Handler(HttpPlugin):
         school = self.context.schoolmgr.school
 
         custom_script_path = f'/var/lib/samba/sysvol/{samba_realm}/scripts/{school}/custom/'
-        scripts_linux = ['sessionstart.sh', 'logon.sh', 'sysstart.sh', 'sysstop.sh']
-        scripts_windows = ['logoff.bat', 'logon.bat', 'sysstart.bat', 'sysstop.bat']
 
         return {
             'path': custom_script_path,
@@ -47,14 +50,14 @@ class Handler(HttpPlugin):
                     'path':f'{custom_script_path}/linux/{script}',
                     'name': script,
                     'content': read_script_content(f'{custom_script_path}/linux/{script}'),
-                } for script in scripts_linux
+                } for script in self.scripts['linux']
             ],
             'windows': [
                 {
                     'path': f'{custom_script_path}/windows/{script}',
                     'name': script,
                     'content': read_script_content(f'{custom_script_path}/windows/{script}'),
-                } for script in scripts_windows
+                } for script in self.scripts['windows']
             ],
         }
 
@@ -65,6 +68,16 @@ class Handler(HttpPlugin):
 
         path = http_context.json_body()['path']
         content = http_context.json_body()['content']
+
+        school = self.context.schoolmgr.school
+        custom_script_path = f'/var/lib/samba/sysvol/{samba_realm}/scripts/{school}/custom'
+        allowed = [
+            os.path.realpath(f'{custom_script_path}/{os_type}/{script}')
+            for os_type, scripts in self.scripts.items()
+            for script in scripts
+        ]
+        if os.path.realpath(path) not in allowed:
+            return http_context.respond_forbidden()
 
         try:
             with open(path, 'w') as script:

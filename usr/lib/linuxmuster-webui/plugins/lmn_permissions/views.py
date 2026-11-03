@@ -8,7 +8,6 @@ from jadi import component
 
 
 from aj.api.http import get, post, HttpPlugin
-from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import PermissionProvider
 from aj.plugins.core.api.sidebar import SidebarItemProvider
@@ -23,7 +22,6 @@ class Handler(HttpPlugin):
 
 ## Check rights
     @get(r'/api/lmn/permissions')
-    @authorize('lm:schoolsettings') # TODO : adapt
     @endpoint(api=True)
     def handle_api_get_permissions(self, http_context):
         """
@@ -36,7 +34,7 @@ class Handler(HttpPlugin):
         """
 
 
-        if not aj.dev:
+        if not aj.dev or self.context.identity != 'root':
             return http_context.respond_forbidden()
 
         # Load all sidebar items and rearrange it in a dict
@@ -206,7 +204,6 @@ class Handler(HttpPlugin):
         return PluginDict, apiPermissionDict, sidebarPermissionDict
 
     @post(r'/api/lmn/permissions/export')
-    @authorize('lm:schoolsettings') # TODO : adapt
     @endpoint(api=True)
     def handle_api_export_permissions(self, http_context):
         """
@@ -219,7 +216,7 @@ class Handler(HttpPlugin):
         """
 
 
-        if not aj.dev:
+        if not aj.dev or self.context.identity != 'root':
             return http_context.respond_forbidden()
 
         api = http_context.json_body()['api']

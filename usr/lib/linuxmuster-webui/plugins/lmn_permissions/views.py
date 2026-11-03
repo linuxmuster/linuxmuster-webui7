@@ -12,6 +12,7 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import PermissionProvider
 from aj.plugins.core.api.sidebar import SidebarItemProvider
+import aj
 from linuxmusterTools.lmnfile import LMNFile
 
 
@@ -33,6 +34,10 @@ class Handler(HttpPlugin):
         :return: All plugins details
         :rtype: dict
         """
+
+
+        if not aj.dev:
+            return http_context.respond_forbidden()
 
         # Load all sidebar items and rearrange it in a dict
         # Children are not parsed
@@ -212,6 +217,10 @@ class Handler(HttpPlugin):
         :return:
         :rtype:
         """
+
+
+        if not aj.dev:
+            return http_context.respond_forbidden()
 
         api = http_context.json_body()['api']
         sidebar = http_context.json_body()['sidebar']

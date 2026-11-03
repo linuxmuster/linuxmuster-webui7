@@ -4,7 +4,7 @@ from aj.auth import authorize
 from aj.api.http import post, get, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from linuxmusterTools.lmnfile import LMNFile
-from linuxmusterTools.linbo import last_sync
+from linuxmusterTools.linbo import last_sync, list_onboot_commands
 
 import os
 import nmap
@@ -268,15 +268,16 @@ class Handler(HttpPlugin):
     @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getPrestartCommands(self, http_context):
-        result = []
-        dir_path = "/srv/linbo/linbocmd/"
-        for path in os.listdir(dir_path):
-            full_path = os.path.join(dir_path, path)
-            if os.path.isfile(full_path):
-                with open(full_path) as raw_file:
-                    result.append(
-                        {"name": path.split(".")[0], "path": full_path, "content": raw_file.read()})
-        return result
+        # list_onboot_commands() never returns the "linbo:<password>" entry,
+        # which is the LINBO rsync password in clear.
+        return [
+            {
+                "name": onboot["hostname"],
+                "path": f"/srv/linbo/linbocmd/{onboot['hostname']}.cmd",
+                "content": ",".join(onboot["commands"]),
+            }
+            for onboot in list_onboot_commands()
+        ]
 
     @post(r'/api/lmn/device-manager/removePrestartCommands')
     @authorize('lm:device-manager:modify')
@@ -301,7 +302,14 @@ class Handler(HttpPlugin):
         if os.path.dirname(path) != os.path.realpath("/srv/linbo/linbocmd"):
             return http_context.respond_forbidden()
         if os.path.isfile(path):
+            # Keep the rsync credentials hidden by getPrestartCommands, needed
+            # by a pending upload, after a leading "dryrun" like linbo-remote -p.
+            with open(path) as raw_file:
+                secrets = [cmd for cmd in raw_file.read().strip().split(',') if cmd.startswith('linbo:')]
+            commands = [cmd for cmd in newCommand.strip().split(',') if cmd and not cmd.startswith('linbo:')]
+            start = 1 if commands[:1] == ['dryrun'] else 0
+            commands[start:start] = secrets
             with open(path, "w") as raw_file:
-                raw_file.write(newCommand)
+                raw_file.write(','.join(commands))
                 return {"status": True, "message": ""}
         return {"status": False, "message": "File not found!"}

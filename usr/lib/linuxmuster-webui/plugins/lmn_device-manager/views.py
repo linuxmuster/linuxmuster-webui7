@@ -268,6 +268,9 @@ class Handler(HttpPlugin):
     @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getPrestartCommands(self, http_context):
+        # Restrict to selected school
+        hosts = {cn.lower() for cn in self.context.ldapreader.getval('/devices', 'cn', school=self.context.schoolmgr.school)}
+
         # list_onboot_commands() never returns the "linbo:<password>" entry,
         # which is the LINBO rsync password in clear.
         return [
@@ -277,6 +280,7 @@ class Handler(HttpPlugin):
                 "content": ",".join(onboot["commands"]),
             }
             for onboot in list_onboot_commands()
+            if onboot["hostname"].lower() in hosts
         ]
 
     @post(r'/api/lmn/device-manager/removePrestartCommands')
@@ -285,7 +289,12 @@ class Handler(HttpPlugin):
     def handle_api_lmn_devicemanager_removePrestartCommands(self, http_context):
         preStartCommand = http_context.json_body()['preStartCommand']
         path = os.path.realpath(preStartCommand["path"])
-        if os.path.dirname(path) != os.path.realpath("/srv/linbo/linbocmd"):
+
+        # Restrict to selected school
+        hosts = {cn.lower() for cn in self.context.ldapreader.getval('/devices', 'cn', school=self.context.schoolmgr.school)}
+
+        if (os.path.dirname(path) != os.path.realpath("/srv/linbo/linbocmd")
+                or os.path.splitext(os.path.basename(path))[0].lower() not in hosts):
             return http_context.respond_forbidden()
         if os.path.isfile(path):
             os.remove(path)
@@ -299,7 +308,12 @@ class Handler(HttpPlugin):
         preStartCommand = http_context.json_body()['preStartCommand']
         newCommand = http_context.json_body()['newCommand']
         path = os.path.realpath(preStartCommand["path"])
-        if os.path.dirname(path) != os.path.realpath("/srv/linbo/linbocmd"):
+
+        # Restrict to selected school
+        hosts = {cn.lower() for cn in self.context.ldapreader.getval('/devices', 'cn', school=self.context.schoolmgr.school)}
+
+        if (os.path.dirname(path) != os.path.realpath("/srv/linbo/linbocmd")
+                or os.path.splitext(os.path.basename(path))[0].lower() not in hosts):
             return http_context.respond_forbidden()
         if os.path.isfile(path):
             # Keep the rsync credentials hidden by getPrestartCommands, needed
@@ -310,6 +324,6 @@ class Handler(HttpPlugin):
             start = 1 if commands[:1] == ['dryrun'] else 0
             commands[start:start] = secrets
             with open(path, "w") as raw_file:
-                raw_file.write(','.join(commands))
+                raw_file.write(','.join(commands) + '\n')
                 return {"status": True, "message": ""}
         return {"status": False, "message": "File not found!"}

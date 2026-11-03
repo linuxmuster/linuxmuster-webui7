@@ -283,8 +283,11 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_removePrestartCommands(self, http_context):
         preStartCommand = http_context.json_body()['preStartCommand']
-        if os.path.isfile(preStartCommand["path"]):
-            os.remove(preStartCommand["path"])
+        path = os.path.realpath(preStartCommand["path"])
+        if os.path.dirname(path) != os.path.realpath("/srv/linbo/linbocmd"):
+            return http_context.respond_forbidden()
+        if os.path.isfile(path):
+            os.remove(path)
             return {"status": True, "message": ""}
         return {"status": False, "message": "File not found!"}
 
@@ -294,8 +297,11 @@ class Handler(HttpPlugin):
     def handle_api_lmn_devicemanager_editPrestartCommands(self, http_context):
         preStartCommand = http_context.json_body()['preStartCommand']
         newCommand = http_context.json_body()['newCommand']
-        if os.path.isfile(preStartCommand["path"]):
-            with open(preStartCommand["path"], "w") as raw_file:
+        path = os.path.realpath(preStartCommand["path"])
+        if os.path.dirname(path) != os.path.realpath("/srv/linbo/linbocmd"):
+            return http_context.respond_forbidden()
+        if os.path.isfile(path):
+            with open(path, "w") as raw_file:
                 raw_file.write(newCommand)
                 return {"status": True, "message": ""}
         return {"status": False, "message": "File not found!"}

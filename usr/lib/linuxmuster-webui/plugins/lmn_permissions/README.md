@@ -20,7 +20,7 @@ A floating-toolbar **Export permissions file** button writes the edited matrix b
 
 `views.py` exposes two endpoints. `GET /api/lmn/permissions` gathers all sidebar items, all declared permissions, every `HttpPlugin`'s URL patterns (with their `permission_id`, `api`/`auth`/`page` flags, method and docstring) and the existing `permissions.yml` files under `/usr/lib/linuxmuster-webui/plugins`, and returns `(PluginDict, apiPermissionDict, sidebarPermissionDict)`. `POST /api/lmn/permissions/export` writes the posted matrix back to each plugin's `permissions.yml` via `LMNFile`, for the six roles.
 
-Both endpoints are guarded by `@authorize('lm:schoolsettings')`, each marked `# TODO: adapt` in the source: this is the generic school-settings permission (granted to schooladmins) and is **not scoped per school**, so the export is not restricted to the admin's own school. A third download endpoint (`GET /api/lmn/permissions/download/<tmpfile>`, same `lm:schoolsettings # TODO: adapt` guard) is present but fully commented out ("Obsolet").
+Both endpoints are guarded by `@authorize('lm:schoolsettings')` and answer 403 unless Ajenti runs in dev mode (`aj.dev`), like the sidebar entry. The export ignores the plugin names that are not a directory of `/usr/lib/linuxmuster-webui/plugins`.
 
 ---
 

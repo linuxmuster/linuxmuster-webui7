@@ -257,24 +257,3 @@ class Handler(HttpPlugin):
                 perm_file = os.path.join(plugins_path, plugin, 'permissions.yml')
                 with LMNFile(perm_file, 'w') as f:
                     f.write(permissions)
-
-    # Obsolet
-    # @get(r'/api/lmn/permissions/download/(?P<tmpfile>.+)')
-    # @authorize('lm:schoolsettings') # TODO : adapt
-    # @endpoint(api=False, page=True)
-    # def handle_api_download_permissions(self, http_context, tmpfile):
-    #     """
-    #     Expose default-ui-permissions to download.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param tmpfile: Path to default-ui-permissions tmp file
-    #     :type tmpfile: string
-    #     """
-    #
-    #     if not tmpfile.startswith('/tmp/default-ui-permissions_'):
-    #         return
-    #
-    #     return http_context.file(tmpfile, inline=False, name=tmpfile.encode())
-
-

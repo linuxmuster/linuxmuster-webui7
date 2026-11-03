@@ -5,10 +5,10 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
         'plugin': '',
         'sidebar': ''
     }
-    $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'default']
+    $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff', 'default']
 
 
-    $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student']
+    $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff']
     $http.get('/api/lmn/permissions').then (resp) ->
 
         $scope.pluginObj = resp.data[0]

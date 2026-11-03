@@ -21,8 +21,8 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       'plugin': '',
       'sidebar': ''
     };
-    $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'default'];
-    $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student'];
+    $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff', 'default'];
+    $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff'];
     $http.get('/api/lmn/permissions').then(function(resp) {
       var details, i, len, ref, ref1, url;
       $scope.pluginObj = resp.data[0];

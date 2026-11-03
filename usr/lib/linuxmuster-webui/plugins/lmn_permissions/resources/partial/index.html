@@ -15,10 +15,12 @@
                             <th translate ng-click="switch('plugin','schooladministrator')">SchoolAdmin</th>
                             <th translate ng-click="switch('plugin','teacher')">Teacher</th>
                             <th translate ng-click="switch('plugin','student')">Student</th>
+                            <th translate ng-click="switch('plugin','parent')">Parent</th>
+                            <th translate ng-click="switch('plugin','staff')">Staff</th>
                             <th translate>Def.</th>
                         </tr>
                         <tr ng-repeat-start="(url,methods) in pluginObj[plugin].methods">
-                            <td colspan="6"><b>{{url}}</b></td>
+                            <td colspan="8"><b>{{url}}</b></td>
                         </tr>
                         <tr ng-repeat-end ng-repeat="details in methods"  ng-if="filter_api(details)">
                             <td style="width:300px;border-top-width:0" title="{{details.doc}}">
@@ -32,7 +34,7 @@
                             <td ng:repeat="role in columns" ng:click="changeApi(details, role)" style="text-align:center;border-top-width:0" ng:show="details.permission_id">
                                 <i class="fas fa-{{iconify(apiPermissions[details.permission_id][role])}}" style="{{colorize(apiPermissions[details.permission_id][role])}}"></i>
                             </td>
-                            <td ng:show="!details.permission_id" colspan="5" style="text-align:center;border-top-width:0" translate>
+                            <td ng:show="!details.permission_id" colspan="7" style="text-align:center;border-top-width:0" translate>
                                 No authorization set for this method.
                             </td>
                         </tr>
@@ -48,6 +50,8 @@
                         <th translate ng-click="switch('sidebar','schooladministrator')">SchoolAdmin</th>
                         <th translate ng-click="switch('sidebar','teacher')">Teacher</th>
                         <th translate ng-click="switch('sidebar','student')">Student</th>
+                        <th translate ng-click="switch('sidebar','parent')">Parent</th>
+                        <th translate ng-click="switch('sidebar','staff')">Staff</th>
                         <th translate>Def.</th>
                     </tr>
                     <tr ng-repeat="url in sidebarPermissionsList|filter:filter_sidebar">

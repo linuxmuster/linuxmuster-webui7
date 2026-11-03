@@ -231,7 +231,9 @@ class Handler(HttpPlugin):
             'globaladministrator',
             'schooladministrator',
             'teacher',
-            'student'
+            'student',
+            'parent',
+            'staff',
         ]
 
         for plugin, details in pluginDict.items():

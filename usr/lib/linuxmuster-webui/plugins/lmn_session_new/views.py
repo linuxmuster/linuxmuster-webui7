@@ -1,5 +1,6 @@
 from concurrent import futures
 import logging
+import re
 import subprocess
 from time import localtime, strftime  # needed for timestamp in collect transfer
 
@@ -177,10 +178,19 @@ class Handler(HttpPlugin):
         for member in session['members']:
             # Regular student exam account
             if member['cn'].endswith("-exam"):
-                valid_users_cn.append(member['cn'])
+                exam_cn = member['cn']
             # Exam stopped from another teacher
             elif member['examMode'] and valid_role:
-                valid_users_cn.append(f"{member['cn']}-exam")
+                exam_cn = f"{member['cn']}-exam"
+            else:
+                continue
+
+            try:
+                if self.context.ldapreader.getval(f'/users/exam/{exam_cn}', 'cn') == exam_cn:
+                    valid_users_cn.append(exam_cn)
+            except Exception:
+                # Not a valid exam user 
+                continue
 
         participants = ','.join(valid_users_cn)
         group_type = _(session['type'])
@@ -188,6 +198,9 @@ class Handler(HttpPlugin):
 
         now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
         target = f'EXAM_{group_type}_{group_name}_{now}'
+        
+        # Avoid special chars in target
+        target = re.sub(r'[^A-Za-z0-9_-]', '_', target)
 
         if participants:
             try:

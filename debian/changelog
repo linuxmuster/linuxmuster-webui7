@@ -1,3 +1,13 @@
+linuxmuster-webui7 (7.3.48) lmn73; urgency=high
+
+  * [security] [lmn_session_new] Root command execution when stopping an
+    exam: the target directory is sanitized and the participants are
+    checked in LDAP.
+  * [security] [lmn_session_new] The unused moveFileToHome route, without
+    permission check, is disabled.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 18 Nov 2026 10:47:06 +0100
+
 linuxmuster-webui7 (7.3.47) lmn73; urgency=medium
 
   * Update to Ajenti 2.2.18 (security fixes).

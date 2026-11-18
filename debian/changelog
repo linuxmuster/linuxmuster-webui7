@@ -1,3 +1,23 @@
+linuxmuster-webui7 (7.4.15) lmn74; urgency=high
+
+  * [security] [lmn_session] Root command execution when stopping an
+    exam: the target directory is sanitized and the participants are
+    checked in LDAP.
+  * [security] [lmn_device-manager] Prestart commands: no path traversal,
+    the rsync password is never returned, current school only.
+  * [security] [lmn_clients] Only the custom scripts of the current
+    school can be written.
+  * [security] [lmn_common] Only global administrators can change the
+    school.
+  * [security] [lmn_permissions] The permissions matrix is restricted to
+    root in dev mode.
+  * [lmn_session] lmn_session_new is renamed lmn_session, the old upload
+    methods are deprecated.
+  * [lmn_permissions] Parent and staff permissions are handled.
+  * The room of a user is read through linuxmuster-api.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 18 Nov 2026 09:05:08 +0100
+
 linuxmuster-webui7 (7.4.14) lmn74; urgency=medium
 
   * [security] [lmn_auth] The password is no longer kept after the
